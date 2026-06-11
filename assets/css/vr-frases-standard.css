@@ -1,0 +1,659 @@
+/**
+ * VR-Frases Standard Stylesheet (Legacy Compatibility)
+ *
+ * Legacy stylesheet version without CSS variables for older browser compatibility.
+ * Provides the same visual styling as vr-frases-base.css but uses hardcoded
+ * color values instead of CSS custom properties. This file serves as a fallback
+ * for environments that don't support modern CSS variable features.
+ *
+ * Compatibility features:
+ * - Fixed color values instead of CSS variables
+ * - Same layout and component structure as base stylesheet
+ * - Full responsive design support maintained
+ * - Identical visual appearance across all components
+ * - Legacy browser support for older WordPress installations
+ *
+ * Note: Consider using vr-frases-base.css for modern browsers that support
+ * CSS custom properties and advanced theming capabilities.
+ *
+ * @package     VR_Frases
+ * @author      Vicente Ruiz Gálvez
+ * @version     4.1.0
+ * @license     GPL-2.0+
+ */
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
+
+/**
+ * BLOCK: PREFERENCES.
+ */
+
+/* Toggle for the preferences bar. */
+.vr-frases-preferences-toggle.hidden {
+	display: none;
+}
+
+.toggle-btn {
+	align-items: center;
+	background: none;
+	border: none;
+	color: #23527c;
+	cursor: pointer;
+	display: flex;
+	font-size: 1.1em;
+	font-weight: 700;
+	gap: 6px;
+	margin-bottom: 8px;
+}
+
+.toggle-btn:hover {
+	background: none;
+	border: none;
+	box-shadow: none;
+	color: #9951df;
+	outline: none;
+}
+
+#toggle-icon {
+	font-size: 1.2em;
+	transition: transform 0.2s;
+}
+
+/* Preferences bar. */
+.vr-frases-preferences-bar {
+	align-items: center;
+	background: #fafbfc;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	box-shadow: 0 1px 4px rgb(0 0 0 / 4%);
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+	margin-bottom: 16px;
+	padding: 16px;
+	width: 100%;
+}
+
+.vr-frases-preferences-bar h2 {
+	color: #23527c;
+	font-size: 1.2em;
+	font-weight: 700;
+	margin-right: 16px;
+}
+
+/* Styles for the preferences block labels. */
+.vr-frases-preferences-bar label {
+	color: #222;
+	font-weight: 600;
+	margin-right: 6px;
+	min-width: 70px;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.vr-frases-preferences-bar select {
+	background: #fff;
+	border: 1.5px solid #357ca5;
+	border-radius: 5px;
+	box-sizing: border-box;
+	flex: 1 1 0;
+	font-size: 1em;
+	max-width: none;
+	min-width: 0;
+	padding: 7px;
+	transition:
+	background 0.2s,
+	border-color 0.2s;
+	width: auto;
+}
+
+.vr-frases-preferences-bar input[type="number"] {
+	background: #fff;
+	border: 1.5px solid #357ca5;
+	border-radius: 5px;
+	box-sizing: border-box;
+	flex: 1 1 0;
+	font-size: 1em;
+	max-width: 65px;
+	min-width: 65px;
+	padding: 7px;
+	transition:
+	background 0.2s,
+	border-color 0.2s;
+	width: 65px;
+}
+
+.vr-frases-preferences-bar select:focus,
+.vr-frases-preferences-bar input[type="number"]:focus {
+	background: #e6f0fa;
+	border-color: #357ca5;
+	outline: none;
+}
+
+/* The outer container should not have border, padding, or margin. */
+.vr-frases-preferences-toggle {
+	background: none !important;
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/**
+ * BLOCK: PAGINATION.
+ */
+
+.vr-frases-pagination-bar {
+	align-items: center;
+	background: #fafbfc;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	box-shadow: 0 1px 4px rgb(0 0 0 / 4%);
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+	margin-bottom: 16px;
+	padding: 16px;
+	width: 100%;
+}
+
+.tablenav-pages,
+.pagination-links {
+	align-items: center;
+	display: flex;
+	gap: 0.5rem;
+	width: auto;
+
+	/* margin-left: auto; */
+}
+
+.pagination-links label {
+	flex: 0 1 180px;
+	margin-bottom: 0;
+	max-width: 300px;
+	min-width: 140px;
+	overflow: visible;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.pagination-links select.page-numbers {
+	align-self: center;
+	box-sizing: border-box;
+	font-size: 1em;
+	margin-left: 8px;
+	max-width: 65px;
+	min-width: 65px;
+	padding: 7px;
+	width: 65px;
+}
+
+.vr-frases-search-count {
+	color: #23527c;
+	flex: 1 1 0;
+	font-size: 1.1em;
+	font-weight: 700;
+	margin-right: 16px;
+	text-align: left;
+}
+
+/**
+ * BLOCK: SEARCH.
+ */
+
+.vr-frases-search-bar {
+	align-items: center;
+	background: #fafbfc;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	box-shadow: 0 1px 4px rgb(0 0 0 / 4%);
+	display: flex;
+	margin-bottom: 16px;
+	padding: 16px;
+	width: 100%;
+}
+
+/* Reset for internal search containers. */
+.vr-frases-search-bar .search-box,
+.vr-frases-search-bar .vr-search-container,
+.vr-frases-search-bar #vr-search-container {
+	margin: 0;
+	padding: 0;
+}
+
+.vr-frases-search-form {
+	align-items: center;
+	background: none;
+	border: none;
+	display: flex;
+	flex-direction: row;
+	gap: 7px;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.vr-frases-search-form > input,
+.vr-frases-search-form > select {
+	background: #fff;
+	border: 1.5px solid #357ca5;
+	border-radius: 5px;
+	box-sizing: border-box;
+	flex: 1 1 0;
+	font-size: 1em;
+	max-width: none;
+	min-width: 0;
+	padding: 7px;
+	transition:
+	background 0.2s,
+	border-color 0.2s;
+	width: 100%;
+}
+
+.vr-frases-search-form > select:focus,
+.vr-frases-search-form > input:focus {
+	background: #e6f0fa;
+	border-color: #357ca5;
+	outline: none;
+}
+
+.vr-frases-search-form label {
+	font-size: 1em;
+	left: -9999px;
+	position: absolute;
+}
+
+.vr-frases-search-form > .button,
+.vr-frases-search-form > .reset-search {
+	background: #23527c;
+	border: 1px solid #23527c;
+	border-radius: 8px;
+	color: #fff;
+	flex: 0 0 120px;
+	font-weight: 500;
+	margin-bottom: 7px;
+	min-width: 120px;
+	text-shadow: none;
+	transition: background-color 0.2s ease;
+}
+
+.vr-frases-search-form > .button:hover,
+.vr-frases-search-form > .reset-search:hover {
+	background: #9951df;
+	border-color: #9951df;
+	color: #fff;
+}
+
+.vr-frases-search-form > .button:focus,
+.vr-frases-search-form > .reset-search:focus {
+	background: #9951df;
+	border-color: #9951df;
+	box-shadow: 0 0 0 2px rgb(153 81 223 / 30%);
+	color: #fff;
+	outline: none;
+}
+
+.vr-frases-search-form > input[type="text"] {
+	border: 1.5px solid #357ca5 !important;
+	font-size: 1.08em;
+}
+
+.vr-frases-search-form input::placeholder {
+	font-size: 1em;
+	opacity: 1;
+}
+
+/**
+ * BLOCK: USER FONT SIZE.
+ */
+
+.font-size-default {
+	font-size: 1em !important;
+}
+
+.font-size-small {
+	font-size: 0.9em !important;
+}
+
+.font-size-medium {
+	font-size: 1.08em !important;
+}
+
+.font-size-large {
+	font-size: 1.22em !important;
+}
+
+/* Grid for the phrase list. */
+.vr-frases-grid {
+	display: grid;
+	gap: 24px;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	margin: 24px 0;
+}
+
+.frase-card {
+	background: #fff;
+	border: 1px solid #e0e6ed;
+	border-radius: 8px;
+	box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
+	display: flex;
+	flex-direction: column;
+	padding: 24px 18px 18px;
+	transition:
+	box-shadow 0.3s ease,
+	border-color 0.3s ease,
+	transform 0.2s ease;
+}
+
+.frase-card:hover {
+	border-color: #c1c9d2;
+	box-shadow: 0 6px 20px rgb(0 0 0 / 18%);
+	transform: translateY(-2px);
+}
+
+.frase-quote {
+	color: #222;
+	font-size: 1.15em;
+	font-weight: 500;
+	margin-bottom: 12px;
+}
+
+.frase-meta {
+	color: #444;
+	display: flex;
+	flex-direction: column;
+	font-size: 0.98em;
+	gap: 8px;
+}
+
+.frase-categories {
+	align-items: flex-end;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-top: 4px;
+}
+
+.frase-author a {
+	color: #0073aa;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.frase-author a:hover {
+	text-decoration: underline;
+}
+
+.frase-class {
+	background: linear-gradient(135deg, #e8f4f8 0%, #d1e7dd 100%);
+	border: 1px solid #b8d4da;
+	border-radius: 6px;
+	color: #1a5a6b;
+	display: inline-block;
+	font-size: 0.85em;
+	font-weight: 600;
+	margin: 4px 0 6px;
+	padding: 4px 10px;
+	text-align: right;
+	text-transform: uppercase;
+	width: auto;
+}
+
+.frase-theme {
+	background: linear-gradient(135deg, #fff4e6 0%, #ffe4b5 100%);
+	border: 1px solid #deb887;
+	border-radius: 6px;
+	color: #8b4513;
+	display: inline-block;
+	font-size: 0.85em;
+	font-style: italic;
+	font-weight: 500;
+	margin: 2px 0 0;
+	padding: 4px 10px;
+	text-align: right;
+	width: auto;
+}
+
+.frase-meta .dashicons {
+	font-size: 1em;
+	margin-left: 4px;
+	vertical-align: middle;
+}
+
+@media (width <=600px) {
+	.vr-frases-grid {
+	gap: 16px;
+	grid-template-columns: 1fr;
+	}
+
+	.frase-card {
+	padding: 16px 10px;
+	}
+
+	/* Responsive para la nueva tarjeta de autor */
+	.vr-author-content {
+	flex-direction: column !important;
+	}
+
+	.vr-author-left-column,
+	.vr-author-right-column {
+	flex: 1 1 100% !important;
+	margin-bottom: 10px;
+	}
+}
+
+/**
+ * BLOCK: AUTHOR CARD (FRONTEND).
+ */
+
+/* Main container for the author card. */
+.vr-author-card {
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 12px;
+	box-shadow: 0 4px 8px rgb(0 0 0 / 8%);
+	margin: 20px 0;
+	overflow: hidden;
+	transition:
+	box-shadow 0.3s ease,
+	border-color 0.3s ease,
+	transform 0.2s ease;
+}
+
+.vr-author-card:hover {
+	border-color: #c1c9d2;
+	box-shadow: 0 6px 20px rgb(0 0 0 / 18%);
+	transform: translateY(-2px);
+}
+
+/* Header with the author's name. */
+.vr-author-header {
+	background: #fff;
+	color: #222;
+	padding: 16px 20px;
+}
+
+.vr-author-header h3 {
+	color: #23527c;
+	font-family: inherit;
+	font-size: 1.1em;
+	font-weight: 600;
+	margin: 0;
+}
+
+.vr-author-header .author-name {
+	color: #00a;
+	font-weight: 700;
+}
+
+/* Main content with two columns. */
+.vr-author-content {
+	display: flex;
+	gap: 24px;
+	padding: 20px;
+}
+
+/* Left column (30%). */
+.vr-author-left-column {
+	flex: 0 0 30%;
+}
+
+.vr-author-left-column p {
+	color: #666;
+	font-size: 0.95em;
+	line-height: 1.4;
+	margin: 0 0 8px;
+}
+
+.vr-author-left-column strong {
+	color: #222;
+	font-weight: 600;
+}
+
+/* Right column (70%). */
+.vr-author-right-column {
+	flex: 1;
+}
+
+.vr-author-right-column p {
+	margin: 0 0 8px;
+}
+
+.vr-author-right-column strong {
+	color: #222;
+	font-weight: 600;
+}
+
+.author-biography {
+	color: #444;
+	font-size: 0.95em;
+	line-height: 1.5;
+	margin-top: 5px;
+	text-align: justify;
+}
+
+/**
+ * FRONTEND PAGINATION STYLES
+ */
+
+/* Main pagination bar container */
+.vr-frases-pagination-bar {
+	align-items: center;
+	background: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	display: flex;
+	justify-content: space-between;
+	margin: 20px 0;
+	padding: 15px;
+}
+
+/* Search count display */
+.vr-frases-search-count {
+	color: #333;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+/* Pagination controls container */
+.vr-frases-pagination-controls {
+	align-items: center;
+	display: flex;
+}
+
+/* Navigation container */
+.vr-frases-pagination-nav {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+}
+
+/* Pagination buttons */
+.vr-pagination-button {
+	background: #23527c;
+	border-radius: 8px;
+	color: #fff;
+	display: inline-block;
+	font-size: 18px;
+	font-weight: 500;
+	max-height: 36px;
+	min-width: 36px;
+	padding: 0;
+	text-align: center;
+	text-decoration: none;
+	transition: background-color 0.2s ease;
+	vertical-align: middle;
+}
+
+.vr-pagination-button:hover {
+	background: #9951df;
+	color: #fff;
+}
+
+.vr-pagination-button.disabled {
+	background: #ccc;
+	color: #666;
+	cursor: not-allowed;
+}
+
+/* Pagination form styles */
+.vr-pagination-form {
+	margin: 0 12px;
+}
+
+/* Paging input container (WordPress standard) */
+.vr-frases-pagination-nav .paging-input {
+	align-items: center;
+	color: #333;
+	display: flex;
+	font-size: 14px;
+	margin: 0 8px;
+}
+
+/* Current page input (WordPress standard) */
+.vr-frases-pagination-nav .current-page {
+	border: 1px solid #bbb;
+	border-radius: 8px;
+	font-size: 14px;
+	margin-right: 4px;
+	padding: 4px 8px;
+	text-align: center;
+	width: 50px;
+}
+
+.vr-frases-pagination-nav .current-page:focus {
+	border-color: #0073aa;
+	box-shadow: 0 0 0 1px #0073aa;
+	outline: none;
+}
+
+/* Tablenav paging text */
+.vr-frases-pagination-nav .tablenav-paging-text {
+	margin-left: 6px;
+}
+
+/* Total pages styling */
+.vr-total-pages {
+	color: #0073aa;
+	font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (width <=768px) {
+	.vr-frases-pagination-bar {
+	flex-direction: column;
+	gap: 15px;
+	text-align: center;
+	}
+
+	.vr-frases-pagination-nav {
+	flex-wrap: wrap;
+	justify-content: center;
+	}
+
+	.vr-pagination-button {
+	font-size: 13px;
+	padding: 6px 10px;
+	}
+}

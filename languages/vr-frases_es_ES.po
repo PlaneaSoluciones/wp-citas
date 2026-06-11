@@ -1,0 +1,2100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: VR-Frases 4.1.0\n"
+"POT-Creation-Date: 2025-10-17 20:07+0200\n"
+"PO-Revision-Date: 2025-10-17 20:07+0200\n"
+"Last-Translator: Vicente Ruiz <webmaster@vruiz.net>\n"
+"Language-Team: webmaster@vruiz.net\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;esc_html__;esc_html_e;esc_attr__;esc_attr_e;sprintf(__;sprintf(_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-vr-frases-widget.php:46
+msgid "VR-frases"
+msgstr "VR-Frases"
+
+#: admin/class-vr-frases-widget.php:48
+msgid "This widget displays a random phrase on every page reload."
+msgstr ""
+"Este widget muestra una frase aleatoria cada vez que se carga la página."
+
+#: admin/class-vr-frases-widget.php:92
+msgid "Title:"
+msgstr "Título:"
+
+#: admin/vr-frases-autores.php:81 admin/vr-frases-autores.php:563
+#: admin/vr-frases-frases.php:745 admin/vr-frases-frases.php:817
+#: admin/vr-frases-functions-ajax.php:318 admin/vr-frases-options.php:86
+msgid "Security check failed: invalid nonce."
+msgstr "Error de seguridad: nonce inválido."
+
+#: admin/vr-frases-autores.php:86 admin/vr-frases-autores.php:566
+#: admin/vr-frases-frases.php:750 admin/vr-frases-frases.php:822
+#: admin/vr-frases-options.php:91
+msgid "You do not have permission to perform this action."
+msgstr "No tienes permiso para realizar esta acción."
+
+#: admin/vr-frases-autores.php:179 admin/vr-frases-options.php:456
+#: admin/vr-frases-options.php:609 includes/vr-frases-menu.php:80
+#: includes/vr-frases-menu.php:81
+msgid "Manage Authors"
+msgstr "Gestionar Autores"
+
+#: admin/vr-frases-autores.php:186
+msgid "Add Author"
+msgstr "Añadir Autor"
+
+#: admin/vr-frases-autores.php:193
+msgid "Filter:"
+msgstr "Filtro:"
+
+#: admin/vr-frases-autores.php:196
+msgid "Show all records"
+msgstr "Mostrar todos los registros"
+
+#: admin/vr-frases-autores.php:199
+msgid "Show complete records"
+msgstr "Mostrar registros completos"
+
+#: admin/vr-frases-autores.php:202
+msgid "Show pending records"
+msgstr "Mostrar registros inacabados"
+
+#: admin/vr-frases-autores.php:211
+msgid "Search Authors:"
+msgstr "Busca Autores:"
+
+#: admin/vr-frases-autores.php:212
+msgid "Search authors..."
+msgstr "Busca Autores..."
+
+#: admin/vr-frases-autores.php:224 admin/vr-frases-clases.php:142
+#: admin/vr-frases-frases.php:122 admin/vr-frases-import.php:441
+#: admin/vr-frases-temas.php:146 admin/vr-frases-template.php:238
+#, php-format
+msgid "%1$s item%2$s found"
+msgstr "%1$s registro%2$s encontrado%2$s"
+
+#: admin/vr-frases-autores.php:285 admin/vr-frases-autores.php:392
+msgid "Select/Deselect all"
+msgstr "Seleccionar/Deseleccionar todo"
+
+#: admin/vr-frases-autores.php:288 admin/vr-frases-autores.php:395
+#: admin/vr-frases-autores.php:458 admin/vr-frases-clases.php:178
+#: admin/vr-frases-clases.php:241 admin/vr-frases-frases.php:171
+#: admin/vr-frases-frases.php:275 admin/vr-frases-temas.php:185
+#: admin/vr-frases-temas.php:250
+msgid "ID"
+msgstr "ID"
+
+#: admin/vr-frases-autores.php:289 admin/vr-frases-autores.php:396
+#: admin/vr-frases-autores.php:459 admin/vr-frases-frases.php:173
+#: admin/vr-frases-frases.php:277 admin/vr-frases-frases.php:345
+#: admin/vr-frases-frases.php:444 admin/vr-frases-import.php:466
+#: admin/vr-frases-import.php:485 includes/vr-frases-enqueue.php:160
+msgid "Author"
+msgstr "Autor"
+
+#: admin/vr-frases-autores.php:290 admin/vr-frases-autores.php:397
+#: admin/vr-frases-autores.php:460 admin/vr-frases-autores.php:663
+#: includes/vr-frases-enqueue.php:166
+msgid "Country"
+msgstr "Lugar de nacimiento"
+
+#: admin/vr-frases-autores.php:291 admin/vr-frases-autores.php:398
+#: admin/vr-frases-autores.php:461 includes/vr-frases-enqueue.php:161
+msgid "Birth Date"
+msgstr "Fecha de nacimiento"
+
+#: admin/vr-frases-autores.php:292 admin/vr-frases-autores.php:399
+#: admin/vr-frases-autores.php:462 includes/vr-frases-enqueue.php:167
+msgid "Death Date"
+msgstr "Fecha de defunción"
+
+#: admin/vr-frases-autores.php:293 admin/vr-frases-autores.php:400
+#: admin/vr-frases-autores.php:463 includes/vr-frases-enqueue.php:169
+msgid "Details"
+msgstr "Detalles"
+
+#: admin/vr-frases-autores.php:294 admin/vr-frases-autores.php:401
+#: admin/vr-frases-autores.php:464 admin/vr-frases-clases.php:180
+#: admin/vr-frases-clases.php:243 admin/vr-frases-temas.php:187
+#: admin/vr-frases-temas.php:252 admin/vr-frases-widgets.php:42
+msgid "Quotes"
+msgstr "Frases"
+
+#: admin/vr-frases-autores.php:295 admin/vr-frases-autores.php:402
+#: admin/vr-frases-clases.php:181 admin/vr-frases-clases.php:244
+#: admin/vr-frases-frases.php:176 admin/vr-frases-frases.php:280
+#: admin/vr-frases-temas.php:188 admin/vr-frases-temas.php:253
+msgid "Edit"
+msgstr "Editar"
+
+#: admin/vr-frases-autores.php:296 admin/vr-frases-autores.php:377
+#: admin/vr-frases-autores.php:382 admin/vr-frases-autores.php:403
+#: admin/vr-frases-clases.php:182 admin/vr-frases-clases.php:224
+#: admin/vr-frases-clases.php:229 admin/vr-frases-clases.php:245
+#: admin/vr-frases-frases.php:177 admin/vr-frases-frases.php:281
+#: admin/vr-frases-import.php:470 admin/vr-frases-import.php:489
+#: admin/vr-frases-import.php:567 admin/vr-frases-temas.php:189
+#: admin/vr-frases-temas.php:233 admin/vr-frases-temas.php:238
+#: admin/vr-frases-temas.php:254
+msgid "Delete"
+msgstr "Borrar"
+
+#: admin/vr-frases-autores.php:317 admin/vr-frases-functions-filters.php:644
+#: admin/vr-frases-functions.php:310 admin/vr-frases-template.php:406
+msgid "View more quotes from this Author..."
+msgstr "Ver más frases de este Autor..."
+
+#: admin/vr-frases-autores.php:320 admin/vr-frases-template.php:409
+#: includes/vr-frases-enqueue.php:180
+msgid "Search on Wikipedia"
+msgstr "Buscar en la Wikipedia"
+
+#: admin/vr-frases-autores.php:363
+msgid "Edit Data"
+msgstr "Editar datos"
+
+#: admin/vr-frases-autores.php:371
+msgid "Delete this Author"
+msgstr "Borrar esta Autor"
+
+#: admin/vr-frases-autores.php:414
+msgid "Are you sure you want to delete these Authors?"
+msgstr "¿Estás seguro de borrar estos Autores?"
+
+#: admin/vr-frases-autores.php:417 admin/vr-frases-clases.php:259
+#: admin/vr-frases-frases.php:295 admin/vr-frases-temas.php:267
+msgid "Delete selected"
+msgstr "Borrar la selección"
+
+#: admin/vr-frases-autores.php:421
+msgid ""
+"NOTICE: You only can delete authors that do not have related quotes. You can "
+"modify them, or go to delete the related quotes before proceed."
+msgstr ""
+"IMPORTANTE: Sólo puedes borrar elementos que no tengan frases relacionadas. "
+"Puedes modificarlo o borrar las frases antes de proceder."
+
+#: admin/vr-frases-autores.php:427
+msgid "No authors to list."
+msgstr "No hay Autores para listar."
+
+#: admin/vr-frases-autores.php:454
+msgid "Author Details"
+msgstr "Detalles del Autor"
+
+#: admin/vr-frases-autores.php:520
+msgid "Add New Author"
+msgstr "Añadir nuevo Autor"
+
+#: admin/vr-frases-autores.php:527 admin/vr-frases-functions-filters.php:461
+msgid "Author Name"
+msgstr "Nombre del Autor"
+
+#: admin/vr-frases-autores.php:537 admin/vr-frases-clases.php:121
+#: admin/vr-frases-frases.php:383 admin/vr-frases-import.php:469
+#: admin/vr-frases-import.php:488 admin/vr-frases-import.php:553
+#: admin/vr-frases-temas.php:125 includes/vr-frases-enqueue.php:179
+msgid "Save"
+msgstr "Guardar"
+
+#: admin/vr-frases-autores.php:541 admin/vr-frases-frases.php:387
+#: admin/vr-frases-frases.php:475
+msgid "Return"
+msgstr "Volver"
+
+#: admin/vr-frases-autores.php:571
+msgid "Invalid author ID."
+msgstr "ID de Autor inválida."
+
+#: admin/vr-frases-autores.php:580
+msgid "Author not found."
+msgstr "Autor no encontrado."
+
+#: admin/vr-frases-autores.php:656
+msgid "Author Information"
+msgstr "Información  del Autor"
+
+#: admin/vr-frases-autores.php:667
+msgid "Lifespan"
+msgstr "Periodo de vida"
+
+#: admin/vr-frases-autores.php:670
+msgid "Quotes in collection"
+msgstr "Frases en la colección"
+
+#: admin/vr-frases-autores.php:675
+msgid "Biography"
+msgstr "Biografía"
+
+#: admin/vr-frases-autores.php:695 admin/vr-frases-clases.php:289
+#: admin/vr-frases-temas.php:301
+msgid "Permission denied."
+msgstr "Permiso denegado."
+
+#: admin/vr-frases-autores.php:701 admin/vr-frases-clases.php:295
+#: admin/vr-frases-temas.php:307
+msgid "Invalid nonce."
+msgstr "Nonce inválido."
+
+#: admin/vr-frases-autores.php:707
+msgid "Error processing Author. Fields cannot be void."
+msgstr "Error procesando Autor. Los campos no pueden ser nulos."
+
+#: admin/vr-frases-autores.php:714 admin/vr-frases-clases.php:309
+#: admin/vr-frases-temas.php:320
+msgid "Internal error: common add function not found."
+msgstr "Error interno: no se encuentra la función common add."
+
+#: admin/vr-frases-autores.php:729 admin/vr-frases-clases.php:324
+#: admin/vr-frases-frases.php:623 admin/vr-frases-temas.php:335
+msgid "Unknown error."
+msgstr "Error desconocido."
+
+#: admin/vr-frases-autores.php:755 admin/vr-frases-clases.php:349
+#: admin/vr-frases-frases.php:661 admin/vr-frases-import.php:598
+#: admin/vr-frases-temas.php:360
+msgid "Missing required data."
+msgstr "Faltan los datos requeridos."
+
+#: admin/vr-frases-autores.php:768 admin/vr-frases-clases.php:357
+#: admin/vr-frases-frases.php:561 admin/vr-frases-frases.php:670
+#: admin/vr-frases-functions-ajax.php:42 admin/vr-frases-functions-ajax.php:121
+#: admin/vr-frases-temas.php:368
+msgid "Security check failed."
+msgstr "Falló la comprobación de seguridad."
+
+#: admin/vr-frases-autores.php:771 admin/vr-frases-clases.php:360
+#: admin/vr-frases-frases.php:564 admin/vr-frases-frases.php:673
+#: admin/vr-frases-functions-ajax.php:46 admin/vr-frases-import.php:161
+#: admin/vr-frases-temas.php:371
+msgid "Insufficient permissions."
+msgstr "Permisos insuficientes."
+
+#: admin/vr-frases-autores.php:774 admin/vr-frases-frases.php:676
+#: admin/vr-frases-frases.php:834
+msgid "All fields are required."
+msgstr "Se requieren todos los campos."
+
+#: admin/vr-frases-autores.php:777
+msgid "Author name cannot be empty."
+msgstr "El campo Autor no puede ser nulo."
+
+#: admin/vr-frases-autores.php:805
+msgid "Error updating the author. Please check the data."
+msgstr "Error actualizando el Autor. Por favor, prueba de nuevo."
+
+#: admin/vr-frases-autores.php:814
+msgid "Author updated successfully."
+msgstr "Autor actualizado correctamente."
+
+#: admin/vr-frases-clases.php:106 admin/vr-frases-options.php:457
+#: includes/vr-frases-menu.php:89 includes/vr-frases-menu.php:90
+msgid "Manage Classes"
+msgstr "Gestionar Clases"
+
+#: admin/vr-frases-clases.php:112
+msgid "Add new classes"
+msgstr "Añadir nueva Clase"
+
+#: admin/vr-frases-clases.php:117 admin/vr-frases-clases.php:179
+#: admin/vr-frases-clases.php:242 admin/vr-frases-frases.php:174
+#: admin/vr-frases-frases.php:278 admin/vr-frases-frases.php:351
+#: admin/vr-frases-frases.php:448 admin/vr-frases-import.php:467
+#: admin/vr-frases-import.php:486 includes/vr-frases-enqueue.php:163
+msgid "Class"
+msgstr "Clase"
+
+#: admin/vr-frases-clases.php:122 admin/vr-frases-temas.php:126
+msgid "NOTICE: You can input multiple values, separated by commas."
+msgstr "NOTA: Puedes introducir múltiples valores, separados por comas."
+
+#: admin/vr-frases-clases.php:131
+msgid "Search Classes:"
+msgstr "Buscar Clases:"
+
+#: admin/vr-frases-clases.php:132
+msgid "Search classes..."
+msgstr "Buscar Clases..."
+
+#: admin/vr-frases-clases.php:176 admin/vr-frases-clases.php:239
+#: admin/vr-frases-frases.php:169 admin/vr-frases-frases.php:273
+#: admin/vr-frases-temas.php:183 admin/vr-frases-temas.php:248
+msgid "Seleccionar/Deseleccionar todo"
+msgstr "Seleccionar/Deseleccionar todo"
+
+#: admin/vr-frases-clases.php:210 admin/vr-frases-temas.php:219
+#: includes/vr-frases-enqueue.php:178
+msgid "Quick Edit"
+msgstr "Edición rápida"
+
+#: admin/vr-frases-clases.php:218
+msgid "Delete this Class"
+msgstr "Borrar esta Clase"
+
+#: admin/vr-frases-clases.php:256
+msgid "Are you sure you want to delete these Classes?"
+msgstr "¿Estás seguro de borrar estas Clases?"
+
+#: admin/vr-frases-clases.php:263 admin/vr-frases-temas.php:271
+msgid ""
+"NOTICE: You only can delete items that do not have related quotes. You can "
+"modify them, or go to delete the related quotes before proceed."
+msgstr ""
+"IMPORTANTE: Sólo puedes borrar elementos que no tengan frases relacionadas. "
+"Puedes modificarlo o borrar las frases antes de proceder."
+
+#: admin/vr-frases-clases.php:269
+msgid "No classes to list."
+msgstr "No hay Clases para listar."
+
+#: admin/vr-frases-clases.php:301
+msgid "Error processing Class. Fields cannot be void."
+msgstr "Error procesando Clase. Los campos no pueden ser nulos."
+
+#: admin/vr-frases-clases.php:363 admin/vr-frases-temas.php:374
+msgid "ID and name are required."
+msgstr "Se requiere el ID y el nombre."
+
+#: admin/vr-frases-clases.php:370
+msgid "A class with that name already exists."
+msgstr "Existe una Clase con el mismo nombre."
+
+#: admin/vr-frases-clases.php:382
+msgid "Database error updating class."
+msgstr "Error actualizando la Clase."
+
+#: admin/vr-frases-clases.php:389
+msgid "Class updated successfully."
+msgstr "Clase actualizada correctamente."
+
+#: admin/vr-frases-frases.php:99 admin/vr-frases-options.php:455
+#: admin/vr-frases-options.php:607 includes/vr-frases-menu.php:61
+#: includes/vr-frases-menu.php:62
+msgid "Manage Quotes"
+msgstr "Gestionar Frases"
+
+#: admin/vr-frases-frases.php:172 admin/vr-frases-frases.php:276
+#: admin/vr-frases-frases.php:339 admin/vr-frases-frases.php:440
+#: admin/vr-frases-import.php:465 admin/vr-frases-import.php:484
+msgid "Quote"
+msgstr "Frase"
+
+#: admin/vr-frases-frases.php:175 admin/vr-frases-frases.php:279
+#: admin/vr-frases-temas.php:121 admin/vr-frases-temas.php:186
+#: admin/vr-frases-temas.php:251 includes/vr-frases-enqueue.php:186
+msgid "Theme"
+msgstr "Tema"
+
+#: admin/vr-frases-frases.php:197
+msgid "Ver más frases de este autor..."
+msgstr "Ver más frases de este autor..."
+
+#: admin/vr-frases-frases.php:202
+msgid "Buscar en Wikipedia"
+msgstr "Buscar en la Wikipedia"
+
+#: admin/vr-frases-frases.php:227
+msgid "Editar esta frase"
+msgstr "Editar esta frase"
+
+#: admin/vr-frases-frases.php:246
+msgid "Edición rápida de clase y temas"
+msgstr "Edición rápida de clase y temas"
+
+#: admin/vr-frases-frases.php:256
+msgid "Delete this Quote"
+msgstr "Borrar esta Frase"
+
+#: admin/vr-frases-frases.php:292
+msgid "Are you sure you want to delete these Quotes?"
+msgstr "¿Estás seguro de borrar estas Frases?"
+
+#: admin/vr-frases-frases.php:304 admin/vr-frases-template.php:166
+msgid "No quotes to list."
+msgstr "No hay Frases para listar."
+
+#: admin/vr-frases-frases.php:331 admin/vr-frases-options.php:608
+#: includes/vr-frases-menu.php:71 includes/vr-frases-menu.php:72
+msgid "Add New Quote"
+msgstr "Añadir nueva Frase"
+
+#: admin/vr-frases-frases.php:354 admin/vr-frases-frases.php:451
+msgid "*CLASS*"
+msgstr "*CLASE*"
+
+#: admin/vr-frases-frases.php:366 admin/vr-frases-frases.php:456
+#: admin/vr-frases-functions-filters.php:480 admin/vr-frases-import.php:468
+#: admin/vr-frases-import.php:487 admin/vr-frases-widgets.php:43
+msgid "Themes"
+msgstr "Temas"
+
+#: admin/vr-frases-frases.php:409 admin/vr-frases-frases.php:756
+msgid "Invalid quote ID."
+msgstr "ID de Frase inválido."
+
+#: admin/vr-frases-frases.php:417
+msgid "Error: Invalid access nonce."
+msgstr "Error: Acceso al nonce inválido."
+
+#: admin/vr-frases-frases.php:424
+msgid "Edit quote: "
+msgstr "Editar Frase: "
+
+#: admin/vr-frases-frases.php:427
+msgid "Loading quote data..."
+msgstr "Leyendo datos de la Frase..."
+
+#: admin/vr-frases-frases.php:431 includes/vr-frases-enqueue.php:173
+msgid "Error loading quote data."
+msgstr "Error leyendo los datos de la Frase."
+
+#: admin/vr-frases-frases.php:467
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: admin/vr-frases-frases.php:471 includes/vr-frases-enqueue.php:183
+#: includes/vr-frases-enqueue.php:240 includes/vr-frases-enqueue.php:338
+msgid "Saving..."
+msgstr "Guardando..."
+
+#: admin/vr-frases-frases.php:481
+msgid "Quote updated successfully!"
+msgstr "¡Frase actualizada correctamente!"
+
+#: admin/vr-frases-frases.php:558
+msgid "Fields cannot be void."
+msgstr "Los campos no pueden ser nulos."
+
+#: admin/vr-frases-frases.php:568
+msgid "Error: The Quote already exists."
+msgstr "Error: La Frase ya existe."
+
+#: admin/vr-frases-frases.php:636
+msgid "Quote added successfully."
+msgstr "Frase añadida correctamente."
+
+#: admin/vr-frases-frases.php:643
+msgid "Error saving the quote. Please try again."
+msgstr "Error guardando la frase. Por favor, prueba de nuevo."
+
+#: admin/vr-frases-frases.php:720 admin/vr-frases-frases.php:898
+msgid "Quote updated successfully."
+msgstr "Frase actualizada correctamente."
+
+#: admin/vr-frases-frases.php:768
+msgid "Quote not found."
+msgstr "Frase no encontrada."
+
+#: admin/vr-frases-frases.php:841
+msgid "Error: A quote with the same text and author already exists."
+msgstr "Error: La Frase con el mismo texto y Autor ya existe:."
+
+#: admin/vr-frases-frases.php:905
+msgid "Error updating the quote. Please try again."
+msgstr "Error actualizando la Frase. Por favor, prueba de nuevo."
+
+#: admin/vr-frases-functions-ajax.php:38 admin/vr-frases-functions-ajax.php:117
+#: includes/vr-frases-enqueue.php:175
+msgid "Missing or invalid data."
+msgstr "Faltan los datos o son inválidos."
+
+#: admin/vr-frases-functions-ajax.php:61
+msgid "Deleted Quote"
+msgstr "Frase borrada"
+
+#: admin/vr-frases-functions-ajax.php:62
+msgid "Deleted Class"
+msgstr "Clase borrada"
+
+#: admin/vr-frases-functions-ajax.php:63
+msgid "Deleted Theme"
+msgstr "Tema borrado"
+
+#: admin/vr-frases-functions-ajax.php:64
+msgid "Deleted Author"
+msgstr "Autor borrado"
+
+#: admin/vr-frases-functions-ajax.php:65
+msgid "Deleted Import"
+msgstr "Importado borrado"
+
+#: admin/vr-frases-functions-ajax.php:68
+msgid "Item"
+msgstr "Registro"
+
+#: admin/vr-frases-functions-ajax.php:71 admin/vr-frases-functions-ajax.php:147
+#, php-format
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: admin/vr-frases-functions-ajax.php:85 admin/vr-frases-functions-ajax.php:160
+msgid "Error while processing: No valid items found."
+msgstr "Error de proceso: No se han encontrado elementos válidos."
+
+#: admin/vr-frases-functions-ajax.php:125
+msgid "You do not have sufficient permissions to perform this action."
+msgstr "No tienes permisos suficientes para realizar esta acción."
+
+#: admin/vr-frases-functions-ajax.php:138
+msgid "Deleted Quotes"
+msgstr "Frases borradas"
+
+#: admin/vr-frases-functions-ajax.php:139
+msgid "Deleted Classes"
+msgstr "Clases borradas"
+
+#: admin/vr-frases-functions-ajax.php:140
+msgid "Deleted Themes"
+msgstr "Temas borrados"
+
+#: admin/vr-frases-functions-ajax.php:141
+msgid "Deleted Authors"
+msgstr "Autores borrados"
+
+#: admin/vr-frases-functions-ajax.php:142
+msgid "Deleted Imports"
+msgstr "Importados borrados"
+
+#: admin/vr-frases-functions-ajax.php:144
+msgid "Items"
+msgstr "Registros"
+
+#: admin/vr-frases-functions-ajax.php:210
+msgid "Invalid type."
+msgstr "Tipo inválido."
+
+#: admin/vr-frases-functions-ajax.php:223
+msgid "Class added"
+msgstr "Clase añadida"
+
+#: admin/vr-frases-functions-ajax.php:224
+msgid "Classes added"
+msgstr "Clases añadidas"
+
+#: admin/vr-frases-functions-ajax.php:227
+msgid "Theme added"
+msgstr "Tema añadido"
+
+#: admin/vr-frases-functions-ajax.php:228
+msgid "Themes added"
+msgstr "Temas añadidos"
+
+#: admin/vr-frases-functions-ajax.php:231
+msgid "Author added"
+msgstr "Autor añadido"
+
+#: admin/vr-frases-functions-ajax.php:232
+msgid "Authors added"
+msgstr "Autores añadidos"
+
+#: admin/vr-frases-functions-ajax.php:238
+msgid "Class already exists"
+msgstr "La Clase ya existe"
+
+#: admin/vr-frases-functions-ajax.php:239
+msgid "Classes already exist"
+msgstr "Las Clases ya existen"
+
+#: admin/vr-frases-functions-ajax.php:242
+msgid "Theme already exists"
+msgstr "El Tema ya existe"
+
+#: admin/vr-frases-functions-ajax.php:243
+msgid "Themes already exist"
+msgstr "Los Temas ya existen"
+
+#: admin/vr-frases-functions-ajax.php:246
+msgid "Author already exists"
+msgstr "El Autor ya existe"
+
+#: admin/vr-frases-functions-ajax.php:247
+msgid "Authors already exist"
+msgstr "Los autores ya existen"
+
+#: admin/vr-frases-functions-ajax.php:323
+msgid "Author name is required."
+msgstr "Se requiere el nombre del Autor."
+
+#: admin/vr-frases-functions-ajax.php:331
+msgid "Error connecting to Wikipedia API."
+msgstr "Error conectando con la API de Wikipedia."
+
+#: admin/vr-frases-functions-ajax.php:341
+msgid "No Wikipedia page found."
+msgstr "No se encuentra la página en Wikipedia."
+
+#: admin/vr-frases-functions-filters.php:91 admin/vr-frases-template.php:319
+msgid "First page"
+msgstr "Primera página"
+
+#: admin/vr-frases-functions-filters.php:99 admin/vr-frases-template.php:327
+msgid "Previous page"
+msgstr "Pagina anterior"
+
+#: admin/vr-frases-functions-filters.php:105 admin/vr-frases-template.php:345
+msgid "Current Page"
+msgstr "Página actual"
+
+#: admin/vr-frases-functions-filters.php:111 admin/vr-frases-template.php:351
+#, php-format
+msgid " of %s"
+msgstr " de %s"
+
+#: admin/vr-frases-functions-filters.php:121 admin/vr-frases-template.php:363
+msgid "Next page"
+msgstr "Pagina siguiente"
+
+#: admin/vr-frases-functions-filters.php:129 admin/vr-frases-template.php:371
+msgid "Last page"
+msgstr "Última página"
+
+#: admin/vr-frases-functions-filters.php:175
+#, php-format
+msgid "Page %1$d of %2$d"
+msgstr "Página %1$d de %2$d"
+
+#: admin/vr-frases-functions-filters.php:201
+msgid "ALL quotes"
+msgstr "TODAS las Frases"
+
+#: admin/vr-frases-functions-filters.php:202
+msgid "You are viewing ALL quotes."
+msgstr "Estás viendo TODAS las frases."
+
+#: admin/vr-frases-functions-filters.php:211
+msgid "[Quote: "
+msgstr "[Frase: "
+
+#: admin/vr-frases-functions-filters.php:211
+#: admin/vr-frases-functions-filters.php:214
+#: admin/vr-frases-functions-filters.php:217
+#: admin/vr-frases-functions-filters.php:220
+msgid "]"
+msgstr "]"
+
+#: admin/vr-frases-functions-filters.php:214
+msgid "[Author: "
+msgstr "[Autor: "
+
+#: admin/vr-frases-functions-filters.php:217
+msgid "[Category: "
+msgstr "[Categoría: "
+
+#: admin/vr-frases-functions-filters.php:220
+msgid "[Order: "
+msgstr "[Orden: "
+
+#: admin/vr-frases-functions-filters.php:223
+msgid "[ALL Quotes]"
+msgstr "[TODAS las Frases]"
+
+#: admin/vr-frases-functions-filters.php:225
+msgid "You are viewing Search Results for the next criteria: "
+msgstr ""
+"Estás viendo los resultados de la Búsqueda para los siguientes criterios: "
+
+#: admin/vr-frases-functions-filters.php:226
+msgid "Search results"
+msgstr "Resultados de la Búsqueda"
+
+#: admin/vr-frases-functions-filters.php:248
+msgid "sorted by Quotes"
+msgstr "ordenado por Frases"
+
+#: admin/vr-frases-functions-filters.php:249
+msgid "sorted by Author"
+msgstr "ordenado  por Autor"
+
+#: admin/vr-frases-functions-filters.php:250
+msgid "sorted by Class"
+msgstr "ordenado por Clase"
+
+#: admin/vr-frases-functions-filters.php:251
+msgid "sorted by Theme"
+msgstr "ordenado por Tema"
+
+#: admin/vr-frases-functions-filters.php:252
+msgid "in Random Order"
+msgstr "orden aleatorio"
+
+#: admin/vr-frases-functions-filters.php:458
+msgid "Quote text:"
+msgstr "Testo de la Frase:"
+
+#: admin/vr-frases-functions-filters.php:459
+msgid "Quote text"
+msgstr "Texto de la Frase"
+
+#: admin/vr-frases-functions-filters.php:460
+msgid "Author Name:"
+msgstr "Nombre del Autor:"
+
+#: admin/vr-frases-functions-filters.php:462
+msgid "Category:"
+msgstr "Categoría:"
+
+#: admin/vr-frases-functions-filters.php:464
+msgid "All Categories"
+msgstr "Todas las Categorías"
+
+#: admin/vr-frases-functions-filters.php:465 admin/vr-frases-widgets.php:43
+msgid "Classes"
+msgstr "Clases"
+
+#: admin/vr-frases-functions-filters.php:496
+msgid "Order by:"
+msgstr "Ordenado por:"
+
+#: admin/vr-frases-functions-filters.php:498
+msgid "Random Order"
+msgstr "Orden aleatorio"
+
+#: admin/vr-frases-functions-filters.php:499
+msgid "Order by Quote"
+msgstr "Ordenado por Frase"
+
+#: admin/vr-frases-functions-filters.php:500
+msgid "Order by Author"
+msgstr "Ordenado por Autor"
+
+#: admin/vr-frases-functions-filters.php:501
+msgid "Order by Class"
+msgstr "Ordenado por Clase"
+
+#: admin/vr-frases-functions-filters.php:502
+msgid "Order by Theme"
+msgstr "Ordenado por Tema"
+
+#: admin/vr-frases-functions-filters.php:504
+msgid "Search"
+msgstr "Buscar"
+
+#: admin/vr-frases-functions-filters.php:507
+#: admin/vr-frases-functions-filters.php:511
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: admin/vr-frases-functions.php:61
+msgid "Error: Item type is missing or empty."
+msgstr "Error: Tipo de item inválido o faltante."
+
+#: admin/vr-frases-functions.php:100
+#, php-format
+msgid "Error: Invalid item type \"%s\"."
+msgstr "Error: Tipo de item inválido \"%s\"."
+
+#: admin/vr-frases-functions.php:117
+msgid "Error: Invalid nonce. Action not allowed."
+msgstr "Error: Nonce inválido. Acción no permitida."
+
+#: admin/vr-frases-functions.php:130
+msgid "Error: Invalid ID."
+msgstr "Error: ID inválido."
+
+#: admin/vr-frases-functions.php:161
+#, php-format
+msgid "Error: %1$s not found with ID %2$d."
+msgstr "Error: %1$s no se ha encontrado el ID %2$d."
+
+#: admin/vr-frases-functions.php:187
+#, php-format
+msgid "Error deleting %1$s. MySQL error: %2$s"
+msgstr "Error borrando %1$s. MySQL error: %2$s"
+
+#: admin/vr-frases-import.php:46 admin/vr-frases-options.php:220
+#: admin/vr-frases-options.php:611
+msgid "Manage Import / Export"
+msgstr "Gestionar Importar / Exportar"
+
+#: admin/vr-frases-import.php:51
+msgid "Import Quotes"
+msgstr "Importar Frases"
+
+#: admin/vr-frases-import.php:54 admin/vr-frases-import.php:796
+#: admin/vr-frases-import.php:839
+msgid "Export Quotes"
+msgstr "Exportar Frases"
+
+#: admin/vr-frases-import.php:75 includes/vr-frases-enqueue.php:193
+msgid "Hide"
+msgstr "Ocultar"
+
+#: admin/vr-frases-import.php:77 includes/vr-frases-enqueue.php:194
+msgid "Duplicate records found:"
+msgstr "Registros duplicados encontrados:"
+
+#: admin/vr-frases-import.php:113
+msgid "Upload CSV or TXT files:"
+msgstr "Cargar archivos CSV o TXT:"
+
+#: admin/vr-frases-import.php:117
+msgid "Drag and drop your CSV or TXT files here, or click to select."
+msgstr ""
+"Arrastra y suelta tus archivos CSV o TXT aquí, o haz click para seleccionar."
+
+#: admin/vr-frases-import.php:125
+msgid "Import"
+msgstr "Importar"
+
+#: admin/vr-frases-import.php:129
+msgid ""
+"Note: The files should have two columns: \"Quote\" and \"Author\" separated "
+"by commas."
+msgstr ""
+"Nota: Los archivos deben tener dos columnas: \"Frase\" y \"Autor\" separados "
+"por comas."
+
+#: admin/vr-frases-import.php:151 admin/vr-frases-import.php:588
+msgid "Invalid request."
+msgstr "Petición inválida."
+
+#: admin/vr-frases-import.php:156 admin/vr-frases-import.php:593
+msgid "Invalid security token."
+msgstr "Token de seguridad inválido."
+
+#: admin/vr-frases-import.php:166
+msgid "No files uploaded."
+msgstr "No se han subido archivos."
+
+#: admin/vr-frases-import.php:214
+#, php-format
+msgid "Invalid file type for \"%s\". Please upload CSV or TXT files only."
+msgstr ""
+"Tipo de archivo inválido \"%s\". Por favor, carga sólo archivos CSV o TXT."
+
+#: admin/vr-frases-import.php:227
+#, php-format
+msgid "Error uploading file \"%s\"."
+msgstr "Error subiendo archivo \"%s\"."
+
+#: admin/vr-frases-import.php:241
+#, php-format
+msgid "Could not read file \"%s\"."
+msgstr "No se puede leer el archivo \"%s\"."
+
+#: admin/vr-frases-import.php:334
+#, php-format
+msgid "%d quotes imported successfully."
+msgstr "%d Frases importados correctamente."
+
+#: admin/vr-frases-import.php:403 admin/vr-frases-import.php:732
+msgid "Error: Action not allowed. Invalid nonce."
+msgstr "Error: Acción no permitida. Nonce inválido."
+
+#: admin/vr-frases-import.php:497
+msgid "No imported quotes found."
+msgstr "No hay frases importadas."
+
+#: admin/vr-frases-import.php:526
+msgid "Select Class"
+msgstr "Seleccionar Clase"
+
+#: admin/vr-frases-import.php:550
+msgid "Save this imported quote"
+msgstr "Guardar esta frase importada"
+
+#: admin/vr-frases-import.php:561
+msgid "Delete this Import"
+msgstr "Borrar esta Frase"
+
+#: admin/vr-frases-import.php:610
+msgid "Import record not found."
+msgstr "Registro de Importación no encontrada."
+
+#: admin/vr-frases-import.php:615
+msgid "Please select a class."
+msgstr "Por favor, selecciona una Clase."
+
+#: admin/vr-frases-import.php:658
+msgid "This quote already exists in the database."
+msgstr "Esta Frase ya existe en la base de datos."
+
+#: admin/vr-frases-import.php:673
+msgid "Error saving quote to database."
+msgstr "Error guardando los datos de la Frase."
+
+#: admin/vr-frases-import.php:710
+msgid "Quote saved successfully."
+msgstr "Frase añadida correctamente."
+
+#: admin/vr-frases-import.php:800
+msgid "Total number of quotes in your database: "
+msgstr "Total de frases en tu base de datos: "
+
+#: admin/vr-frases-import.php:807
+msgid "Enter a filename or leave it blank to use the default (export):"
+msgstr ""
+"Indica un nombre de archivo, o déjalo en blanco para usar el predeterminado "
+"(export):"
+
+#: admin/vr-frases-import.php:817
+msgid "Select file type:"
+msgstr "Selecciona el tipo de archivo:"
+
+#: admin/vr-frases-import.php:821
+msgid "CSV"
+msgstr "CSV"
+
+#: admin/vr-frases-import.php:826
+msgid "TXT"
+msgstr "TXT"
+
+#: admin/vr-frases-import.php:833
+msgid "Include headers"
+msgstr "Incluir los títulos de cabecera"
+
+#: admin/vr-frases-import.php:843
+msgid ""
+"Note: The created file will have two columns \"Frase\" and \"Autor\" "
+"separated by commas."
+msgstr ""
+"Nota: Los archivos creados tendrán dos columnas: \"Frase\" y \"Autor\" "
+"separados por comas."
+
+#: admin/vr-frases-options.php:58
+msgid "Privacy & GDPR Compliance Notice"
+msgstr "Información sobre privacidad y cumplimiento RGPD"
+
+#: admin/vr-frases-options.php:61 includes/vr-frases-enqueue.php:201
+msgid "Show details"
+msgstr "Mostrar detalles"
+
+#: admin/vr-frases-options.php:65
+msgid ""
+"This plugin manages famous quotes and author data.<br>While it does not "
+"collect personal data from users or visitors, content entered may include "
+"identifiable information about living individuals."
+"<br><br><strong>Recommendations:</strong><br>• Enter factual and public "
+"information only.<br>• Avoid sensitive data or personal opinions.<br>• "
+"Confirm legal basis before adding personal details.<br><br>📌 The developer "
+"is not responsible for plugin usage or content published on third-party "
+"websites."
+msgstr ""
+"Este plugin permite gestionar frases célebres y datos biográficos de autores."
+"<br>Aunque no recoge datos personales de usuarios ni visitantes, el "
+"contenido introducido puede incluir información identificable sobre personas "
+"vivas.<br><br><strong>Recomendaciones:</strong><br>• Introducir sólo "
+"información factual y pública.<br>• Evitar datos sensibles u opiniones "
+"personales.<br>• Verificar si se requiere consentimiento legal.<br><br>📌 El "
+"desarrollador no se responsabiliza del uso que se haga del plugin ni del "
+"contenido publicado en sitios externos."
+
+#: admin/vr-frases-options.php:106 admin/vr-frases-options.php:218
+#: admin/vr-frases-options.php:612
+msgid "Manage Options"
+msgstr "Gestionar Opciones"
+
+#: admin/vr-frases-options.php:111 vr-frases.php:100
+msgid "Settings"
+msgstr "Opciones"
+
+#: admin/vr-frases-options.php:114
+msgid "Procedures"
+msgstr "Procedimientos"
+
+#: admin/vr-frases-options.php:117
+msgid "System Info"
+msgstr "Información del Sistema"
+
+#: admin/vr-frases-options.php:126
+msgid "Settings for main and manage pages"
+msgstr "Configuración para las páginas principal y de gesttión"
+
+#: admin/vr-frases-options.php:129
+msgid "Quotes per page"
+msgstr "Frases por página"
+
+#: admin/vr-frases-options.php:131
+msgid "Limit to display results (quotes or authors) per page (must be > 0)"
+msgstr "Límite para mostrar resultados por página (necesita ser > 0)"
+
+#: admin/vr-frases-options.php:134
+msgid "Page slug"
+msgstr "Slug de la página"
+
+#: admin/vr-frases-options.php:136
+msgid "Caption (slug) of the page which contains the main shortcode."
+msgstr "Nombre (slug) de la página que contiene el shortcode principal."
+
+#: admin/vr-frases-options.php:139
+msgid "Plugin Language"
+msgstr "Lenguaje del Plugin"
+
+#: admin/vr-frases-options.php:141
+msgid ""
+"Plugin Language. You can add more languages in the /languages/ directory."
+msgstr ""
+"Lenguaje del Plugin. Puedes añadir más lenguajes en el directorio /"
+"languages/."
+
+#: admin/vr-frases-options.php:144
+msgid "Wikipedia Language"
+msgstr "Lenguaje de la Wikipedia"
+
+#: admin/vr-frases-options.php:146
+msgid "Language code for Wikipedia queries (e.g., es, en, fr). Default: en"
+msgstr "Código de lenguaje para Wikipedia (por ej.: es, en fr) Por defecto: en"
+
+#: admin/vr-frases-options.php:149
+msgid "Date Format"
+msgstr "Formato de fecha"
+
+#: admin/vr-frases-options.php:151
+msgid "Specify the date format to use for authors (e.g., d/m/Y, m-d-Y)."
+msgstr ""
+"Especifica el formsto de fecha para usar en Autores (por ej. d/m/Y, m-d-Y)"
+
+#: admin/vr-frases-options.php:154
+msgid "AC/BC Format"
+msgstr "Formato AC/BC"
+
+#: admin/vr-frases-options.php:157
+msgid "AC"
+msgstr "AC"
+
+#: admin/vr-frases-options.php:160
+msgid "Specify the format for dates before Christ (AC or BC)."
+msgstr "Especifica el formato para fechas anteriores a Cristo (AC o BC)."
+
+#: admin/vr-frases-options.php:164
+msgid "Settings for widget and [randomfrase] short code"
+msgstr "Configuración para el Widget y el shortcode [randomfrase]"
+
+#: admin/vr-frases-options.php:167
+msgid "Link author"
+msgstr "Enlazar Autor"
+
+#: admin/vr-frases-options.php:169
+msgid ""
+"Link the author name to main page in order to view more quotes from him."
+msgstr "Enlaza al Autor a la página principal para ver más frases del mismo."
+
+#: admin/vr-frases-options.php:172
+msgid "Side author"
+msgstr "Posición del Autor"
+
+#: admin/vr-frases-options.php:174
+msgid "Mark to display author name before the quote. Unmark to display after."
+msgstr ""
+"Marcar para mostrar el Autor antes de la frase. Desmarcar para mostrarlo "
+"despues."
+
+#: admin/vr-frases-options.php:177
+msgid "Hide author"
+msgstr "Ocultar el Autor"
+
+#: admin/vr-frases-options.php:180
+msgid "Mark to hide the author name in the quote display."
+msgstr "Marcar para ocultar el nombre del Autor en la frase mostrada."
+
+#: admin/vr-frases-options.php:184
+msgid "Separate lines"
+msgstr "Lineas separadas"
+
+#: admin/vr-frases-options.php:186
+msgid ""
+"Mark to insert <br /> between author and quote. Otherwise inserts a blank "
+"space."
+msgstr ""
+"Marcar para insertar &lt;br /&gt; entre el autor y la frase. De lo contrario "
+"se insertará un espacio en blanco."
+
+#: admin/vr-frases-options.php:189
+msgid "Plugin Maintenance"
+msgstr "Mantenimiento del Plugin"
+
+#: admin/vr-frases-options.php:192
+msgid "Allow Full Uninstall"
+msgstr "Habilitar desinstalación completa"
+
+#: admin/vr-frases-options.php:195
+msgid ""
+"WARNING: If checked, all plugin data (quotes, authors, settings) will be "
+"permanently deleted when the plugin is uninstalled. This action cannot be "
+"undone."
+msgstr ""
+"ATENCIÓN: Si está marcado, todos los datos del plugin (frases, autores, "
+"opciones) serán borrados completamente cuando se desinstale el plugin. Esta "
+"acción no se puede deshacer."
+
+#: admin/vr-frases-options.php:200
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+#: admin/vr-frases-options.php:204
+msgid "Admin Panel Procedures"
+msgstr "Procedimientos del panel de Administración"
+
+#: admin/vr-frases-options.php:217
+msgid "Import / Export Quotes"
+msgstr "Importar / Exportar Frases"
+
+#: admin/vr-frases-options.php:219 admin/vr-frases-options.php:610
+msgid "Manage Classes and Manage Topics"
+msgstr "Gestionar Clases y Gestionar Temas"
+
+#: admin/vr-frases-options.php:224
+msgid ""
+"This is the main panel of the plugin where all quotes are displayed, as well "
+"as the results matching the search parameters, sorted by the criteria you "
+"choose. All criteria can be combined."
+msgstr ""
+"Es el panel principal del Plugin donde se muestran todas las frases, y los "
+"resultados que coincidan con los parámetros de la búsqueda, ordenados por el "
+"criterio que elijas. Se pueden combinar todos los criterios entre sí."
+
+#: admin/vr-frases-options.php:225
+msgid ""
+"Quick Edit allows you to modify only the Class and Topics, while the Edit "
+"function lets you modify all fields."
+msgstr ""
+"La Edición rápida te permite modificar sólo la Clase y los Temas, mientras "
+"que la función Editar, te permite modificar todos los campos."
+
+#: admin/vr-frases-options.php:228
+msgid ""
+"This form is used to add quotes individually. All fields must be filled in."
+msgstr ""
+"Este formulario se usa para añadir frases individualmente. Se deben rellenar "
+"todos los campos."
+
+#: admin/vr-frases-options.php:229
+msgid ""
+"If any element is duplicated (Quote and Author), an error message will be "
+"displayed and it will NOT be processed."
+msgstr ""
+"Si algún elemento está duplicado (Frase y Autor) se mostrará un mensaje de "
+"error y NO se procesará."
+
+#: admin/vr-frases-options.php:232
+msgid "This panel shows a list of all authors registered in the database."
+msgstr ""
+"Este panel muestra un listado de todos los autores que tengamos registrados "
+"en la base de datos."
+
+#: admin/vr-frases-options.php:233
+msgid ""
+"Each Author record is created automatically when adding a new Quote, "
+"modifying an existing Quote, or after processing an item from the imported "
+"quotes table."
+msgstr ""
+"Cada registro de Autor se crea automáticamente al añadir una nueva Frase, al "
+"modificar una Frase existente y después de procesar un elemento de la tabla "
+"de frases importadas."
+
+#: admin/vr-frases-options.php:234
+msgid ""
+"Quick Edit allows you to add or modify the data associated with the Author: "
+"Place of birth and birth and death dates, as well as a brief biography."
+msgstr ""
+"La Edición rápida te permite añadir o modificar los datos asociados al "
+"Autor: Lugar de nacimiento y fechas de nacimiento y defunción, además de un "
+"breve dato de la biografía."
+
+#: admin/vr-frases-options.php:235
+msgid ""
+"For dates before Christ, you must check the \"AC\" option and enter the date "
+"as \"01/01/YYYY\", which will display the date as \"YYYY AC\"."
+msgstr ""
+"Para las fechas anteriores a Cristo, se debe marcar la opción 'AC' e "
+"introducir la fecha como '01/01/YYYY', que mostrará la fecha como 'YYYY AC'."
+
+#: admin/vr-frases-options.php:236
+msgid ""
+"When there is no known author (e.g. sayings, proverbs, etc.) in the dates of "
+"birth and death we will put 01/01/0001, this will make the field appear "
+"blank in the listing, but it will be assigned a value for filtering purposes."
+msgstr ""
+"Cuando no hay autor conocido (p.ej. refranes, proverbios, etc.) en las "
+"fechas de nacimiento y defunción pondremos 01/01/0001, eso hará que el campo "
+"se muestre en blanco en el listado, pero tendrá asignado un valor a efectos "
+"de filtros."
+
+#: admin/vr-frases-options.php:237
+msgid ""
+"There is a dropdown that allows you to filter Authors who have all their "
+"data and those who still need to complete the information."
+msgstr ""
+"Tienes un cuadro desplegable que te permite filtrar los Autores que tienen "
+"todos los datos y los que todavía están pendientes de completar la "
+"información."
+
+#: admin/vr-frases-options.php:240
+msgid ""
+"These panels allow you to add or modify Classes and Topics of your choice."
+msgstr ""
+"Estos paneles te permiten añadir o modificar las Clases y Temas de tu "
+"elección."
+
+#: admin/vr-frases-options.php:241
+msgid "Classes act as categories and Topics as tags."
+msgstr "Las Clases actúan como categorías y los Temas como etiquetas."
+
+#: admin/vr-frases-options.php:242
+msgid "In the Add field, you can enter several values separated by commas (,)."
+msgstr ""
+"En el campo Añadir, puedes introducir múltiples valores, separados por comas "
+"(,)."
+
+#: admin/vr-frases-options.php:243
+msgid ""
+"If any element is duplicated, an error message will be displayed and it will "
+"NOT be processed."
+msgstr ""
+"Si algún elemento está duplicado se mostrará un mensaje de error y NO se "
+"procesará."
+
+#: admin/vr-frases-options.php:246
+msgid ""
+"The Import tab of this panel, allows you to upload a .CSV or .TXT file with "
+"the fields \"Quote\" and \"Author\" in quotes and separated by commas (,)."
+msgstr ""
+"La pestaña Importar de este panel te permite subir un archivo con "
+"formato .CSV o .TXT con los campos \"Frase\" y \"Autor\" entre comillas y "
+"separados por comas (,)"
+
+#: admin/vr-frases-options.php:247
+msgid ""
+"When importing the file, the data is copied to an intermediate table from "
+"where you can process each record. You must add a Class and one or more "
+"Topics. When saving the data, the Quote goes to the main table and the "
+"Author goes to the authors table where you can add biographical data."
+msgstr ""
+"Al importar el archivo, se copian los datos a una tabla intermedia desde "
+"donde podrás procesar cada registro, debes añadir una Clase y uno o varios "
+"Temas, al grabar los datos la Frase pasa a la tabla principal y el Autor "
+"pasa a la tabla de autores donde podrás añadir los datos biográficos."
+
+#: admin/vr-frases-options.php:248
+msgid ""
+"If any element is duplicated, an error message will be displayed during data "
+"import and it will NOT be processed."
+msgstr ""
+"Si algún elemento está duplicado se mostrará un mensaje de error, durante la "
+"importación de datos, y NO se procesará."
+
+#: admin/vr-frases-options.php:249
+msgid ""
+"In the Export tab, you have the option to export the Quotes and Authors from "
+"your database to a CSV or TXT file with fields in quotes and separated by "
+"commas."
+msgstr ""
+"En la pestaña Exportar, puedes exportar tus Frases y Autores de tu base de "
+"datos a un archivo CSV o TXT con los campos \"Frase\" y \"Autor\" entre "
+"comillas y separados por comas (,)"
+
+#: admin/vr-frases-options.php:252
+msgid ""
+"In this panel you can modify the plugin options. Each field has a "
+"descriptive legend of the option to configure, so it will be easy to adjust "
+"it to your preferences."
+msgstr ""
+"En este panel puedes modificar las opciones del Plugin, cada campo tiene una "
+"leyenda descriptiva de la opción a configurar, por lo que te será sencillo "
+"ajustarlo a tus preferencias."
+
+#: admin/vr-frases-options.php:253
+msgid ""
+"The most important option is the \"slug\" of the page where you will display "
+"your quotes to the user."
+msgstr ""
+"La opción más importante es la del 'slug' de la página donde mostrarás tus "
+"frases al usuario."
+
+#: admin/vr-frases-options.php:254
+msgid ""
+"Create a blank page with the name you have chosen in the \"slug\" option and "
+"insert the shortcode [vrfrases] and it will be ready to use."
+msgstr ""
+"Crea una página en blanco con el nombre que hayas elegido en la opción "
+"'slug' e inserta el shortcode [vrfrases] y ya estará listo para funcionar."
+
+#: admin/vr-frases-options.php:276
+msgid "Widgets and Shortcodes included in this plugin"
+msgstr "Widgets y Shortcodes incluidos en este plugin"
+
+#: admin/vr-frases-options.php:288 admin/vr-frases-options.php:614
+msgid "Widget: VR-frases"
+msgstr "Widget: VR-Frases"
+
+#: admin/vr-frases-options.php:289 admin/vr-frases-options.php:615
+msgid "Widget: Take a look for VR-frases"
+msgstr "WIdget: VR-Frases de un vistazo"
+
+#: admin/vr-frases-options.php:290 admin/vr-frases-options.php:616
+msgid "Shortcode: [vrfrases]"
+msgstr "Shortcode: [vrfrases]"
+
+#: admin/vr-frases-options.php:291 admin/vr-frases-options.php:617
+msgid "Shortcode: [randomfrase]"
+msgstr "Shortcode: [randomfrase]"
+
+#: admin/vr-frases-options.php:292 admin/vr-frases-options.php:618
+msgid "Shortcode: [frasescount]"
+msgstr "Shortcode: [frasescount]"
+
+#: admin/vr-frases-options.php:293 admin/vr-frases-options.php:619
+msgid "Shortcode: [autorescount]"
+msgstr "Shortcode: [autorescount]"
+
+#: admin/vr-frases-options.php:297
+msgid "VR-Frases Widget (VR_Frases_Widget):"
+msgstr "VR-Frases Widget (VR_Frases_Widget):"
+
+#: admin/vr-frases-options.php:298
+msgid "Displays a random quote on each page reload."
+msgstr "Muestra una frase aleatoria en cada recarga de página."
+
+#: admin/vr-frases-options.php:301
+msgid "VR-Frases Dashboard Widget (vr_frases_dash_widget):"
+msgstr "VR-Frases Dashboard Widget (vr_frases_dash_widget):"
+
+#: admin/vr-frases-options.php:302
+msgid ""
+"Displays in the WordPress admin dashboard a summary of the data (total "
+"quotes, authors, topics, classes), a random sample quote, and the plugin "
+"version."
+msgstr ""
+"Muestra en el panel de administración de WordPress un resumen de los datos "
+"(total de frases, autores, temas, clases), una frase aleatoria de ejemplo y "
+"la versión del plugin."
+
+#: admin/vr-frases-options.php:305
+msgid "Displays the main plugin page content and the search form."
+msgstr ""
+"Muestra el contenido de la página principal del plugin y el formulario de "
+"búsqueda."
+
+#: admin/vr-frases-options.php:308
+msgid "Includes a random quote in the content of a post or page."
+msgstr "Incluye una frase aleatoria en el contenido de una entrada o página."
+
+#: admin/vr-frases-options.php:309
+msgid ""
+"In your templates you can use the code: <code>&lt;?php echo "
+"vr_frases_random_frase (); ?&gt;</code>"
+msgstr ""
+"En tus plantillas, puedes usar el código: <code>&lt;?php echo "
+"vr_frases_random_frase (); ?&gt;</code>"
+
+#: admin/vr-frases-options.php:312
+msgid "Returns an integer with the total number of stored quotes."
+msgstr "Devuelve un número entero con el total de frases almacenadas."
+
+#: admin/vr-frases-options.php:315
+msgid "Returns an integer with the total number of stored authors."
+msgstr "Devuelve un número entero con el total de autores almacenados."
+
+#: admin/vr-frases-options.php:411
+msgid "System Information"
+msgstr "Información del Sistema"
+
+#: admin/vr-frases-options.php:414
+msgid "WordPress Version"
+msgstr "Versión de WordPress"
+
+#: admin/vr-frases-options.php:418
+msgid "PHP Version"
+msgstr "Versión de PHP"
+
+#: admin/vr-frases-options.php:422
+msgid "MySQL Version"
+msgstr "Versión de MySQL"
+
+#: admin/vr-frases-options.php:426
+msgid "Plugin Version"
+msgstr "Versión del Plugin"
+
+#: admin/vr-frases-options.php:434
+msgid "Plugin Statistics"
+msgstr "Estadísticas del Plugin"
+
+#: admin/vr-frases-options.php:437
+msgid "Total Quotes"
+msgstr "Total de Frases"
+
+#: admin/vr-frases-options.php:441
+msgid "Total Authors"
+msgstr "Total de Autores"
+
+#: admin/vr-frases-options.php:445
+msgid "Total Classes"
+msgstr "Total de Clases"
+
+#: admin/vr-frases-options.php:449
+msgid "Total Themes"
+msgstr "Total de Temas"
+
+#: admin/vr-frases-options.php:458 admin/vr-frases-temas.php:109
+#: includes/vr-frases-menu.php:98 includes/vr-frases-menu.php:99
+msgid "Manage Themes"
+msgstr "Gestionar Temas"
+
+#: admin/vr-frases-options.php:469
+msgid "Top Authors by Quote Count"
+msgstr "Top 10 de Autores por el número de Frases"
+
+#: admin/vr-frases-options.php:474 admin/vr-frases-options.php:494
+#: admin/vr-frases-options.php:514
+msgid "quotes"
+msgstr "frases"
+
+#: admin/vr-frases-options.php:480
+msgid "Showing top 10 authors. Visit Manage Authors to see all."
+msgstr ""
+"Mostrando del Top 10 de Autores. Visita Gestionar Autores para verlos todos."
+
+#: admin/vr-frases-options.php:489
+msgid "Top Classes by Quote Count"
+msgstr "Top 10 de Clases por el número de Frases"
+
+#: admin/vr-frases-options.php:500
+msgid "Showing top 10 classes. Visit Manage Classes to see all."
+msgstr ""
+"Mostrando del Top 10 de Clases. Visita Gestionar Clases para verlas todas."
+
+#: admin/vr-frases-options.php:509
+msgid "Top Themes by Quote Count"
+msgstr "Top 10 de Temas por el número de Frases"
+
+#: admin/vr-frases-options.php:520
+msgid "Showing top 10 themes. Visit Manage Themes to see all."
+msgstr ""
+"Mostrando del Top 10 de Temas. Visita Gestionar Temas para verlos todos."
+
+#: admin/vr-frases-options.php:584
+msgid "Default (use site locale)"
+msgstr "Predeterminado (usar el idioma local del sitio)"
+
+#: admin/vr-frases-temas.php:115
+msgid "Add new themes"
+msgstr "Añadir nuevo Tema"
+
+#: admin/vr-frases-temas.php:135
+msgid "Search Themes:"
+msgstr "Buscar Temas:"
+
+#: admin/vr-frases-temas.php:136
+msgid "Search themes..."
+msgstr "Buscar Temas..."
+
+#: admin/vr-frases-temas.php:228
+msgid "Delete this Theme"
+msgstr "Borrar este  Tema"
+
+#: admin/vr-frases-temas.php:264
+msgid "Are you sure you want to delete these Themes?"
+msgstr "¿Estás seguro de borrar estos Temas?"
+
+#: admin/vr-frases-temas.php:279
+msgid "No themes to list."
+msgstr "No hay Temas para listar."
+
+#: admin/vr-frases-temas.php:313
+msgid "Error processing Theme. Fields cannot be void."
+msgstr "Error procesando Tema. Los campos no pueden ser nulos."
+
+#: admin/vr-frases-temas.php:381
+msgid "A theme with that name already exists."
+msgstr "Existe un Tema con el mismo nombre."
+
+#: admin/vr-frases-temas.php:393
+msgid "Database error updating theme."
+msgstr "Error actualizando el Tema."
+
+#: admin/vr-frases-temas.php:400
+msgid "Theme updated successfully."
+msgstr "Tema actualizado correctamente:."
+
+#: admin/vr-frases-template.php:128
+msgid "List of Quotes"
+msgstr "Lista de Frases"
+
+#: admin/vr-frases-template.php:130 admin/vr-frases-template.php:457
+msgid "Show preferences"
+msgstr "Mostrar preferencias"
+
+#: admin/vr-frases-template.php:189
+msgid "Standard"
+msgstr "Estándar"
+
+#: admin/vr-frases-template.php:190
+msgid "Dark"
+msgstr "Oscuro"
+
+#: admin/vr-frases-template.php:191
+msgid "Elegant"
+msgstr "Elegante"
+
+#: admin/vr-frases-template.php:192
+msgid "Classic"
+msgstr "Clásico"
+
+#: admin/vr-frases-template.php:193
+msgid "Minimalist"
+msgstr "Minimalista"
+
+#: admin/vr-frases-template.php:198
+msgid "Preferences:"
+msgstr "Preferencias:"
+
+#: admin/vr-frases-template.php:199
+msgid "Style:"
+msgstr "Estilo:"
+
+#: admin/vr-frases-template.php:205
+msgid "Font size:"
+msgstr "Tamaño de fuente:"
+
+#: admin/vr-frases-template.php:207
+msgid "Default"
+msgstr "Por defecto"
+
+#: admin/vr-frases-template.php:208
+msgid "Small"
+msgstr "Pequeño"
+
+#: admin/vr-frases-template.php:209
+msgid "Medium"
+msgstr "Mediano"
+
+#: admin/vr-frases-template.php:210
+msgid "Large"
+msgstr "Grande"
+
+#: admin/vr-frases-template.php:212
+msgid "Records per page:"
+msgstr "Registros por página:"
+
+#: admin/vr-frases-template.php:458
+msgid "Hide preferences"
+msgstr "Ocultar preferencias"
+
+#: admin/vr-frases-widgets.php:41
+msgid "Registered data totals:"
+msgstr "Datos totales registrados:"
+
+#: admin/vr-frases-widgets.php:42
+msgid "At this moment your database contains "
+msgstr "En este momento tu base de datos contiene "
+
+#: admin/vr-frases-widgets.php:42
+msgid " from "
+msgstr " de "
+
+#: admin/vr-frases-widgets.php:42
+msgid " Authors."
+msgstr " Autores."
+
+#: admin/vr-frases-widgets.php:43
+msgid "Your classification handlers: "
+msgstr "Tus criterios de clasificación: "
+
+#: admin/vr-frases-widgets.php:43
+msgid " and "
+msgstr " y "
+
+#: admin/vr-frases-widgets.php:45
+msgid "Sample of output style for [randomfrase] and sidebar widgets:"
+msgstr "Ejemplo de salida para [randomfrase] y widgets del Sidebar:"
+
+#: admin/vr-frases-widgets.php:48
+msgid "You are using VR-frases version: "
+msgstr "Estás usando Vr-Frases versión: "
+
+#: admin/vr-frases-widgets.php:69
+msgid "Take a look for VR-frases"
+msgstr "VR-Frases de un vistazo"
+
+#: includes/vr-frases-database.php:182 includes/vr-frases-database.php:212
+msgid "General"
+msgstr "General"
+
+#: includes/vr-frases-database.php:183
+msgid "Default category for all quotes"
+msgstr "Categoría por defecto para todas las frases"
+
+#: includes/vr-frases-database.php:186
+msgid "Wisdom"
+msgstr "Sabiduría"
+
+#: includes/vr-frases-database.php:187
+msgid "Quotes that contain deep wisdom and philosophical insights"
+msgstr "Citas que contienen una profunda sabiduría y conocimientos filosóficos"
+
+#: includes/vr-frases-database.php:190
+msgid "Humor"
+msgstr "Humor"
+
+#: includes/vr-frases-database.php:191
+msgid "Funny and humorous quotes"
+msgstr "Frases divertidas y humorísticas"
+
+#: includes/vr-frases-database.php:223 includes/vr-frases-database.php:234
+#: includes/vr-frases-database.php:238
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: includes/vr-frases-database.php:224
+msgid "Welcome to VR Frases! This is a sample quote."
+msgstr "¡Bienvenido a VR Frases! Esta es una frase de ejemplo."
+
+#: includes/vr-frases-database.php:239
+msgid "Used when the author of a quote is unknown"
+msgstr "Usado cuando el autor de una cita es desconocido"
+
+#: includes/vr-frases-database.php:668
+msgid "VR-Frases Plugin Upgrade Failed"
+msgstr "Ha fallado la actualización del plugin VR-Frases"
+
+#: includes/vr-frases-database.php:671
+msgid ""
+"The plugin upgrade encountered errors. Please check your error logs or "
+"contact support."
+msgstr ""
+"La actualización del plugin ha detectado errores. Por favor, revisa tus logs "
+"de errores o contacta con el soporte del plugin."
+
+#: includes/vr-frases-database.php:673
+msgid "Last error:"
+msgstr "Último error:"
+
+#: includes/vr-frases-database.php:691
+msgid "VR-Frases Plugin Updated Successfully"
+msgstr "Plugin VR-Frases actualizado correctamente"
+
+#: includes/vr-frases-database.php:697
+#, php-format
+msgid "VR-Frases has been updated to version %s. All data has been preserved."
+msgstr ""
+"VR-Frases se ha actualizado a la versión %s. Todos los datos se han "
+"preservado."
+
+#: includes/vr-frases-enqueue.php:159
+msgid "AJAX error."
+msgstr "Error de AJAX."
+
+#: includes/vr-frases-enqueue.php:162
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: includes/vr-frases-enqueue.php:164
+msgid "Are you sure you want to delete these items?"
+msgstr "¿Estás seguro de borrar estos registros?"
+
+#: includes/vr-frases-enqueue.php:165
+msgid "Are you sure you want to delete this item?"
+msgstr "¿Estás seguro de borrar esta registro?"
+
+#: includes/vr-frases-enqueue.php:168
+msgid "Item deleted successfully."
+msgstr "Registro borrado correctamente."
+
+#: includes/vr-frases-enqueue.php:170
+msgid "Class field is required."
+msgstr "Se requiere la Clase."
+
+#: includes/vr-frases-enqueue.php:171
+msgid "Field cannot be empty."
+msgstr "El campo no puede ser nulo."
+
+#: includes/vr-frases-enqueue.php:172
+msgid "An error occurred."
+msgstr "Ha ocurrido un error desconocido."
+
+#: includes/vr-frases-enqueue.php:174
+msgid "Error saving quote data."
+msgstr "Error guardando los datos de la Frase."
+
+#: includes/vr-frases-enqueue.php:176
+msgid "The item does not have a valid ID."
+msgstr "EL registro no tiene un ID válido."
+
+#: includes/vr-frases-enqueue.php:177
+msgid "No items selected."
+msgstr "No hay registros seleccionados."
+
+#: includes/vr-frases-enqueue.php:181
+msgid "Select a class..."
+msgstr "Selecciona una Clase..."
+
+#: includes/vr-frases-enqueue.php:182
+msgid "Select themes..."
+msgstr "Selecciona los Temas..."
+
+#: includes/vr-frases-enqueue.php:184
+msgid "Error saving settings."
+msgstr "Error guardando Opciones."
+
+#: includes/vr-frases-enqueue.php:185
+msgid "Settings saved."
+msgstr "Opciones guardadas."
+
+#: includes/vr-frases-enqueue.php:187
+msgid "View more quotes from this author..."
+msgstr "Ver más frases de este Autor..."
+
+#: includes/vr-frases-enqueue.php:188
+msgid "Please select files to import."
+msgstr "Por favor, selecciona los archivos a importar."
+
+#: includes/vr-frases-enqueue.php:189
+msgid ""
+"Invalid file type for \"{filename}\". Please upload CSV or TXT files only."
+msgstr ""
+"Tipo de archivo inválido \"{filename}\". Por favor, carga sólo archivos CSV "
+"o TXT."
+
+#: includes/vr-frases-enqueue.php:190
+msgid "{count} duplicates were skipped."
+msgstr "{count} duplicados ha sido descartados."
+
+#: includes/vr-frases-enqueue.php:191
+msgid "Error importing files."
+msgstr "Error importando archivos."
+
+#: includes/vr-frases-enqueue.php:192
+msgid "Import timeout. Please try with smaller files."
+msgstr "Tiempo límite excedido. Por favor, prueba con archivos más pequeños."
+
+#: includes/vr-frases-enqueue.php:195
+msgid "File"
+msgstr "Archivo"
+
+#: includes/vr-frases-enqueue.php:196
+msgid "Line"
+msgstr "Línea"
+
+#: includes/vr-frases-enqueue.php:197
+msgid "Already in database"
+msgstr "Ya está en la base de datos"
+
+#: includes/vr-frases-enqueue.php:198
+msgid "Already in import list"
+msgstr "Ya está en la lista de Importados"
+
+#: includes/vr-frases-enqueue.php:199
+msgid "These quotes were not imported because they already exist."
+msgstr "Estas Frases no se han importado porque ya existen."
+
+#: includes/vr-frases-enqueue.php:200
+msgid "Page will reload automatically when you close the duplicates panel."
+msgstr ""
+"La página se recargará automáticamente cuando cierres el panel de duplicados."
+
+#: includes/vr-frases-enqueue.php:202
+msgid "Hide details"
+msgstr "Ocultar detalles"
+
+#: includes/vr-frases-enqueue.php:223
+msgid "Select Class..."
+msgstr "Selecciona una Clase..."
+
+#: includes/vr-frases-enqueue.php:224
+msgid "Select one or more Themes..."
+msgstr "Selecciona uno o más Temas..."
+
+#: includes/vr-frases-enqueue.php:238 includes/vr-frases-enqueue.php:336
+msgid "Updating results..."
+msgstr "Actualizando resultados..."
+
+#: includes/vr-frases-enqueue.php:239 includes/vr-frases-enqueue.php:337
+msgid "Deleting..."
+msgstr "Borrando..."
+
+#: includes/vr-frases-enqueue.php:241 includes/vr-frases-enqueue.php:339
+msgid "Loading data..."
+msgstr "Leyendo datos..."
+
+#: includes/vr-frases-menu.php:50 includes/vr-frases-menu.php:51
+msgid "VR-Frases"
+msgstr "VR-Frases"
+
+#: includes/vr-frases-menu.php:107 includes/vr-frases-menu.php:108
+msgid "Manage Import/Export"
+msgstr "Gestionar Importar / Exportar"
+
+#: includes/vr-frases-menu.php:116 includes/vr-frases-menu.php:117
+#: includes/vr-frases-menu.php:149
+msgid "Manage Settings"
+msgstr "Gestionar Opciones"
+
+#: includes/vr-frases-obsoletes.php:250
+msgid "No cleanup performed yet."
+msgstr "No se ha ejecutado ninguna limpieza todavía."
+
+#: includes/vr-frases-obsoletes.php:255
+#, php-format
+msgid "Last cleanup: v%1$s on %2$s. Removed %3$d files and %4$d directories."
+msgstr ""
+"Última limpieza: v%1$s en %2$s. Eliminados %3$d archivos y %4$d directorios."
+
+#: uninstall.php:68
+msgid "Confirm Full Uninstall"
+msgstr "Confirmar desinstalación completa"
+
+#: uninstall.php:69
+msgid ""
+"Warning: You are about to perform a FULL UNINSTALL. All plugin data will be "
+"permanently deleted. This includes all quotes, authors, classes, and themes."
+msgstr ""
+"Advertencia: Estás a punto de realizar una DESINSTALACIÓN COMPLETA. Todos "
+"los datos del plugin se eliminarán permanentemente. Esto incluye todas las "
+"citas, autores, clases y temas."
+
+#: uninstall.php:70
+msgid "This action cannot be undone."
+msgstr "Esta acción no se puede deshacer."
+
+#: uninstall.php:71
+msgid ""
+"If you want to preserve your data for future use, click \"Keep Data\" to "
+"perform a temporary uninstall (which preserves database tables)."
+msgstr ""
+"Si deseas preservar tus datos para uso futuro, haz clic en \"Conservar "
+"datos\" para realizar una desinstalación temporal (que preserva las tablas "
+"de la base de datos)."
+
+#: uninstall.php:74
+msgid "Yes, Delete Everything"
+msgstr "Sí, bórralo todo"
+
+#: uninstall.php:75
+msgid "Keep Data"
+msgstr "Conservar datos"
+
+#: uninstall.php:82
+msgid "Security check failed. Please try again."
+msgstr "Fallo verificando la seguridad. Por favor, prueba de nuevo."
+
+#: vr-frases.php:69
+#, php-format
+msgid "VR-frases requires WordPress %1$s or higher and PHP %2$s or higher."
+msgstr "VR-frases requiere WordPress %1$s o superior y PHP %2$s o superior."
+
+#~ msgid "Information"
+#~ msgstr "Información"
+
+#, php-format
+#~ msgid "%1$s record%2$s found"
+#~ msgstr "%1$s registro%2$s encontrado%2$s"
+
+#~ msgid "Showing: "
+#~ msgstr "Mostrando: "
+
+#~ msgid "records"
+#~ msgstr "registros"
+
+#~ msgid "Imported Quotes: "
+#~ msgstr "Frases importadas: "
+
+#~ msgid "Author field is required."
+#~ msgstr "Se requiere el nombre del Autor."
+
+#~ msgid "This function has been deprecated. Please use AJAX version."
+#~ msgstr "Wsta función ha sido descartada. Por favor, usa la versión AJAX."
+
+#~ msgid "Data saved successfully."
+#~ msgstr "Datos grabados correctamente."
+
+#~ msgid "Authors"
+#~ msgstr "Autores"
+
+#, php-format
+#~ msgid "%1$d %2$s added: %3$s"
+#~ msgstr "%1$d %2$s añadidos: %3$s"
+
+#, php-format
+#~ msgid "%1$d %2$s already exist: %3$s"
+#~ msgstr "%1$d %2$s ya existen: %3$s"
+
+#~ msgid "Security check failed: nonce is missing."
+#~ msgstr "Error de seguridad: falta el nonce."
+
+#~ msgid "You do not have sufficient permissions to access this page."
+#~ msgstr "No tienes permisos suficientes para acceder a esta página."
+
+#, php-format
+#~ msgid "Class updated successfully: %s"
+#~ msgstr "Clase actualizada correctamente: %s"
+
+#, php-format
+#~ msgid "Error processing Class. Database error: %s"
+#~ msgstr "Error procesando Clase. mySql error: %s"
+
+#~ msgid "Error: Invalid nonce."
+#~ msgstr "Error: Nonce  inválido."
+
+#~ msgid "Error: All fields are required."
+#~ msgstr "Error: Se requieren todos los campos."
+
+#~ msgid "Class and themes updated successfully."
+#~ msgstr "Clase y temas actualizados correctamente:."
+
+#~ msgid "Error updating class and themes. Please try again."
+#~ msgstr "Error actualizando clase y temas. Por favor, prueba de nuevo."
+
+#~ msgid "Error: Class is required."
+#~ msgstr "Error: Se requiere la Clase."
+
+#~ msgid "Error: Missing or invalid quote ID."
+#~ msgstr "Error: El ID de la Frase falta o es incorrecto."
+
+#, php-format
+#~ msgid "Duplicate found: \"%1$s\" by \"%2$s\". Skipping."
+#~ msgstr "Duplicado encontrado: \"%1$s\" por \"%2$s\". Saltando."
+
+#~ msgid "Error: Action not allowed. Invalid or missing nonce."
+#~ msgstr "Error: Acción no permitida. Nonce inválido o ausente."
+
+#, php-format
+#~ msgid "Error: Theme already exists: %s"
+#~ msgstr "Error: El Tema ya existe: %s"
+
+#, php-format
+#~ msgid "Theme updated successfully: %s"
+#~ msgstr "Tema actualizado correctamente: %s"
+
+#, php-format
+#~ msgid "Error processing Theme. Database error: %s"
+#~ msgstr "Error procesando Tema. mySql error: %s"
+
+#~ msgid "Error updating Theme."
+#~ msgstr "Error actualizando el Tema."
+
+#, fuzzy
+#~| msgid "Import"
+#~ msgid "Imports"
+#~ msgstr "Importar"
+
+#~ msgid "Error: Invalid author ID."
+#~ msgstr "Error: ID de Autor inválido."
+
+#~ msgid "Deleted items: "
+#~ msgstr "Elementos borrados: "
+
+#~ msgid "Are you sure you want to delete this quote?"
+#~ msgstr "¿Estás seguro de borrar esta Frase?"
+
+#~ msgid "AJAX request failed."
+#~ msgstr "Fallo en la petición AJAX."
+
+#, fuzzy
+#~| msgid "Error inserting the author."
+#~ msgid "Error al insertar el autor."
+#~ msgstr "Error insertando el Autor."
+
+#, fuzzy
+#~| msgid "Error: The author already exists."
+#~ msgid "Error: El autor ya existe."
+#~ msgstr "Error: El Autor ya existe:."
+
+#~ msgid "Invalid nonce. Please try again."
+#~ msgstr "Error actualizando: NONCE incorrecto, prueba de nuevo."
+
+#~ msgid "Author added successfully."
+#~ msgstr "Autor añadido correctamente."
+
+#, php-format
+#~ msgid "%1$d classes added: %2$s"
+#~ msgstr "%1$d Clases añadidas: %2$s"
+
+#~ msgid "Error updating class and themes."
+#~ msgstr "Error actualizando clase y temas."
+
+#~ msgid "Error processing Quote. The Quote already exists."
+#~ msgstr "Error procesando Frase: La Frase ya existe."
+
+#~ msgid "Error while processing: Missing or invalid data."
+#~ msgstr "Error de proceso: Datos inválidos o faltantes."
+
+#~ msgid "Error while processing: Invalid item type."
+#~ msgstr "Error al procesar: Tipo de ítem inválido."
+
+#, php-format
+#~ msgid "%1$s deleted successfully: %2$d - %3$s"
+#~ msgstr "%1$s borradas correctamente: %2$d - %3$s"
+
+#, fuzzy, php-format
+#~| msgid "%1$s deleted successfully: %2$d - %3$s"
+#~ msgid "%1$s deleted successfully: %2$d – %3$s"
+#~ msgstr "%1$s borradas correctamente: %2$d - %3$s"
+
+#~ msgid "Record deleted successfully."
+#~ msgstr "Registro borrado correctamente."
+
+#~ msgid "records found"
+#~ msgstr "registros encontrados"
+
+#~ msgid "Are you sure you want to delete this Author?"
+#~ msgstr "¿Estás seguro de borrar este Autor?"
+
+#~ msgid "Are you sure you want to delete this Class?"
+#~ msgstr "¿Estás seguro de borrar esta Clase?"
+
+#~ msgid "Eliminar esta frase"
+#~ msgstr "Eliminar esta frase"
+
+#~ msgid "Are you sure you want to delete this Theme?"
+#~ msgstr "¿Estás seguro de borrar este Tema?"
+
+#~ msgid "VR Frases Settings"
+#~ msgstr "VR-Frases Configuración"
+
+#~ msgid "Widgets included in this plugin"
+#~ msgstr "Widgets incluidos en este plugin"
+
+#~ msgid "In your templates you can use the code:"
+#~ msgstr "En tus plantillas puedes usar el código:"
+
+#~ msgid "Error: Acción no permitida. Nonce inválido."
+#~ msgstr "Error: Acción no permitida. Nonce inválido o ausente."
+
+#~ msgid "Invalid nonce. Unauthorized request."
+#~ msgstr "Nonce inválido, Solicitud no autorizada."
+
+#~ msgid "Class added successfully: "
+#~ msgstr "Clase añadida correctamente: "
+
+#~ msgid "Error: Database error."
+#~ msgstr "Error de la base de datos."
+
+#~ msgid "items found"
+#~ msgstr "registros encontrados"
+
+#~ msgid "Theme added successfully: "
+#~ msgstr "Tema añadido correctramente: "
+
+#~ msgid "Error processing - Theme already exists: "
+#~ msgstr "Error de proceso - El Tema ya existe: "
+
+#~ msgid "Manager Import/Export"
+#~ msgstr "Gestionar Importar/Exportar"
+
+#~ msgid "Default Order"
+#~ msgstr "Orden por defecto"
+
+#~ msgid "Options saved successfully."
+#~ msgstr "Configuración actualizada correctamente."
+
+#~ msgid "Apply"
+#~ msgstr "Aplicar"
+
+#~ msgid "No author data found with the provided name: "
+#~ msgstr "No se han encontrado datos con el nombre de Autor provisto: "
+
+#~ msgid "Edit this quote"
+#~ msgstr "Editar Frase"
+
+#~ msgid "Quick edit class and themes"
+#~ msgstr "Edición rápida de Clase y Temas"

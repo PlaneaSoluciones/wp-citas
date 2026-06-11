@@ -1,0 +1,3 @@
+languages/*.mo
+*.DS_Store
+.vscode/

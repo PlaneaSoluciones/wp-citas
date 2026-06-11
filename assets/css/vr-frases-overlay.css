@@ -1,0 +1,138 @@
+/**
+ * VR-Frases Loading Overlay Styles
+ *
+ * Specialized stylesheet for loading overlays, spinners, and modal dialogs
+ * used throughout the VR-Frases plugin. Provides smooth animations,
+ * accessibility-friendly indicators, and responsive overlay functionality
+ * for enhanced user experience during AJAX operations and data loading.
+ *
+ * Overlay components:
+ * - Full-screen loading overlays with backdrop
+ * - Animated spinners with gradient effects and pulsing
+ * - Modal dialog containers with responsive positioning
+ * - Smooth fade-in animations and transitions
+ * - Cross-browser compatible loading indicators
+ *
+ * @package     VR_Frases
+ * @author      Vicente Ruiz Gálvez
+ * @version     4.1.0
+ * @license     GPL-2.0+
+ */
+
+/* Loading overlay base styles. */
+#vr-loading-overlay {
+	background-color: rgb(0 0 0 / 40%);
+	display: none;
+	inset: 0;
+	position: fixed;
+	z-index: 9999;
+}
+
+.vr-overlay-dialog {
+	background-color: #fff;
+	border-radius: 6px;
+	box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+	left: 50%;
+	max-width: 90%;
+	min-width: 280px;
+	padding: 24px;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.vr-overlay-content {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.vr-overlay-content .spinner {
+	margin-right: 16px;
+}
+
+.vr-overlay-content p {
+	animation: fadeInText 0.6s ease-in-out;
+	color: #222;
+	font-size: 16px;
+	font-weight: 500;
+	margin: 0;
+}
+
+@keyframes fadeInText {
+	from {
+	opacity: 0;
+	transform: translateY(5px);
+	}
+
+	to {
+	opacity: 1;
+	transform: translateY(0);
+	}
+}
+
+/* Spinner colorido con gradiente */
+.vr-spinner {
+	animation: vr-spin 1s linear infinite;
+	background: conic-gradient(
+	from 0deg,
+	#ff6b6b,
+	#4ecdc4,
+	#45b7d1,
+	#96ceb4,
+	#feca57,
+	#ff9ff3,
+	#ff6b6b
+	);
+	border: 5px solid transparent;
+	border-radius: 50%;
+	height: 40px;
+	margin-right: 16px;
+	position: relative;
+	width: 40px;
+}
+
+.vr-spinner::before {
+	background: #fff;
+	border-radius: 50%;
+	content: "";
+	height: 30px;
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 30px;
+}
+
+.vr-spinner::after {
+	animation: vr-pulse 2s ease-in-out infinite;
+	background: radial-gradient(circle, rgb(255 107 107 / 30%), transparent);
+	border-radius: 50%;
+	content: "";
+	height: 60px;
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 60px;
+}
+
+@keyframes vr-spin {
+	to {
+	transform: rotate(360deg);
+	}
+}
+
+@keyframes vr-pulse {
+	0%,
+	100% {
+	opacity: 0;
+	transform: translate(-50%, -50%) scale(0.8);
+	}
+
+	50% {
+	opacity: 0.6;
+	transform: translate(-50%, -50%) scale(1.2);
+	}
+}
