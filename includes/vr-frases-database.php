@@ -69,7 +69,7 @@ function vr_frases_new_first() {
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (idfrase),
             KEY idx_idclase (idclase)
-        ) {$wpdb->get_charset_collate()};",
+        ) ENGINE=InnoDB {$wpdb->get_charset_collate()};",
 
 		'clases'  => "CREATE TABLE {$wpdb->clases} (
             idclase int(11) NOT NULL AUTO_INCREMENT,
@@ -83,7 +83,7 @@ function vr_frases_new_first() {
             tema tinytext NOT NULL,
             slug varchar(255) NULL,
             PRIMARY KEY (idtema)
-        ) {$wpdb->get_charset_collate()};",
+        ) ENGINE=InnoDB {$wpdb->get_charset_collate()};",
 
 		'taxos'   => "CREATE TABLE {$wpdb->taxos} (
             idtaxos int(11) NOT NULL AUTO_INCREMENT,
@@ -91,7 +91,7 @@ function vr_frases_new_first() {
             idtema int(11) NOT NULL,
             PRIMARY KEY (idtaxos),
             UNIQUE KEY unique_taxos (idfrase, idtema)
-        ) {$wpdb->get_charset_collate()};", // Foreign keys added separately.
+        ) ENGINE=InnoDB {$wpdb->get_charset_collate()};", // Foreign keys added separately.
 
 		'autores' => "CREATE TABLE {$wpdb->autores} (
             idautor int(11) NOT NULL AUTO_INCREMENT,
@@ -124,7 +124,21 @@ function vr_frases_new_first() {
 	/**
 	 * Add foreign key constraints to ensure referential integrity.
 	 * These constraints help maintain data consistency when records are deleted.
+	 * Requires InnoDB — convert existing tables if they were created with MyISAM.
 	 */
+
+	// Ensure InnoDB engine on tables that need FK support.
+	foreach ( array( $wpdb->frases, $wpdb->temas, $wpdb->taxos ) as $table ) {
+		$engine = $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT ENGINE FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = %s',
+				$table
+			)
+		);
+		if ( $engine && 'InnoDB' !== $engine ) {
+			$wpdb->query( "ALTER TABLE `{$table}` ENGINE=InnoDB" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		}
+	}
 
 	// Check if foreign keys already exist to avoid errors.
 	// Use $wpdb->prepare() to safely pass the table name into the query.
@@ -157,8 +171,10 @@ function vr_frases_new_first() {
             ADD CONSTRAINT fr_taxos_idtema
             FOREIGN KEY (idtema) REFERENCES {$wpdb->temas}(idtema) ON DELETE CASCADE"
 		);
-
 	}
+
+	// FK errors are non-fatal: the plugin works without them on hosts that don't support InnoDB FK.
+	$wpdb->last_error = '';
 }
 
 /**
