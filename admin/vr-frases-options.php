@@ -352,11 +352,6 @@ function vr_frases_manage_settings() {
 function vr_frases_render_system_info_tab() {
 	global $wpdb;
 
-	// Include database definitions if not already loaded.
-	if ( ! isset( $wpdb->frases ) ) {
-		require_once plugin_dir_path( __DIR__ ) . 'includes/vr-frases-database.php';
-	}
-
 	// Get system information.
 	$wp_version  = get_bloginfo( 'version' );
 	$php_version = PHP_VERSION;

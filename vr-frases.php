@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: VR-frases
- * Plugin URI:  https://wordpress.org/plugins/vr-frases/
- * Description: Creates and manages a list of quotes and authors. Display options for your template or sidebar (widget).
- * Author:      Vicente Ruiz
- * Author URI:  https://www.vruiz.net
- * Version:     4.1.1
+ * Plugin Name: WP Citas
+ * Plugin URI:  https://github.com/PlaneaSoluciones/wp-citas
+ * Description: Crea y gestiona una lista de frases y autores con opciones de visualización en plantilla o widget. Fork de VR-Frases (Vicente Ruiz) mantenido por Planea Soluciones.
+ * Author:      Planea Soluciones
+ * Author URI:  https://github.com/PlaneaSoluciones
+ * Version:     4.1.2
  * Requires at least: 5.5
  * Tested up to: 6.8.2
  * Requires PHP: 7.2
@@ -15,8 +15,8 @@
  * Domain Path: /languages
  *
  * @package     VR_Frases
- * @author      Vicente Ruiz
- * @version     4.1.1
+ * @author      Planea Soluciones
+ * @version     4.1.2
  * @license     GPL-2.0+
  * @since       4.1.0
  */
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'VR_FRASES_VERSION', '4.1.1' );
+define( 'VR_FRASES_VERSION', '4.1.2' );
 define( 'VR_FRASES_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

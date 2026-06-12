@@ -34,8 +34,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-require_once plugin_dir_path( __DIR__ ) . '/admin/vr-frases-options.php'; // Plugin options.
-
 /**
  * Creates the menus and submenus in the admin panel for the VR Frases plugin.
  *
