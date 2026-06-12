@@ -221,7 +221,7 @@ function vr_frases_maybe_cleanup_obsolete_files() {
 	// Solo ejecutar si:
 	// 1. La versión almacenada es anterior a 4.1.0
 	// 2. La versión actual es 4.1.0 o superior
-	// 3. No se ha ejecutado la limpieza para esta versión
+	// 3. No se ha ejecutado la limpieza para esta versión.
 	if ( version_compare( $stored_version, '4.1.0', '<' ) &&
 		version_compare( VR_FRASES_VERSION, '4.1.0', '>=' ) &&
 		! in_array( VR_FRASES_VERSION, $cleanup_done, true ) ) {
@@ -241,7 +241,7 @@ function vr_frases_maybe_cleanup_obsolete_files() {
  * Muestra información sobre la última limpieza en el log de upgrades.
  *
  * @since 4.1.0
- * @return void
+ * @return string|false
  */
 function vr_frases_get_cleanup_status() {
 	$cleanup_log = get_option( 'vr_frases_last_cleanup_log', false );

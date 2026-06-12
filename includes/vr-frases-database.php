@@ -467,27 +467,25 @@ function vr_frases_update_legacy() {
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_frases ) ) ) {
 		// Add necessary columns if they don't exist. Escape identifiers.
 		$old_frases_esc = '`' . esc_sql( $old_frases ) . '`';
-		$wpdb->query( "ALTER TABLE {$old_frases_esc} ADD COLUMN IF NOT EXISTS idclase INT(11) NOT NULL" );
-		$wpdb->query( "ALTER TABLE {$old_frases_esc} ADD COLUMN IF NOT EXISTS idtema INT(11) NOT NULL" );
+		$wpdb->query( "ALTER TABLE {$old_frases_esc} ADD COLUMN IF NOT EXISTS idclase INT(11) NOT NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( "ALTER TABLE {$old_frases_esc} ADD COLUMN IF NOT EXISTS idtema INT(11) NOT NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_clases ) ) ) {
 		$old_clases_esc = '`' . esc_sql( $old_clases ) . '`';
-		$wpdb->query( "ALTER TABLE {$old_clases_esc} ADD COLUMN IF NOT EXISTS descripcion TEXT" );
+		$wpdb->query( "ALTER TABLE {$old_clases_esc} ADD COLUMN IF NOT EXISTS descripcion TEXT" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_temas ) ) ) {
 		$old_temas_esc = '`' . esc_sql( $old_temas ) . '`';
-		$wpdb->query( "ALTER TABLE {$old_temas_esc} ADD COLUMN IF NOT EXISTS slug VARCHAR(255)" );
+		$wpdb->query( "ALTER TABLE {$old_temas_esc} ADD COLUMN IF NOT EXISTS slug VARCHAR(255)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	// Migrate data if necessary. Use prepared statements for value placeholders.
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_frases ) ) ) {
 		$old_frases_esc = '`' . esc_sql( $old_frases ) . '`';
-		$query          = "UPDATE {$old_frases_esc} SET idclase = %d WHERE idclase IS NULL";
-		$wpdb->query( $wpdb->prepare( $query, 1 ) );
-		$query = "UPDATE {$old_frases_esc} SET idtema = %d WHERE idtema IS NULL";
-		$wpdb->query( $wpdb->prepare( $query, 1 ) );
+		$wpdb->query( $wpdb->prepare( "UPDATE {$old_frases_esc} SET idclase = %d WHERE idclase IS NULL", 1 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $wpdb->prepare( "UPDATE {$old_frases_esc} SET idtema = %d WHERE idtema IS NULL", 1 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }
 
@@ -502,6 +500,7 @@ function vr_frases_update_legacy() {
  *
  * @since 4.1.0
  * @return void
+ * @throws Exception If a database operation fails during upgrade.
  */
 function vr_frases_maybe_run_upgrades() {
 	if ( ! is_admin() ) {

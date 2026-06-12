@@ -141,9 +141,9 @@ function vr_frases_listar_autores( $pagina = '' ) {
 		$args_count[] = '%' . $wpdb->esc_like( $search ) . '%';
 	}
 	if ( ! empty( $args_count ) ) {
-		$registros = (int) $wpdb->get_var( $wpdb->prepare( $sql_count, ...$args_count ) );
+		$registros = (int) $wpdb->get_var( $wpdb->prepare( $sql_count, ...$args_count ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	} else {
-		$registros = (int) $wpdb->get_var( $sql_count );
+		$registros = (int) $wpdb->get_var( $sql_count ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 
 	$inicio = ( $pagina - 1 ) * $num_inputs;
@@ -167,7 +167,7 @@ function vr_frases_listar_autores( $pagina = '' ) {
 	$sql    .= ' ORDER BY autor ASC LIMIT %d, %d';
 	$args[]  = (int) $inicio;
 	$args[]  = (int) $num_inputs;
-	$autores = $wpdb->get_results( $wpdb->prepare( $sql, ...$args ) );
+	$autores = $wpdb->get_results( $wpdb->prepare( $sql, ...$args ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 	$inicio  = ( $pagina - 1 ) * $num_inputs;
 	$paginas = $num_inputs > 0 ? max( 1, ceil( $registros / $num_inputs ) ) : 1; // Prevent division by zero.
@@ -271,7 +271,7 @@ function vr_frases_listar_autores( $pagina = '' ) {
 		$args[] = (int) $inicio;
 		$args[] = (int) $num_inputs;
 
-		$autores = $wpdb->get_results( $wpdb->prepare( $sql, ...$args ) );
+		$autores = $wpdb->get_results( $wpdb->prepare( $sql, ...$args ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		if ( ! empty( $autores ) ) {
 			?>
