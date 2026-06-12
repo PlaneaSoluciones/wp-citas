@@ -8,8 +8,6 @@
     <exclude-pattern>css/</exclude-pattern>
     <exclude-pattern>scripts/</exclude-pattern>
 
-    <arg name="n"/>
-
     <rule ref="WordPress"/>
 
     <config name="minimum_wp_version" value="5.5"/>

@@ -9,7 +9,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
     },
     "scripts": {
-        "lint": "phpcs",
+        "lint": "phpcs -n",
         "fix": "phpcbf"
     },
     "config": {
