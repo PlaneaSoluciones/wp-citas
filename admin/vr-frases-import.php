@@ -242,7 +242,7 @@ function vr_frases_handle_import_ajax() {
 			if ( $first_data_line ) {
 				$first_data_line = false;
 				$lower           = strtolower( $line );
-				if ( 'frase,autor' === $lower || "\"frase\",\"autor\"" === $lower || "frase\tautor" === $lower ) {
+				if ( 'frase,autor' === $lower || '"frase","autor"' === $lower || "frase\tautor" === $lower ) {
 					continue;
 				}
 			}
