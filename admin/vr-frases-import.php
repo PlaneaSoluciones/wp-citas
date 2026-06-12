@@ -58,31 +58,6 @@ function vr_frases_manage_import() {
 		<?php if ( 'import' === $active_tab ) : ?>
 			<?php vr_frases_import_form( $vr_nonce_import ); ?>
 
-			<?php
-			if (
-				isset( $_POST['vr_nonce_import'] ) &&
-				wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['vr_nonce_import'] ) ), 'vr_nonce_import' ) &&
-				isset( $_FILES['import_files'] )
-			) {
-				vr_frases_handle_import();
-			}
-
-			global $vr_frases_duplicados_import;
-			if ( ! empty( $vr_frases_duplicados_import ) ) :
-				?>
-				<div id="duplicados-lista" class="notice notice-warning" style="margin:20px 0;padding:10px;">
-					<button onclick="document.getElementById('duplicados-lista').style.display='none';" class="button" style="float:right;">
-						<?php esc_html_e( 'Hide', 'vr-frases' ); ?>
-					</button>
-					<strong><?php esc_html_e( 'Duplicate records found:', 'vr-frases' ); ?></strong>
-					<ul style="margin-top:10px;">
-						<?php foreach ( $vr_frases_duplicados_import as $dup ) : ?>
-							<li><?php echo esc_html( $dup['frase'] ); ?> — <?php echo esc_html( $dup['autor'] ); ?></li>
-						<?php endforeach; ?>
-					</ul>
-				</div>
-			<?php endif; ?>
-
 			<?php vr_frases_display_imported_data(); ?>
 
 		<?php elseif ( 'export' === $active_tab ) : ?>
@@ -245,10 +220,17 @@ function vr_frases_handle_import_ajax() {
 			);
 		}
 
+		// Strip UTF-8 BOM if present.
+		$file_content = ltrim( $file_content, "\xEF\xBB\xBF" );
+
+		// Detect separator: TXT exports use tab, CSV exports use comma.
+		$separator = ( 'txt' === $file_type ) ? "\t" : ',';
+
 		// Process file lines.
 		$lines           = explode( "\n", $file_content );
 		$file_imported   = 0;
 		$file_duplicates = 0;
+		$first_data_line = true;
 
 		foreach ( $lines as $line_number => $line ) {
 			$line = trim( $line );
@@ -256,7 +238,16 @@ function vr_frases_handle_import_ajax() {
 				continue;
 			}
 
-			$data = str_getcsv( $line, ',', '"', '\\' );
+			// Skip header row produced by the plugin's own export.
+			if ( $first_data_line ) {
+				$first_data_line = false;
+				$lower           = strtolower( $line );
+				if ( 'frase,autor' === $lower || "\"frase\",\"autor\"" === $lower || "frase\tautor" === $lower ) {
+					continue;
+				}
+			}
+
+			$data = str_getcsv( $line, $separator, '"', '\\' );
 			if ( ! $data || count( $data ) < 2 ) {
 				continue;
 			}
@@ -456,7 +447,7 @@ function vr_frases_display_imported_data() {
 		</div>
 	</div>
 
-	<form id="import-form" method="post" action="">
+	<form id="import-staging-form" method="post" action="">
 		<?php wp_nonce_field( 'vr_nonce_import', 'vr_nonce_import' ); ?>
 
 		<table class="wp-list-table widefat striped">
@@ -495,10 +486,8 @@ function vr_frases_display_imported_data() {
 		<?php
 	} else {
 		echo '<div class="notice notice-info"><p>' . esc_html__( 'No imported quotes found.', 'vr-frases' ) . '</p></div>';
-		$redirect_url = esc_url( admin_url( 'admin.php?page=vrfr_manageimport&tab=import' ) );
-		wp_safe_redirect( $redirect_url );
-		exit;
-	}}
+	}
+}
 
 /**
  * Render a single row for an imported quote in the import table.
