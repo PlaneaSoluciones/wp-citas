@@ -45,8 +45,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function vr_frases_add_menu() {
 	// Main menu for quote management.
 	add_menu_page(
-		esc_html__( 'VR-Frases', 'vr-frases' ), // Main menu name.
-		esc_html__( 'VR-Frases', 'vr-frases' ),
+		esc_html__( 'WP Citas', 'vr-frases' ), // Main menu name.
+		esc_html__( 'WP Citas', 'vr-frases' ),
 		'manage_options',
 		'vrfr_managefrases',
 		'vr_frases_manage_frases',
