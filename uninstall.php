@@ -46,56 +46,11 @@ function vr_frases_perform_uninstall() {
 		}
 	}
 
-	// Common options to delete (even on temporary uninstall).
-	$options_to_delete = array(
-		'vr_frases_version',          // Plugin version.
-		'widget_vr_frases_widget',    // Widget options.
-	);
-
-	// Delete common options.
-	foreach ( $options_to_delete as $option_name ) {
-		delete_option( $option_name );
-	}
-
-	// Process confirmation if in admin interface.
-	if ( is_admin() ) {
-		// Create a nonce for security.
-		$nonce = wp_create_nonce( 'vr_frases_uninstall_nonce' );
-
-		// Show confirmation dialog if not already confirmed.
-		if ( ! isset( $_POST['vr_confirm_uninstall'] ) ) {
-			echo '<div class="wrap">';
-			echo '<h2>' . esc_html__( 'Confirm Full Uninstall', 'vr-frases' ) . '</h2>';
-			echo '<p>' . esc_html__( 'Warning: You are about to perform a FULL UNINSTALL. All plugin data will be permanently deleted. This includes all quotes, authors, classes, and themes.', 'vr-frases' ) . '</p>';
-			echo '<p><strong>' . esc_html__( 'This action cannot be undone.', 'vr-frases' ) . '</strong></p>';
-			echo '<p>' . esc_html__( 'If you want to preserve your data for future use, click "Keep Data" to perform a temporary uninstall (which preserves database tables).', 'vr-frases' ) . '</p>';
-			echo '<form method="post">';
-			echo '<input type="hidden" name="vr_uninstall_nonce" value="' . esc_attr( $nonce ) . '" />';
-			echo '<button type="submit" name="vr_confirm_uninstall" value="yes" class="button button-primary">' . esc_html__( 'Yes, Delete Everything', 'vr-frases' ) . '</button> ';
-			echo '<button type="submit" name="vr_confirm_uninstall" value="no" class="button">' . esc_html__( 'Keep Data', 'vr-frases' ) . '</button>';
-			echo '</form></div>';
-			return;
-		}
-
-		// Verify nonce.
-		if ( ! isset( $_POST['vr_uninstall_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['vr_uninstall_nonce'] ) ), 'vr_frases_uninstall_nonce' ) ) {
-			wp_die( esc_html__( 'Security check failed. Please try again.', 'vr-frases' ) );
-		}
-
-		// If user cancels, disable the option and exit.
-		if ( isset( $_POST['vr_confirm_uninstall'] ) && 'no' === $_POST['vr_confirm_uninstall'] ) {
-			$plugin_options['allow_full_uninstall'] = false;
-			update_option( 'vr_frases_options', $plugin_options );
-			return;
-		}
-	}
-
 	// Clean any transients that might have been created.
 	delete_transient( 'vr_frases_cache' );
 
-	// If full uninstall is not allowed, we're done (temporary uninstall).
+	// Only continue if the user explicitly enabled full uninstall in plugin settings.
 	if ( ! $proceed_with_full_uninstall ) {
-		// For temporary uninstall, we exit here.
 		return;
 	}
 

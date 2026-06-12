@@ -192,7 +192,23 @@ function vr_frases_manage_settings() {
 						<th scope="row"><label for="allow_full_uninstall"><?php echo esc_html( __( 'Allow Full Uninstall', 'vr-frases' ) ); ?></label></th>
 						<td>
 							<input type="checkbox" name="vr_frases_options[allow_full_uninstall]" id="allow_full_uninstall" value="1" <?php checked( true, $options['allow_full_uninstall'] ?? false ); ?> />
-							<span class="description" style="color: red;"><?php echo esc_html( __( 'WARNING: If checked, all plugin data (quotes, authors, settings) will be permanently deleted when the plugin is uninstalled. This action cannot be undone.', 'vr-frases' ) ); ?></span>
+							<input type="hidden" name="vr_frases_options[uninstall_confirmed]" id="uninstall_confirmed" value="0" />
+							<span class="description" style="color: #b32d2e; font-weight: bold;"><?php echo esc_html( __( '⚠ PELIGRO: Si está marcado, al desinstalar el plugin se borrarán permanentemente TODAS las frases, autores y datos. Esta acción NO tiene vuelta atrás.', 'vr-frases' ) ); ?></span>
+							<script>
+							document.getElementById('allow_full_uninstall').addEventListener('change', function() {
+								if (this.checked) {
+									var confirmacion = prompt('Para confirmar, escribe exactamente: BORRAR TODO');
+									if (confirmacion !== 'BORRAR TODO') {
+										this.checked = false;
+										alert('Operación cancelada. No se ha activado el borrado completo.');
+									} else {
+										document.getElementById('uninstall_confirmed').value = '1';
+									}
+								} else {
+									document.getElementById('uninstall_confirmed').value = '0';
+								}
+							});
+							</script>
 						</td>
 					</tr>
 
@@ -545,7 +561,8 @@ function vr_frases_options_validate( $input ) {
 	$validated_input['date_format']          = isset( $input['date_format'] ) ? sanitize_text_field( wp_unslash( $input['date_format'] ) ) : 'd/m/Y';
 	$ac_bc_format                            = isset( $input['ac_bc_format'] ) ? sanitize_text_field( wp_unslash( $input['ac_bc_format'] ) ) : 'AC';
 	$validated_input['ac_bc_format']         = in_array( $ac_bc_format, array( 'AC', 'BC' ), true ) ? $ac_bc_format : 'AC';
-	$validated_input['allow_full_uninstall'] = isset( $input['allow_full_uninstall'] ) ? (bool) $input['allow_full_uninstall'] : false;
+	$confirmed = isset( $input['uninstall_confirmed'] ) && '1' === $input['uninstall_confirmed'];
+	$validated_input['allow_full_uninstall'] = ( isset( $input['allow_full_uninstall'] ) && $confirmed ) ? true : false;
 
 	return $validated_input;
 }
