@@ -71,10 +71,9 @@ function vr_frases_show_main() {
 	$get_font_size = filter_input( INPUT_GET, 'font_size', FILTER_UNSAFE_RAW );
 	$get_num       = filter_input( INPUT_GET, 'num_inputs', FILTER_UNSAFE_RAW );
 	$get_pagina    = filter_input( INPUT_GET, 'pagina', FILTER_UNSAFE_RAW );
-	$get_frase     = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
-	$get_autor     = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
-	$get_categoria = filter_input( INPUT_GET, 'categoria', FILTER_UNSAFE_RAW );
-	$get_orden     = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
+	$get_frase  = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
+	$get_autor  = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
+	$get_orden  = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
 
 	$font_size = 'default';
 	if ( $nonce_valid && null !== $get_font_size && '' !== $get_font_size ) {
@@ -96,7 +95,7 @@ function vr_frases_show_main() {
 	}
 
 	// Determine order: random by default if not active search.
-	$has_search_params = ( null !== $get_frase && '' !== $get_frase ) || ( null !== $get_autor && '' !== $get_autor ) || ( null !== $get_categoria && '' !== $get_categoria );
+	$has_search_params = ( null !== $get_frase && '' !== $get_frase ) || ( null !== $get_autor && '' !== $get_autor );
 	$orden             = 'aleatorio';
 	if ( null !== $get_orden && '' !== $get_orden ) {
 		$orden = sanitize_text_field( wp_unslash( $get_orden ) );
@@ -104,9 +103,8 @@ function vr_frases_show_main() {
 		$orden = 'porfrase';
 	}
 
-	$frase     = null !== $get_frase ? sanitize_text_field( wp_unslash( $get_frase ) ) : '';
-	$autor     = null !== $get_autor ? sanitize_text_field( wp_unslash( $get_autor ) ) : '';
-	$categoria = null !== $get_categoria ? sanitize_text_field( wp_unslash( $get_categoria ) ) : '';
+	$frase = null !== $get_frase ? sanitize_text_field( wp_unslash( $get_frase ) ) : '';
+	$autor = null !== $get_autor ? sanitize_text_field( wp_unslash( $get_autor ) ) : '';
 
 	$data      = vr_frases_get_list_data( $pagina, $num_inputs, $orden );
 	$frases    = $data['frases'];
@@ -130,10 +128,9 @@ function vr_frases_show_main() {
 	echo esc_html(
 		vr_frases_define_titles(
 			array(
-				'frase'     => $frase,
-				'autor'     => $autor,
-				'categoria' => $categoria,
-				'orden'     => $orden,
+				'frase' => $frase,
+				'autor' => $autor,
+				'orden' => $orden,
 			)
 		)['msg']
 	);
@@ -275,7 +272,7 @@ function vr_frases_frontend_pagination( $pagina, $paginas ) {
 
 	// Get current parameters safely.
 	$current_params  = array();
-	$preserve_params = array( 'font_size', 'num_inputs', 'frase', 'autor', 'categoria', 'orden' );
+	$preserve_params = array( 'font_size', 'num_inputs', 'frase', 'autor', 'orden' );
 
 	foreach ( $preserve_params as $param ) {
 		$param_value = filter_input( INPUT_GET, $param, FILTER_UNSAFE_RAW );
@@ -389,12 +386,7 @@ function vr_frases_block_listado_frases( $frases, $options ) {
 									<span class="dashicons dashicons-external"></span>
 								</a>
 							</span>
-							<div class="frase-categories">
-								<div class="frase-theme">
-									<?php echo esc_html( $frase->temas ); ?>
 								</div>
-							</div>
-						</div>
 					</div>
 					<?php
 				endif;

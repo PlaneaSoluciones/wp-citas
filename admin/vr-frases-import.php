@@ -453,9 +453,8 @@ function vr_frases_display_imported_data() {
 		<table class="wp-list-table widefat striped">
 			<thead>
 				<tr>
-					<th width="35%"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
-					<th width="15%"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-					<th width="30%"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></th>
+					<th width="50%"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
+					<th width="30%"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
 					<th width="10%"><?php esc_html_e( 'Save', 'vr-frases' ); ?></th>
 					<th width="10%"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 				</tr>
@@ -471,9 +470,8 @@ function vr_frases_display_imported_data() {
 
 			<tfoot>
 				<tr>
-					<th width="35%"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
-					<th width="15%"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-					<th width="30%"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></th>
+					<th width="50%"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
+					<th width="30%"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
 					<th width="10%"><?php esc_html_e( 'Save', 'vr-frases' ); ?></th>
 					<th width="10%"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 				</tr>
@@ -498,24 +496,11 @@ function vr_frases_display_imported_data() {
  * @return void
  */
 function vr_frases_render_import_row( $item ) {
-	global $wpdb;
-
-	$temas = $wpdb->get_results( "SELECT * FROM {$wpdb->temas} ORDER BY tema ASC" );
 	?>
 
 	<tr>
 		<td><?php echo esc_html( $item->frase ); ?></td>
 		<td><?php echo esc_html( $item->autor ); ?></td>
-
-		<td>
-			<select name="idtemas[<?php echo esc_attr( $item->idimport ); ?>][]" class="select2-temas" multiple>
-				<?php foreach ( $temas as $tema ) : ?>
-					<option value="<?php echo esc_attr( $tema->idtema ); ?>">
-						<?php echo esc_html( $tema->tema ); ?>
-					</option>
-				<?php endforeach; ?>
-			</select>
-		</td>
 
 		<td>
 			<button 
@@ -576,29 +561,11 @@ function vr_frases_save_imported_data_ajax() {
 	global $wpdb;
 
 	$idimport = absint( $_POST['idimport'] );
-	$idtemas  = isset( $_POST['idtemas'] ) ? array_map( 'sanitize_text_field', (array) wp_unslash( $_POST['idtemas'] ) ) : array();
 
 	// Validate that import record exists.
 	$importado = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}vr_fr_import WHERE idimport = %d", $idimport ) );
 	if ( ! $importado ) {
 		wp_send_json_error( array( 'message' => esc_html__( 'Import record not found.', 'vr-frases' ) ) );
-	}
-
-	// Process themes.
-	$idtemas_final = array();
-	foreach ( $idtemas as $tema ) {
-		if ( ! is_numeric( $tema ) && ! empty( $tema ) ) {
-			// Check if theme already exists.
-			$existing_theme = $wpdb->get_var( $wpdb->prepare( "SELECT idtema FROM {$wpdb->temas} WHERE tema = %s", $tema ) );
-			if ( $existing_theme ) {
-				$idtemas_final[] = $existing_theme;
-			} else {
-				$wpdb->insert( "{$wpdb->temas}", array( 'tema' => $tema ), array( '%s' ) );
-				$idtemas_final[] = $wpdb->insert_id;
-			}
-		} elseif ( is_numeric( $tema ) ) {
-			$idtemas_final[] = absint( $tema );
-		}
 	}
 
 	// Check for duplicates in main frases table only (not in import table).
@@ -631,18 +598,6 @@ function vr_frases_save_imported_data_ajax() {
 	}
 
 	$idfrase = $wpdb->insert_id;
-
-	// Save theme associations.
-	foreach ( $idtemas_final as $idtema ) {
-		$wpdb->insert(
-			"{$wpdb->taxos}",
-			array(
-				'idfrase' => $idfrase,
-				'idtema'  => $idtema,
-			),
-			array( '%d', '%d' )
-		);
-	}
 
 	// Add author if it doesn't exist.
 	$autor_existente = $wpdb->get_var(

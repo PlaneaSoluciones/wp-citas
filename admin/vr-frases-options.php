@@ -379,7 +379,6 @@ function vr_frases_render_system_info_tab() {
 	// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
 	$frases_count  = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->frases}" );
 	$autores_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->autores}" );
-	$temas_count   = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->temas}" );
 
 	// Get authors with their quote counts.
 	$autores_stats = $wpdb->get_results(
@@ -388,16 +387,6 @@ function vr_frases_render_system_info_tab() {
 		 LEFT JOIN {$wpdb->frases} f ON a.autor = f.autor
 		 GROUP BY a.autor
 		 ORDER BY count DESC, a.autor ASC
-		 LIMIT 10"
-	);
-
-	// Get themes with their quote counts through taxonomy table.
-	$temas_stats = $wpdb->get_results(
-		"SELECT t.tema, COUNT(tx.idfrase) as count
-		 FROM {$wpdb->temas} t
-		 LEFT JOIN {$wpdb->taxos} tx ON t.idtema = tx.idtema
-		 GROUP BY t.idtema, t.tema
-		 ORDER BY count DESC, t.tema ASC
 		 LIMIT 10"
 	);
 	// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery
@@ -441,16 +430,11 @@ function vr_frases_render_system_info_tab() {
 						<td><?php esc_html_e( 'Total Authors', 'vr-frases' ); ?>:</td>
 						<td><?php echo esc_html( number_format_i18n( $autores_count ) ); ?></td>
 					</tr>
-					<tr>
-						<td><?php esc_html_e( 'Total Themes', 'vr-frases' ); ?>:</td>
-						<td><?php echo esc_html( number_format_i18n( $temas_count ) ); ?></td>
-					</tr>
 				</table>
 				
 				<div class="quick-links">
 					<a href="?page=vrfr_managefrases"><?php esc_html_e( 'Manage Quotes', 'vr-frases' ); ?></a>
 					<a href="?page=vrfr_manageautores"><?php esc_html_e( 'Manage Authors', 'vr-frases' ); ?></a>
-					<a href="?page=vrfr_managetemas"><?php esc_html_e( 'Manage Themes', 'vr-frases' ); ?></a>
 				</div>
 			</div>
 
@@ -478,25 +462,6 @@ function vr_frases_render_system_info_tab() {
 			</div>
 			<?php endif; ?>
 
-			<!-- Top Themes Card -->
-			<?php if ( ! empty( $temas_stats ) ) : ?>
-			<div class="system-info-card">
-				<h3><span class="dashicons dashicons-tag" style="margin-right: 8px;"></span><?php esc_html_e( 'Top Themes by Quote Count', 'vr-frases' ); ?></h3>
-				<div class="authors-list">
-					<?php foreach ( $temas_stats as $tema ) : ?>
-					<div class="author-item">
-						<span><?php echo esc_html( $tema->tema ); ?></span>
-						<span><strong><?php echo esc_html( number_format_i18n( $tema->count ) ); ?></strong> <?php esc_html_e( 'quotes', 'vr-frases' ); ?></span>
-					</div>
-					<?php endforeach; ?>
-				</div>
-				<?php if ( count( $temas_stats ) >= 10 ) : ?>
-				<p style="margin-top: 10px; font-style: italic; color: #666;">
-					<?php esc_html_e( 'Showing top 10 themes. Visit Manage Themes to see all.', 'vr-frases' ); ?>
-				</p>
-				<?php endif; ?>
-			</div>
-			<?php endif; ?>
 		</div>
 	</div>
 	<?php

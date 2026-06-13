@@ -133,7 +133,6 @@ function vr_frases_listar_frases( $pagina = '' ) {
 						<input type="hidden" name="orden" value="<?php echo esc_attr( $orden ); ?>" />
 						<input type="hidden" name="frase" value="<?php echo esc_attr( null !== filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW ) ? sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW ) ) ) : '' ); ?>" />
 						<input type="hidden" name="autor" value="<?php echo esc_attr( null !== filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW ) ? sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW ) ) ) : '' ); ?>" />
-						<input type="hidden" name="categoria" value="<?php echo esc_attr( null !== filter_input( INPUT_GET, 'categoria', FILTER_UNSAFE_RAW ) ? sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'categoria', FILTER_UNSAFE_RAW ) ) ) : '' ); ?>" />
 						<div class="tablenav-pages">
 							<?php vr_frases_form_paginar( $pagina, $paginas, $registros, 'top' ); ?>
 						</div>
@@ -171,7 +170,6 @@ function vr_frases_listar_frases( $pagina = '' ) {
 							<th scope="col" class="vr-column-center" style="width: 03%;"><?php esc_html_e( 'ID', 'vr-frases' ); ?></th>
 							<th scope="col" class="column-primary" style="width: 58%;"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
 							<th scope="col" style="width: 15%;"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-							<th scope="col" style="width: 22%;"><?php esc_html_e( 'Theme', 'vr-frases' ); ?></th>
 							<th scope="col" class="vr-column-center" style="width: 06%;"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
 							<th scope="col" class="vr-column-center" style="width: 04%;"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 						</tr>
@@ -203,7 +201,6 @@ function vr_frases_listar_frases( $pagina = '' ) {
 										</a>
 
 									</td>
-									<td><?php echo esc_html( $frase->temas ); ?></td>
 									<td class="vr-column-center">
 										<div class="button-group">
 											<a href="
@@ -225,25 +222,6 @@ function vr_frases_listar_frases( $pagina = '' ) {
 											title="<?php esc_attr_e( 'Editar esta frase', 'vr-frases' ); ?>">
 												<span class="dashicons dashicons-edit"></span>
 											</a>
-											<button type="button" class="quick-edit button"
-												data-context="frases"
-												data-id="<?php echo esc_attr( $frase->idfrase ); ?>"
-												data-temas="
-												<?php
-													// Direct query to get associated themes for the quote. No safer alternative exists and the query is properly prepared.
-													$temas_asociados = $wpdb->get_col(
-														$wpdb->prepare(
-															"SELECT idtema FROM {$wpdb->taxos} WHERE idfrase = %d",
-															$frase->idfrase
-														)
-													);
-												echo esc_attr( implode( ',', $temas_asociados ) );
-												?>
-												"
-												style="padding-top: 5px;" title="<?php esc_attr_e( 'Edición rápida de temas', 'vr-frases' ); ?>"
-												>
-												<span class="dashicons dashicons-admin-tools"></span>
-											</button>
 										</div>
 									</td>
 									<td class="vr-column-center">
@@ -272,7 +250,6 @@ function vr_frases_listar_frases( $pagina = '' ) {
 							<th scope="col" class="vr-column-center"><?php esc_html_e( 'ID', 'vr-frases' ); ?></th>
 							<th scope="col" class="column-primary"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
 							<th scope="col"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-							<th scope="col"><?php esc_html_e( 'Theme', 'vr-frases' ); ?></th>
 							<th scope="col" class="vr-column-center"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
 							<th scope="col" class="vr-column-center"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 						</tr>
@@ -315,10 +292,9 @@ function vr_frases_listar_frases( $pagina = '' ) {
  */
 function vr_frases_addnew_frase_form() {
 	global $wpdb;
-	$form_key     = 'vr_frases_form_' . ( get_current_user_id() > 0 ? get_current_user_id() : 'guest' );
-	$pres_frase   = '';
-	$pres_autor   = '';
-	$pres_idtemas = array();
+	$form_key   = 'vr_frases_form_' . ( get_current_user_id() > 0 ? get_current_user_id() : 'guest' );
+	$pres_frase = '';
+	$pres_autor = '';
 	?>
 	<div class="wrap vr-frases">
 			<h1 style="display:flex;align-items:center;gap:12px;">
@@ -342,21 +318,7 @@ function vr_frases_addnew_frase_form() {
 						<input type='text' name='autor' id='autor' class="regular-text" value="<?php echo esc_attr( $pres_autor ); ?>" required />
 					</td>
 				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="idtemas"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></label></th>
-					<td>
-						<select name="idtemas[]" id="idtemas" multiple="multiple" class="select2-temas">
-							<?php
-								$temas = $wpdb->get_results( "SELECT * FROM {$wpdb->temas} ORDER by tema ASC" );
-							foreach ( $temas as $tema ) {
-								$selected = ( is_array( $pres_idtemas ) && in_array( $tema->idtema, $pres_idtemas, true ) ) ? 'selected="selected"' : '';
-								echo '<option ' . esc_attr( $selected ) . ' value="' . esc_attr( $tema->idtema ) . '">' . esc_html( $tema->tema ) . '</option>';
-							}
-							?>
-						</select>
-					</td>
-				</tr>
-			</table>
+		</table>
 			<p class="submit">
 				<button type="submit" class="button button-primary" name="save">
 					<span class="dashicons dashicons-plus-alt" style="vertical-align: text-bottom;"></span>
@@ -424,14 +386,7 @@ function vr_frases_editar_frase( $id = 0 ) {
 					<th><label for="edit-quote-author"><?php esc_html_e( 'Author', 'vr-frases' ); ?></label></th>
 					<td><input type="text" id="edit-quote-author" class="regular-text" /></td>
 				</tr>
-				<tr>
-					<th><label for="edit-quote-themes"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></label></th>
-					<td>
-						<select id="edit-quote-themes" multiple="multiple" class="select2-temas">
-						</select>
-					</td>
-				</tr>
-			</table>
+		</table>
 
 			<p class="submit">
 				<button type="button" id="vr-save-quote-btn" class="button button-primary">
@@ -520,10 +475,9 @@ function vr_frases_comprobar_duplicados( $frase, $autor, $idfrase = null ) {
 function vr_frases_ajax_add_frase() {
 	global $wpdb;
 
-	$frase   = isset( $_POST['frase'] ) ? sanitize_text_field( wp_unslash( $_POST['frase'] ) ) : '';
-	$autor   = isset( $_POST['autor'] ) ? sanitize_text_field( wp_unslash( $_POST['autor'] ) ) : '';
-	$idtemas = isset( $_POST['idtemas'] ) ? array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['idtemas'] ) ) : array();
-	$nonce   = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+	$frase = isset( $_POST['frase'] ) ? sanitize_text_field( wp_unslash( $_POST['frase'] ) ) : '';
+	$autor = isset( $_POST['autor'] ) ? sanitize_text_field( wp_unslash( $_POST['autor'] ) ) : '';
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
 
 	if ( empty( $frase ) || empty( $autor ) ) {
 		wp_send_json_error( array( 'message' => __( 'Fields cannot be void.', 'vr-frases' ) ) );
@@ -549,21 +503,6 @@ function vr_frases_ajax_add_frase() {
 	);
 	if ( false !== $resultado ) {
 		$idfrase = $wpdb->insert_id;
-		// Save themes.
-		foreach ( $idtemas as $tema ) {
-			if ( ! is_numeric( $tema ) ) {
-				$wpdb->insert( "{$wpdb->temas}", array( 'tema' => sanitize_text_field( $tema ) ), array( '%s' ) );
-				$tema = $wpdb->insert_id;
-			}
-			$wpdb->insert(
-				$wpdb->taxos,
-				array(
-					'idfrase' => $idfrase,
-					'idtema'  => $tema,
-				),
-				array( '%d', '%d' )
-			);
-		}
 		// Add author if it doesn't exist.
 		$autor_existente = $wpdb->get_var(
 			$wpdb->prepare(
@@ -628,7 +567,6 @@ function vr_frases_quick_edit_ajax_frases() {
 
 	$idfrase = absint( wp_unslash( $_POST['idfrase'] ) );
 	$nonce   = sanitize_text_field( wp_unslash( $_POST['nonce'] ) );
-	$idtemas = isset( $_POST['idtemas'] ) ? array_map( 'sanitize_text_field', wp_unslash( (array) $_POST['idtemas'] ) ) : array();
 
 	if ( ! wp_verify_nonce( $nonce, 'vr_nonce_frases' ) ) {
 		wp_send_json_error( array( 'message' => esc_html__( 'Security check failed.', 'vr-frases' ) ) );
@@ -641,34 +579,9 @@ function vr_frases_quick_edit_ajax_frases() {
 	}
 
 	global $wpdb;
-	// Update themes.
-	$wpdb->delete( $wpdb->taxos, array( 'idfrase' => $idfrase ), array( '%d' ) );
-	foreach ( $idtemas as $tema ) {
-		$tema_id = absint( $tema );
-		if ( $tema_id ) {
-			$wpdb->insert(
-				$wpdb->taxos,
-				array(
-					'idfrase' => $idfrase,
-					'idtema'  => $tema_id,
-				),
-				array( '%d', '%d' )
-			);
-		}
-	}
 
 	// Get data for the row (data only, no HTML).
-	$row           = $wpdb->get_row( $wpdb->prepare( "SELECT idfrase, frase, autor FROM {$wpdb->frases} WHERE idfrase = %d", $idfrase ), ARRAY_A );
-	$temas         = $wpdb->get_col( $wpdb->prepare( "SELECT idtema FROM {$wpdb->taxos} WHERE idfrase = %d", $idfrase ) );
-	$temas_nombres = array();
-	if ( ! empty( $temas ) ) {
-		foreach ( $temas as $idtema ) {
-			$nombre = $wpdb->get_var( $wpdb->prepare( "SELECT tema FROM {$wpdb->temas} WHERE idtema = %d", $idtema ) );
-			if ( $nombre ) {
-				$temas_nombres[] = $nombre;
-			}
-		}
-	}
+	$row = $wpdb->get_row( $wpdb->prepare( "SELECT idfrase, frase, autor FROM {$wpdb->frases} WHERE idfrase = %d", $idfrase ), ARRAY_A );
 
 	wp_send_json_success(
 		array(
@@ -676,8 +589,6 @@ function vr_frases_quick_edit_ajax_frases() {
 			'idfrase' => $row['idfrase'],
 			'frase'   => $row['frase'],
 			'autor'   => $row['autor'],
-			'idtemas' => $temas,
-			'temas'   => $temas_nombres,
 		)
 	);
 }
@@ -721,19 +632,9 @@ function vr_frases_ajax_get_frase_data() {
 		wp_send_json_error( array( 'message' => esc_html__( 'Quote not found.', 'vr-frases' ) ) );
 	}
 
-	// Get associated themes.
-	$temas_asociados = $wpdb->get_col(
-		$wpdb->prepare( "SELECT idtema FROM {$wpdb->taxos} WHERE idfrase = %d", $id )
-	);
-
-	// Get all available themes for the select dropdown.
-	$temas = $wpdb->get_results( "SELECT idtema, tema FROM {$wpdb->temas} ORDER BY tema ASC", ARRAY_A );
-
 	wp_send_json_success(
 		array(
-			'frase'           => $frase,
-			'temas_asociados' => $temas_asociados,
-			'temas'           => $temas,
+			'frase' => $frase,
 		)
 	);
 }
@@ -775,7 +676,6 @@ function vr_frases_ajax_save_frase_data() {
 	$idfrase = isset( $_POST['idfrase'] ) ? absint( $_POST['idfrase'] ) : 0;
 	$autor   = isset( $_POST['autor'] ) ? sanitize_text_field( wp_unslash( $_POST['autor'] ) ) : '';
 	$frase   = isset( $_POST['frase'] ) ? sanitize_text_field( wp_unslash( $_POST['frase'] ) ) : '';
-	$idtemas = isset( $_POST['idtemas'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['idtemas'] ) ) : array();
 
 	// Validate required fields.
 	if ( empty( $idfrase ) || empty( $autor ) || empty( $frase ) ) {
@@ -813,23 +713,6 @@ function vr_frases_ajax_save_frase_data() {
 			$result = vr_frases_add_items_common_ajax( 'autores', array( $autor ), $wpdb );
 			// Optional: handle $result['success'], $result['messages'] if feedback is required.
 		}
-	}
-
-	// Save new themes if they don't exist and update associations.
-	$wpdb->delete( $wpdb->taxos, array( 'idfrase' => $idfrase ) );
-	foreach ( $idtemas as $tema ) {
-		if ( ! is_numeric( $tema ) ) {
-			$wpdb->insert( "{$wpdb->temas}", array( 'tema' => sanitize_text_field( $tema ) ), array( '%s' ) );
-			$tema = $wpdb->insert_id;
-		}
-		$wpdb->insert(
-			$wpdb->taxos,
-			array(
-				'idfrase' => $idfrase,
-				'idtema'  => $tema,
-			),
-			array( '%d', '%d' )
-		);
 	}
 
 	// Return success or error response.

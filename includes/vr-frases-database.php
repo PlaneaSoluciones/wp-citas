@@ -38,8 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wpdb;
 $wpdb->frases  = $wpdb->prefix . 'vr_fr_frases';   // Quotes table.
 $wpdb->autores = $wpdb->prefix . 'vr_fr_autores';  // Authors table.
-$wpdb->temas   = $wpdb->prefix . 'vr_fr_temas';    // Themes table.
-$wpdb->taxos   = $wpdb->prefix . 'vr_fr_taxos';    // Taxonomies table.
 $wpdb->import  = $wpdb->prefix . 'vr_fr_import';   // Import table.
 
 /**
@@ -67,21 +65,6 @@ function vr_frases_new_first() {
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (idfrase)
         ) ENGINE=InnoDB {$wpdb->get_charset_collate()};",
-
-		'temas'   => "CREATE TABLE {$wpdb->temas} (
-            idtema int(11) NOT NULL AUTO_INCREMENT,
-            tema tinytext NOT NULL,
-            slug varchar(255) NULL,
-            PRIMARY KEY (idtema)
-        ) ENGINE=InnoDB {$wpdb->get_charset_collate()};",
-
-		'taxos'   => "CREATE TABLE {$wpdb->taxos} (
-            idtaxos int(11) NOT NULL AUTO_INCREMENT,
-            idfrase int(11) NOT NULL,
-            idtema int(11) NOT NULL,
-            PRIMARY KEY (idtaxos),
-            UNIQUE KEY unique_taxos (idfrase, idtema)
-        ) ENGINE=InnoDB {$wpdb->get_charset_collate()};", // Foreign keys added separately.
 
 		'autores' => "CREATE TABLE {$wpdb->autores} (
             idautor int(11) NOT NULL AUTO_INCREMENT,
@@ -111,60 +94,6 @@ function vr_frases_new_first() {
 		dbDelta( $sql );
 	}
 
-	/**
-	 * Add foreign key constraints to ensure referential integrity.
-	 * These constraints help maintain data consistency when records are deleted.
-	 * Requires InnoDB — convert existing tables if they were created with MyISAM.
-	 */
-
-	// Ensure InnoDB engine on tables that need FK support.
-	foreach ( array( $wpdb->frases, $wpdb->temas, $wpdb->taxos ) as $table ) {
-		$engine = $wpdb->get_var(
-			$wpdb->prepare(
-				'SELECT ENGINE FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = %s',
-				$table
-			)
-		);
-		if ( $engine && 'InnoDB' !== $engine ) {
-			$wpdb->query( "ALTER TABLE `{$table}` ENGINE=InnoDB" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		}
-	}
-
-	// Check if foreign keys already exist to avoid errors.
-	// Use $wpdb->prepare() to safely pass the table name into the query.
-	$foreign_keys = $wpdb->get_results(
-		$wpdb->prepare(
-			"SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME = %s AND CONSTRAINT_TYPE = 'FOREIGN KEY' AND TABLE_SCHEMA = DATABASE();",
-			$wpdb->taxos
-		)
-	);
-
-	// Extract existing constraint names from the DB result.
-	// Use `wp_list_pluck` to avoid direct property naming style warnings.
-	// (the column name is returned in upper case by INFORMATION_SCHEMA).
-	$existing_keys = wp_list_pluck( $foreign_keys, 'CONSTRAINT_NAME' );
-
-	// Add foreign key for quotes reference if it doesn't exist.
-	if ( ! in_array( 'fr_taxos_idfrase', $existing_keys, true ) ) {
-		$wpdb->query(
-			"ALTER TABLE {$wpdb->taxos}
-            ADD CONSTRAINT fr_taxos_idfrase
-            FOREIGN KEY (idfrase) REFERENCES {$wpdb->frases}(idfrase) ON DELETE CASCADE"
-		);
-
-	}
-
-	// Add foreign key for themes reference if it doesn't exist.
-	if ( ! in_array( 'fr_taxos_idtema', $existing_keys, true ) ) {
-		$wpdb->query(
-			"ALTER TABLE {$wpdb->taxos}
-            ADD CONSTRAINT fr_taxos_idtema
-            FOREIGN KEY (idtema) REFERENCES {$wpdb->temas}(idtema) ON DELETE CASCADE"
-		);
-	}
-
-	// FK errors are non-fatal: the plugin works without them on hosts that don't support InnoDB FK.
-	$wpdb->last_error = '';
 }
 
 /**
@@ -181,18 +110,6 @@ function vr_frases_insert_initial_data() {
 
 	// Only add initial data if quotes table is empty.
 	if ( ! $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->frases}" ) ) {
-		// Insert default theme if none exists.
-		if ( 0 === $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->temas}" ) ) {
-			$wpdb->insert(
-				$wpdb->temas,
-				array(
-					'tema' => __( 'General', 'vr-frases' ),
-					'slug' => 'general',
-				),
-				array( '%s', '%s' )
-			);
-		}
-
 		// Insert sample quote for new users.
 		$wpdb->insert(
 			$wpdb->frases,
@@ -203,9 +120,6 @@ function vr_frases_insert_initial_data() {
 			array( '%s', '%s' )
 		);
 
-		// Get the new quote ID.
-		$quote_id = $wpdb->insert_id;
-
 		// Add the author if not exists.
 		if ( ! $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->autores} WHERE autor = %s", __( 'Anonymous', 'vr-frases' ) ) ) ) {
 			$wpdb->insert(
@@ -215,18 +129,6 @@ function vr_frases_insert_initial_data() {
 					'datos' => __( 'Used when the author of a quote is unknown', 'vr-frases' ),
 				),
 				array( '%s', '%s' )
-			);
-		}
-
-		// Connect the quote with the first theme.
-		if ( $quote_id ) {
-			$wpdb->insert(
-				$wpdb->taxos,
-				array(
-					'idfrase' => $quote_id,
-					'idtema'  => 1,
-				),
-				array( '%d', '%d' )
 			);
 		}
 	}
@@ -283,19 +185,6 @@ function vr_frases_upgrade() {
 	$current_db_version = isset( $options['db_version'] ) ? $options['db_version'] : '0';
 
 	// Basic Tables Creation (for older versions that might not have them).
-	// Ensure taxonomy table exists (for plugins before v3.0).
-	$wpdb->query(
-		"CREATE TABLE IF NOT EXISTS {$wpdb->taxos} (
-			idtaxos int(11) NOT NULL AUTO_INCREMENT,
-			idfrase int(11) NOT NULL,
-			idtema int(11) NOT NULL,
-			PRIMARY KEY (idtaxos),
-			UNIQUE KEY unique_taxos (idfrase, idtema),
-			CONSTRAINT fr_taxos_idfrase FOREIGN KEY (idfrase) REFERENCES {$wpdb->frases}(idfrase) ON DELETE CASCADE,
-			CONSTRAINT fr_taxos_idtema FOREIGN KEY (idtema) REFERENCES {$wpdb->temas}(idtema) ON DELETE CASCADE
-		) {$wpdb->get_charset_collate()};"
-	);
-
 	// Ensure import table exists (for plugins before v3.5).
 	$wpdb->query(
 		"CREATE TABLE IF NOT EXISTS {$wpdb->import} (
@@ -373,33 +262,6 @@ function vr_frases_upgrade() {
 		}
 	}
 
-	// Add new slug field to themes table if upgrading from before 4.0.
-	$slug_exists = $wpdb->get_results(
-		$wpdb->prepare(
-			"SHOW COLUMNS FROM {$wpdb->temas} LIKE %s",
-			'slug'
-		)
-	);
-
-	if ( empty( $slug_exists ) ) {
-		$wpdb->query( "ALTER TABLE {$wpdb->temas} ADD COLUMN slug VARCHAR(255) NULL" );
-
-		// Generate slugs for existing themes.
-		$themes = $wpdb->get_results( "SELECT idtema, tema FROM {$wpdb->temas}" );
-		if ( ! empty( $themes ) ) {
-			foreach ( $themes as $theme ) {
-				$slug = sanitize_title( $theme->tema );
-				$wpdb->update(
-					$wpdb->temas,
-					array( 'slug' => $slug ),
-					array( 'idtema' => $theme->idtema ),
-					array( '%s' ),
-					array( '%d' )
-				);
-			}
-		}
-	}
-
 	// Update the stored database version.
 	$options['db_version'] = VR_FRASES_VERSION;
 	update_option( 'vr_frases_options', $options );
@@ -420,24 +282,12 @@ function vr_frases_update_legacy() {
 
 	// Legacy tables.
 	$old_frases = $wpdb->prefix . 'fr_frases';
-	$old_temas  = $wpdb->prefix . 'fr_temas';
 
 	// Check if legacy tables exist (use prepared statements for the LIKE pattern).
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_frases ) ) ) {
 		// Add necessary columns if they don't exist. Escape identifiers.
 		$old_frases_esc = '`' . esc_sql( $old_frases ) . '`';
 		$wpdb->query( "ALTER TABLE {$old_frases_esc} ADD COLUMN IF NOT EXISTS idtema INT(11) NOT NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	}
-
-	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_temas ) ) ) {
-		$old_temas_esc = '`' . esc_sql( $old_temas ) . '`';
-		$wpdb->query( "ALTER TABLE {$old_temas_esc} ADD COLUMN IF NOT EXISTS slug VARCHAR(255)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	}
-
-	// Migrate data if necessary. Use prepared statements for value placeholders.
-	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_frases ) ) ) {
-		$old_frases_esc = '`' . esc_sql( $old_frases ) . '`';
-		$wpdb->query( $wpdb->prepare( "UPDATE {$old_frases_esc} SET idtema = %d WHERE idtema IS NULL", 1 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }
 

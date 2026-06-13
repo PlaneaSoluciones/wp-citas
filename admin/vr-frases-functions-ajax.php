@@ -28,7 +28,6 @@ function vr_frases_ajax_delete_item() {
 
 	$nonces_map = array(
 		'frases'  => 'vr_nonce_frases',
-		'temas'   => 'vr_nonce_temas',
 		'autores' => 'vr_nonce_autores',
 		'import'  => 'vr_nonce_import',
 	);
@@ -58,7 +57,6 @@ function vr_frases_ajax_delete_item() {
 
 		$tipo_labels = array(
 			'frases'  => esc_html__( 'Deleted Quote', 'vr-frases' ),
-			'temas'   => esc_html__( 'Deleted Theme', 'vr-frases' ),
 			'autores' => esc_html__( 'Deleted Author', 'vr-frases' ),
 			'import'  => esc_html__( 'Deleted Import', 'vr-frases' ),
 		);
@@ -106,7 +104,6 @@ function vr_frases_ajax_delete_multiple_items() {
 
 	$nonces_map = array(
 		'frases'  => 'vr_nonce_frases',
-		'temas'   => 'vr_nonce_temas',
 		'autores' => 'vr_nonce_autores',
 	);
 
@@ -133,7 +130,6 @@ function vr_frases_ajax_delete_multiple_items() {
 		);
 			$tipo_labels_multi = array(
 				'frases'  => esc_html__( 'Deleted Quotes', 'vr-frases' ),
-				'temas'   => esc_html__( 'Deleted Themes', 'vr-frases' ),
 				'autores' => esc_html__( 'Deleted Authors', 'vr-frases' ),
 				'imports' => esc_html__( 'Deleted Imports', 'vr-frases' ),
 			);
@@ -186,10 +182,6 @@ add_action( 'init', 'vr_frases_register_ajax_handlers' );
  */
 function vr_frases_add_items_common_ajax( $tipo, $items, $wpdb ) {
 	$map = array(
-		'temas'   => array(
-			'table'  => $wpdb->temas,
-			'column' => 'tema',
-		),
 		'autores' => array(
 			'table'  => $wpdb->autores,
 			'column' => 'autor',
@@ -211,10 +203,6 @@ function vr_frases_add_items_common_ajax( $tipo, $items, $wpdb ) {
 
 	// Labels for entity types.
 	$tipo_labels_add = array(
-		'temas'   => array(
-			'singular' => esc_html__( 'Theme added', 'vr-frases' ),
-			'plural'   => esc_html__( 'Themes added', 'vr-frases' ),
-		),
 		'autores' => array(
 			'singular' => esc_html__( 'Author added', 'vr-frases' ),
 			'plural'   => esc_html__( 'Authors added', 'vr-frases' ),
@@ -222,10 +210,6 @@ function vr_frases_add_items_common_ajax( $tipo, $items, $wpdb ) {
 	);
 
 	$tipo_labels_dup = array(
-		'temas'   => array(
-			'singular' => esc_html__( 'Theme already exists', 'vr-frases' ),
-			'plural'   => esc_html__( 'Themes already exist', 'vr-frases' ),
-		),
 		'autores' => array(
 			'singular' => esc_html__( 'Author already exists', 'vr-frases' ),
 			'plural'   => esc_html__( 'Authors already exist', 'vr-frases' ),
@@ -241,9 +225,7 @@ function vr_frases_add_items_common_ajax( $tipo, $items, $wpdb ) {
 		}
 		// Query construction to satisfy PHPCS security checks.
 		$row = null;
-		if ( 'temas' === $tipo ) {
-			$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->temas} WHERE tema = %s", $item_clean ) );
-		} elseif ( 'autores' === $tipo ) {
+		if ( 'autores' === $tipo ) {
 			$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->autores} WHERE autor = %s", $item_clean ) );
 		}
 		if ( $row ) {

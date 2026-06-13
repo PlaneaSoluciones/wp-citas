@@ -46,25 +46,23 @@
 function vr_frases_form_paginar( $pagina, $paginas, $registros, $pos = '' ) {
 	if ( $paginas > 1 ) {
 		// Read and sanitize common query parameters using filter_input for improved safety.
-		$frase_raw     = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
-		$autor_raw     = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
-		$categoria_raw = filter_input( INPUT_GET, 'categoria', FILTER_UNSAFE_RAW );
-		$orden_raw     = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
-		$filter_raw    = filter_input( INPUT_GET, 'filter', FILTER_UNSAFE_RAW );
-		$page_raw      = filter_input( INPUT_GET, 'page', FILTER_UNSAFE_RAW );
-		$search_raw    = filter_input( INPUT_GET, 'search', FILTER_UNSAFE_RAW );
+		$frase_raw  = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
+		$autor_raw  = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
+		$orden_raw  = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
+		$filter_raw = filter_input( INPUT_GET, 'filter', FILTER_UNSAFE_RAW );
+		$page_raw   = filter_input( INPUT_GET, 'page', FILTER_UNSAFE_RAW );
+		$search_raw = filter_input( INPUT_GET, 'search', FILTER_UNSAFE_RAW );
 
 		// Build current URL for pagination base.
 		$base_url   = is_admin() ? admin_url( 'admin.php' ) : home_url();
 		$query_args = array(
-			'frase'     => null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '',
-			'autor'     => null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '',
-			'categoria' => null !== $categoria_raw ? sanitize_text_field( wp_unslash( $categoria_raw ) ) : '',
-			'orden'     => null !== $orden_raw ? sanitize_text_field( wp_unslash( $orden_raw ) ) : '',
-			'filter'    => null !== $filter_raw ? sanitize_text_field( wp_unslash( $filter_raw ) ) : '',
-			'search'    => null !== $search_raw ? sanitize_text_field( wp_unslash( $search_raw ) ) : '',
-			'page'      => null !== $page_raw ? sanitize_text_field( wp_unslash( $page_raw ) ) : 'vrfr_managefrases',
-			'accion'    => 'buscar',
+			'frase'  => null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '',
+			'autor'  => null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '',
+			'orden'  => null !== $orden_raw ? sanitize_text_field( wp_unslash( $orden_raw ) ) : '',
+			'filter' => null !== $filter_raw ? sanitize_text_field( wp_unslash( $filter_raw ) ) : '',
+			'search' => null !== $search_raw ? sanitize_text_field( wp_unslash( $search_raw ) ) : '',
+			'page'   => null !== $page_raw ? sanitize_text_field( wp_unslash( $page_raw ) ) : 'vrfr_managefrases',
+			'accion' => 'buscar',
 		);
 
 		// Remove empty parameters to clean URLs.
@@ -202,19 +200,15 @@ function vr_frases_define_titles( $params ) {
 	$msg       = esc_html__( 'You are viewing ALL quotes.', 'vr-frases' );
 
 	if ( ! empty( $params ) ) { // Check that $params is not empty.
-		$frase     = isset( $params['frase'] ) ? sanitize_text_field( $params['frase'] ) : '';
-		$autor     = isset( $params['autor'] ) ? sanitize_text_field( $params['autor'] ) : '';
-		$categoria = isset( $params['categoria'] ) ? sanitize_text_field( $params['categoria'] ) : '';
-		$orden     = isset( $params['orden'] ) ? sanitize_text_field( $params['orden'] ) : '';
+		$frase = isset( $params['frase'] ) ? sanitize_text_field( $params['frase'] ) : '';
+		$autor = isset( $params['autor'] ) ? sanitize_text_field( $params['autor'] ) : '';
+		$orden = isset( $params['orden'] ) ? sanitize_text_field( $params['orden'] ) : '';
 
 		if ( ! empty( $frase ) ) {
 			$msg_parts[] = esc_html__( '[Quote: ', 'vr-frases' ) . esc_html( $frase ) . esc_html__( ']', 'vr-frases' );
 		}
 		if ( ! empty( $autor ) ) {
 			$msg_parts[] = esc_html__( '[Author: ', 'vr-frases' ) . esc_html( $autor ) . esc_html__( ']', 'vr-frases' );
-		}
-		if ( ! empty( $categoria ) ) {
-			$msg_parts[] = esc_html__( '[Category: ', 'vr-frases' ) . esc_html( $categoria ) . esc_html__( ']', 'vr-frases' );
 		}
 		if ( ! empty( $orden ) ) {
 			$msg_parts[] = esc_html__( '[Order: ', 'vr-frases' ) . esc_html( vr_frases_get_ordered_message( $orden ) ) . esc_html__( ']', 'vr-frases' );
@@ -247,7 +241,6 @@ function vr_frases_get_ordered_message( $orden ) {
 	$ordered = array(
 		'porfrase'  => esc_html__( 'sorted by Quotes', 'vr-frases' ),
 		'porautor'  => esc_html__( 'sorted by Author', 'vr-frases' ),
-		'portema'   => esc_html__( 'sorted by Theme', 'vr-frases' ),
 		'aleatorio' => esc_html__( 'in Random Order', 'vr-frases' ),
 	);
 
@@ -267,10 +260,9 @@ function vr_frases_get_ordered_message( $orden ) {
 function vr_frases_get_order_by( $orden ) {
 	// Valid ordering options mapped to safe aliases or grouped fields.
 	$order_by_options = array(
-		'porfrase'  => 'f.frase ASC',     // Direct field in SELECT and GROUP BY.
-		'porautor'  => 'f.autor ASC',     // Direct field in SELECT and GROUP BY.
-		'portema'   => 'temas ASC',       // GROUP_CONCAT alias to avoid conflict with t.tema.
-		'aleatorio' => 'RAND()',          // Random order.
+		'porfrase'  => 'f.frase ASC',
+		'porautor'  => 'f.autor ASC',
+		'aleatorio' => 'RAND()',
 	);
 
 	// Normalize the value received.
@@ -304,12 +296,7 @@ function vr_frases_get_list_data( $pagina = 1, $num_inputs = 20, $orden = 'porfr
 	$inicio          = ( 0 < $pagina ) ? ( ( $pagina - 1 ) * $num_inputs ) : 0;
 
 	// Total count.
-	$total_sql = "
-		SELECT COUNT(DISTINCT f.idfrase)
-		FROM {$wpdb->frases} f
-		LEFT JOIN {$wpdb->taxos} tx ON f.idfrase = tx.idfrase
-		LEFT JOIN {$wpdb->temas} t ON tx.idtema = t.idtema
-	";
+	$total_sql = "SELECT COUNT(*) FROM {$wpdb->frases} f";
 	if ( ! empty( $where_clause ) ) {
 		$total_sql .= " WHERE {$where_clause}";
 		/* phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared */
@@ -322,19 +309,10 @@ function vr_frases_get_list_data( $pagina = 1, $num_inputs = 20, $orden = 'porfr
 	$paginas   = ceil( $registros / $num_inputs );
 
 	// Main query.
-	$sql = "
-		SELECT f.idfrase,
-		       f.frase,
-		       f.autor,
-		       GROUP_CONCAT(DISTINCT t.tema ORDER BY t.tema SEPARATOR ', ') AS temas
-		FROM {$wpdb->frases} f
-		LEFT JOIN {$wpdb->taxos} tx ON f.idfrase = tx.idfrase
-		LEFT JOIN {$wpdb->temas} t ON tx.idtema = t.idtema
-	";
+	$sql = "SELECT f.idfrase, f.frase, f.autor FROM {$wpdb->frases} f";
 	if ( ! empty( $where_clause ) ) {
 		$sql .= " WHERE {$where_clause}";
 	}
-	$sql .= ' GROUP BY f.idfrase, f.frase, f.autor';
 	if ( ! empty( $order_by_clause ) ) {
 		$sql .= " ORDER BY {$order_by_clause}";
 	}
@@ -369,13 +347,11 @@ function vr_frases_search_filters() {
 	$where_parts = array();
 	$params      = array();
 
-	$frase_raw     = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
-	$autor_raw     = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
-	$categoria_raw = filter_input( INPUT_GET, 'categoria', FILTER_UNSAFE_RAW );
+	$frase_raw = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
+	$autor_raw = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
 
-	$frase     = null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '';
-	$autor     = null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '';
-	$categoria = null !== $categoria_raw ? sanitize_text_field( wp_unslash( $categoria_raw ) ) : '';
+	$frase = null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '';
+	$autor = null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '';
 
 	if ( ! empty( $frase ) ) {
 		$where_parts[] = 'f.frase LIKE %s';
@@ -385,14 +361,6 @@ function vr_frases_search_filters() {
 	if ( ! empty( $autor ) ) {
 		$where_parts[] = 'f.autor LIKE %s';
 		$params[]      = '%' . $wpdb->esc_like( $autor ) . '%';
-	}
-
-	if ( ! empty( $categoria ) ) {
-		$categoria_id_tema = $wpdb->get_var( $wpdb->prepare( "SELECT idtema FROM {$wpdb->temas} WHERE tema = %s", $categoria ) );
-		if ( $categoria_id_tema ) {
-			$where_parts[] = 'tx.idtema = %d';
-			$params[]      = $categoria_id_tema;
-		}
 	}
 
 	$where_sql = implode( ' AND ', $where_parts );
@@ -413,23 +381,20 @@ function vr_frases_search_filters() {
  */
 function vr_frases_search_form( $orden = '', $num_inputs = '' ) {
 	// Read incoming GET parameters safely.
-	$frase_raw     = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
-	$autor_raw     = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
-	$categoria_raw = filter_input( INPUT_GET, 'categoria', FILTER_UNSAFE_RAW );
-	$orden_raw     = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
+	$frase_raw = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
+	$autor_raw = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
+	$orden_raw = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
 
-	$frase     = null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '';
-	$autor     = null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '';
-	$categoria = null !== $categoria_raw ? sanitize_text_field( wp_unslash( $categoria_raw ) ) : '';
+	$frase = null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '';
+	$autor = null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '';
 
 	// Prefer the function parameter $orden when provided, otherwise use GET value.
 	$orden_value = '' !== $orden ? sanitize_text_field( $orden ) : ( null !== $orden_raw ? sanitize_text_field( wp_unslash( $orden_raw ) ) : '' );
 
 	$query_params = array(
-		'frase'     => $frase,
-		'autor'     => $autor,
-		'categoria' => $categoria,
-		'orden'     => $orden_value,
+		'frase' => $frase,
+		'autor' => $autor,
+		'orden' => $orden_value,
 	);
 
 	$is_admin   = is_admin();
@@ -447,28 +412,11 @@ function vr_frases_search_form( $orden = '', $num_inputs = '' ) {
 			<input type="text" name="frase" id="frase" placeholder="<?php esc_attr_e( 'Quote text', 'vr-frases' ); ?>" value="<?php echo esc_attr( $query_params['frase'] ); ?>" class="search-input" />
 			<label for="autor" class="screen-reader-text"><?php esc_html_e( 'Author Name:', 'vr-frases' ); ?></label>
 			<input type="text" name="autor" id="autor" placeholder="<?php esc_attr_e( 'Author Name', 'vr-frases' ); ?>" value="<?php echo esc_attr( $query_params['autor'] ); ?>" class="search-input" />
-			<label for="categoria" class="screen-reader-text"><?php esc_html_e( 'Category:', 'vr-frases' ); ?></label>
-			<select name="categoria" id="categoria" class="search-input" onchange="document.getElementById('frases-searchform').submit();">
-				<option value="" <?php selected( $query_params['categoria'], '' ); ?>><?php esc_html_e( 'All Themes', 'vr-frases' ); ?></option>
-				<?php
-				$__vr_temas = vr_frases_new_list_temas( $query_params['categoria'] );
-				echo wp_kses(
-					$__vr_temas,
-					array(
-						'option' => array(
-							'value'    => true,
-							'selected' => true,
-						),
-					)
-				);
-				?>
-			</select>
 			<label for="orden" class="screen-reader-text"><?php esc_html_e( 'Order by:', 'vr-frases' ); ?></label>
 			<select name="orden" id="orden" class="search-input" onchange="document.getElementById('frases-searchform').submit();">
 				<option value="aleatorio" <?php selected( $query_params['orden'], 'aleatorio' ); ?>><?php esc_html_e( 'Random Order', 'vr-frases' ); ?></option>
 				<option value="porfrase" <?php selected( $query_params['orden'], 'porfrase' ); ?>><?php esc_html_e( 'Order by Quote', 'vr-frases' ); ?></option>
 				<option value="porautor" <?php selected( $query_params['orden'], 'porautor' ); ?>><?php esc_html_e( 'Order by Author', 'vr-frases' ); ?></option>
-				<option value="portema" <?php selected( $query_params['orden'], 'portema' ); ?>><?php esc_html_e( 'Order by Theme', 'vr-frases' ); ?></option>
 			</select>
 			<input type="submit" class="button" value="<?php esc_attr_e( 'Search', 'vr-frases' ); ?>" />
 			<?php if ( $is_admin ) : ?>
@@ -484,50 +432,6 @@ function vr_frases_search_form( $orden = '', $num_inputs = '' ) {
 	</div>
 	<?php
 	return ob_get_clean();
-}
-
-/**
- * Generates a list of theme options for select inputs.
- *
- * @since 4.1.0
- * @param string $selected_categoria The currently selected category.
- * @return string HTML option elements.
- */
-function vr_frases_new_list_temas( $selected_categoria = '' ) {
-	global $wpdb;
-
-	// Verify that $wpdb->temas is a valid table name.
-	if ( ! isset( $wpdb->temas ) || ! is_string( $wpdb->temas ) || empty( $wpdb->temas ) ) {
-		// Optional: for debugging. Uncomment to log if $wpdb->temas is not defined or is invalid.
-		return ''; // Return empty string if table name is invalid.
-	}
-
-	// Get themes ordered alphabetically.
-	$temas = $wpdb->get_results( "SELECT tema FROM `{$wpdb->temas}` ORDER BY tema ASC" ); // Backticks added for best practice.
-
-	// Generate HTML options.
-	return vr_frases_generate_options( $temas, 'tema', esc_html( $selected_categoria ) ); // Escape $selected_categoria.
-}
-
-/**
- * Generates HTML option elements from database results.
- *
- * @since 4.1.0
- * @param array  $items          Array of objects from database.
- * @param string $field          The field name to use for value/text.
- * @param string $selected_value Currently selected value.
- * @return string HTML option elements.
- */
-function vr_frases_generate_options( $items, $field, $selected_value = '' ) {
-	$options = '';
-	foreach ( $items as $item ) {
-		// Check if the current value should be selected.
-		$selected = ( $item->$field === $selected_value ) ? 'selected="selected"' : '';
-		// Generate HTML option.
-		$options .= '<option value="' . esc_attr( $item->$field ) . '" ' . esc_attr( $selected ) . '>' . esc_html( $item->$field ) . '</option>'; // Escape values.
-	}
-
-	return $options;
 }
 
 /**

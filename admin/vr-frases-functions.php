@@ -69,11 +69,6 @@ function vr_frases_delete_common( $tipo, $ids ) {
 			'id_column'   => 'idfrase',
 			'name_column' => 'frase',
 		),
-		'temas'   => array(
-			'table'       => $wpdb->temas,
-			'id_column'   => 'idtema',
-			'name_column' => 'tema',
-		),
 		'autores' => array(
 			'table'       => $wpdb->autores,
 			'id_column'   => 'idautor',
@@ -98,7 +93,6 @@ function vr_frases_delete_common( $tipo, $ids ) {
 
 	// Validate nonce and capability using centralized helper.
 	$nonces     = array(
-		'temas'   => 'vr_nonce_temas',
 		'frases'  => 'vr_nonce_frases',
 		'autores' => 'vr_nonce_autores',
 		'import'  => 'vr_nonce_import',
@@ -131,9 +125,6 @@ function vr_frases_delete_common( $tipo, $ids ) {
 		switch ( $tipo ) {
 			case 'frases':
 				$item = $wpdb->get_row( $wpdb->prepare( "SELECT idfrase, frase FROM {$wpdb->frases} WHERE idfrase = %d", $id ) );
-				break;
-			case 'temas':
-				$item = $wpdb->get_row( $wpdb->prepare( "SELECT idtema, tema FROM {$wpdb->temas} WHERE idtema = %d", $id ) );
 				break;
 			case 'autores':
 				$item = $wpdb->get_row( $wpdb->prepare( "SELECT idautor, autor FROM {$wpdb->autores} WHERE idautor = %d", $id ) );
@@ -168,7 +159,7 @@ function vr_frases_delete_common( $tipo, $ids ) {
 
 			// Optimize the table after deleting (table name is validated through internal mapping).
 			$table_name = $map[ $tipo ]['table'];
-			if ( in_array( $table_name, array( $wpdb->autores, $wpdb->temas, $wpdb->frases, $wpdb->import ), true ) ) {
+			if ( in_array( $table_name, array( $wpdb->autores, $wpdb->frases, $wpdb->import ), true ) ) {
 				/* phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared */
 				$wpdb->query( "OPTIMIZE TABLE {$table_name}" );
 			}
@@ -224,26 +215,6 @@ function vr_frases_total_autores() {
 	$results   = $wpdb->get_results( "SELECT COUNT(autor) AS count FROM {$wpdb->frases} GROUP BY autor" );
 	$authors   = count( $results );
 	$formatted = number_format_i18n( (int) $authors );
-
-	return $formatted;
-}
-
-/**
- * Get the count of unique themes with localized formatting.
- *
- * Retrieves distinct themes count from database and returns
- * localized formatted string for display.
- *
- * @since 4.1.0
- * @return string Localized and formatted count of unique themes.
- */
-function vr_frases_total_temas() {
-	global $wpdb;
-
-	// Always query the database.
-	$results   = $wpdb->get_results( "SELECT COUNT(tema) AS count FROM {$wpdb->temas} GROUP BY tema" );
-	$themes    = count( $results );
-	$formatted = number_format_i18n( (int) $themes );
 
 	return $formatted;
 }

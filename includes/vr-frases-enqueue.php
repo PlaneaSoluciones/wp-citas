@@ -64,13 +64,6 @@ function vr_frases_enqueue_style( $hook ) {
 	);
 
 	wp_enqueue_style(
-		'select2-css',
-		plugin_dir_url( __DIR__ ) . 'assets/css/select2.min.css',
-		array(),
-		'4.1.0' // Fixed version for Select2.
-	);
-
-	wp_enqueue_style(
 		'vr-frases-overlay',
 		plugin_dir_url( __DIR__ ) . 'assets/css/vr-frases-overlay.css',
 		array(),
@@ -96,14 +89,12 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'gestionar-frases_page_vrfr_addnewquote',
 			'gestionar-frases_page_vrfr_manageautores',
 			'gestionar-frases_page_vrfr_manageimport',
-			'gestionar-frases_page_vrfr_managetemas',
 			'toplevel_page_vrfr_managefrases',
-			'toplevel_page_vrfr_addnewquote', // Added for add new quote page.
+			'toplevel_page_vrfr_addnewquote',
 			'toplevel_page_vrfr_manageimport',
 			'toplevel_page_vrfr_managesettings',
 			'vr-frases_page_vrfr_manageautores',
 			'vr-frases_page_vrfr_manageimport',
-			'vr-frases_page_vrfr_managetemas',
 		)
 	);
 
@@ -123,22 +114,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 		plugin_dir_url( __DIR__ ) . 'assets/js/vr-frases-scripts.js',
 		array( 'jquery', 'jquery-ui-accordion' ),
 		filemtime( plugin_dir_path( __DIR__ ) . 'assets/js/vr-frases-scripts.js' ),
-		true
-	);
-
-	// Select2 and its initializer.
-	wp_enqueue_script(
-		'select2-js',
-		plugin_dir_url( __DIR__ ) . 'assets/js/select2.min.js',
-		array( 'jquery' ),
-		'4.1.0',
-		true
-	);
-	wp_enqueue_script(
-		'vr-frases-select2-init',
-		plugin_dir_url( __DIR__ ) . 'assets/js/vr-frases-select2.js',
-		array( 'select2-js' ),
-		filemtime( plugin_dir_path( __DIR__ ) . 'assets/js/vr-frases-select2.js' ),
 		true
 	);
 
@@ -179,11 +154,9 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'quickEdit'             => __( 'Quick Edit', 'vr-frases' ),
 			'save'                  => __( 'Save', 'vr-frases' ),
 			'searchWikipedia'       => __( 'Search on Wikipedia', 'vr-frases' ),
-			'selectThemes'          => __( 'Select themes...', 'vr-frases' ),
 			'saving'                => __( 'Saving...', 'vr-frases' ),
 			'settingsErrorMessage'  => __( 'Error saving settings.', 'vr-frases' ),
 			'settingsSavedMessage'  => __( 'Settings saved.', 'vr-frases' ),
-			'theme'                 => __( 'Theme', 'vr-frases' ),
 			'viewMoreQuotes'        => __( 'View more quotes from this author...', 'vr-frases' ),
 			'noFilesSelected'       => __( 'Please select files to import.', 'vr-frases' ),
 			'invalidFileType'       => __( 'Invalid file type for "{filename}". Please upload CSV or TXT files only.', 'vr-frases' ),
@@ -204,7 +177,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'nonceAutores'          => wp_create_nonce( 'vr_nonce_autores' ),
 			'nonceFrases'           => wp_create_nonce( 'vr_nonce_frases' ),
 			'nonceImport'           => wp_create_nonce( 'vr_nonce_import' ),
-			'nonceTemas'            => wp_create_nonce( 'vr_nonce_temas' ),
 			'wikilang'              => get_option( 'wiki_lang', 'es' ),
 		);
 
@@ -214,14 +186,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'vrFrasesTranslations',
 			$vr_frases_translations
 		);
-
-	wp_localize_script(
-		'vr-frases-select2-init',
-		'vrSelectTranslations',
-		array(
-			'SelTemas' => esc_html__( 'Select one or more Themes...', 'vr-frases' ),
-		)
-	);
 
 	wp_localize_script(
 		'vr-frases-ajax',
@@ -240,22 +204,8 @@ function vr_frases_enqueue_scripts( $hook ) {
 		)
 	);
 
-	// Pass themes data for JS selects.
-	$temas = get_transient( 'vr_frases_temas_for_js' );
-	if ( false === $temas ) {
-		$temas = $wpdb->get_results( "SELECT idtema AS id, tema AS nombre FROM {$wpdb->temas} ORDER BY tema ASC" );
-		set_transient( 'vr_frases_temas_for_js', $temas, 3600 );
-	}
-	if ( ! empty( $temas ) ) {
-		wp_localize_script(
-			'vr-frases-scripts',
-			'vrFrasesData',
-			array(
-				'temas' => $temas,
-			)
-		);
-	}
 }
+
 add_action( 'admin_enqueue_scripts', 'vr_frases_enqueue_scripts' );
 
 /**

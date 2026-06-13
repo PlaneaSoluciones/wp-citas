@@ -33,13 +33,11 @@ require_once __DIR__ . '/class-vr-frases-widget.php';
 function vr_frases_dash_widget() {
 	$frases  = vr_frases_total_frases();
 	$autores = vr_frases_total_autores();
-	$temas   = vr_frases_total_temas();
 	$random  = vr_frases_random_frase(); // Allow HTML in the random phrase.
 	$version = get_option( 'vr_frases_version' );
 
 	echo '<p><b>' . esc_html__( 'Registered data totals:', 'vr-frases' ) . '</b></p>'; // Escape.
 	echo '<ul><li>' . esc_html__( 'At this moment your database contains ', 'vr-frases' ) . '<a href="' . esc_url( admin_url( 'admin.php?page=vrfr_managefrases' ) ) . '">' . esc_html( $frases ) . ' ' . esc_html__( 'Quotes', 'vr-frases' ) . '</a>' . esc_html__( ' from ', 'vr-frases' ) . '<a href="' . esc_url( admin_url( 'admin.php?page=vrfr_manageautores' ) ) . '">' . esc_html( $autores ) . esc_html__( ' Authors.', 'vr-frases' ) . '</a></li></ul>'; // Escape.
-	echo '<ul><li>' . esc_html__( 'Your classification handlers: ', 'vr-frases' ) . '<a href="' . esc_url( admin_url( 'admin.php?page=vrfr_managetemas' ) ) . '">' . esc_html( $temas ) . ' ' . esc_html__( 'Themes', 'vr-frases' ) . '</a>.</li></ul>'; // Escape.
 	echo '<fieldset id="box" style="height: auto; border: solid 1px; padding: 10px;">';
 	echo '<legend style="padding: 5px;"><em>' . esc_html__( 'Sample of output style for [randomfrase] and sidebar widgets:', 'vr-frases' ) . '</em></legend>'; // Escape.
 	echo '<ul><li>' . wp_kses_post( $random ) . '</li></ul>'; // Allow HTML in the phrase.
