@@ -1008,6 +1008,67 @@ jQuery(document).ready(function ($) {
       });
   });
 
+  // === SAVE ALL IMPORTED QUOTES ===.
+
+  $(document).on("click", "#vr-save-all-import-button", function (e) {
+    e.preventDefault();
+
+    const button = $(this);
+    const nonce = button.data("nonce");
+
+    if (window.vrFrasesOverlay) {
+      window.vrFrasesOverlay.show(vrFrasesAjax.savingAll || "Saving all...");
+    }
+
+    button.prop("disabled", true);
+    const originalHtml = button.html();
+    button.html(
+      '<span class="dashicons dashicons-update-alt" style="animation: spin 1s linear infinite; vertical-align: text-bottom;"></span> ' +
+        (vrFrasesAjax.savingAll || "Saving all..."),
+    );
+
+    $.post(vrFrasesAjax.ajaxurl, {
+      action: "vr_frases_save_all_import",
+      nonce: nonce,
+    })
+      .done(function (response) {
+        if (response.success) {
+          const saved = response.data.saved || 0;
+          const errors = response.data.errors || 0;
+
+          if (saved > 0) {
+            const msg = (vrFrasesAjax.saveAllSuccess || "%d quotes saved successfully.").replace("%d", saved);
+            vrFrasesInsertMessage(msg, "success");
+          }
+          if (errors > 0) {
+            const msg = (vrFrasesAjax.saveAllErrors || "%d quotes could not be saved (duplicates or errors).").replace("%d", errors);
+            vrFrasesInsertMessage(msg, "warning");
+          }
+
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500);
+        } else {
+          vrFrasesInsertMessage(
+            response.data.message || vrFrasesAjax.defaultErrorMessage || "Error saving quotes.",
+            "error",
+          );
+          button.prop("disabled", false);
+          button.html(originalHtml);
+        }
+      })
+      .fail(function () {
+        vrFrasesInsertMessage(vrFrasesAjax.errorSavingData || "Error saving quote data.", "error");
+        button.prop("disabled", false);
+        button.html(originalHtml);
+      })
+      .always(function () {
+        if (window.vrFrasesOverlay) {
+          window.vrFrasesOverlay.hide();
+        }
+      });
+  });
+
   // === FILE IMPORT AJAX ===.
 
   /**

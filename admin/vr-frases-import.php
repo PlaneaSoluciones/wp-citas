@@ -436,6 +436,17 @@ function vr_frases_display_imported_data() {
 				?>
 			</span>
 		</div>
+		<div class="vr-flexbar-actions" style="margin-left: auto; margin-right: 16px;">
+			<button
+				type="button"
+				id="vr-save-all-import-button"
+				class="button button-primary"
+				data-nonce="<?php echo esc_attr( wp_create_nonce( 'vr_nonce_import' ) ); ?>"
+			>
+				<span class="dashicons dashicons-saved" style="vertical-align: text-bottom;"></span>
+				<?php esc_html_e( 'Save all', 'vr-frases' ); ?>
+			</button>
+		</div>
 		<div class="vr-flexbar-paging">
 			<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" class="paging-input">
 				<input type="hidden" name="page" value="vrfr_manageimport" />
@@ -625,6 +636,91 @@ function vr_frases_save_imported_data_ajax() {
 	);
 }
 add_action( 'wp_ajax_vr_frases_save_import', 'vr_frases_save_imported_data_ajax' );
+
+/**
+ * AJAX endpoint to save all pending imported quotes to the main database.
+ *
+ * @since 4.4.0
+ * @return void Sends JSON response and exits.
+ */
+function vr_frases_save_all_imported_ajax() {
+	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+		wp_die( esc_html__( 'Invalid request.', 'vr-frases' ) );
+	}
+
+	if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'vr_nonce_import' ) ) {
+		wp_send_json_error( array( 'message' => esc_html__( 'Invalid security token.', 'vr-frases' ) ) );
+	}
+
+	global $wpdb;
+
+	$importados = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}vr_fr_import" );
+	if ( empty( $importados ) ) {
+		wp_send_json_error( array( 'message' => esc_html__( 'No imported quotes found.', 'vr-frases' ) ) );
+	}
+
+	$saved  = 0;
+	$errors = 0;
+
+	foreach ( $importados as $importado ) {
+		$frase_normalizada = trim( preg_replace( '/\s+/', ' ', $importado->frase ) );
+		$autor_normalizado = trim( preg_replace( '/\s+/', ' ', $importado->autor ) );
+
+		$duplicado = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$wpdb->frases} WHERE LOWER(TRIM(frase)) = LOWER(%s) AND LOWER(TRIM(autor)) = LOWER(%s)",
+				$frase_normalizada,
+				$autor_normalizado
+			)
+		);
+
+		if ( $duplicado > 0 ) {
+			++$errors;
+			if ( function_exists( 'vr_frases_delete_common' ) ) {
+				vr_frases_delete_common( 'import', $importado->idimport );
+			}
+			continue;
+		}
+
+		$result = $wpdb->insert(
+			"{$wpdb->frases}",
+			array(
+				'frase' => $importado->frase,
+				'autor' => $importado->autor,
+			),
+			array( '%s', '%s' )
+		);
+
+		if ( false === $result ) {
+			++$errors;
+			continue;
+		}
+
+		$autor_existente = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT idautor FROM {$wpdb->autores} WHERE autor = %s",
+				$importado->autor
+			)
+		);
+		if ( null === $autor_existente && function_exists( 'vr_frases_add_items_common_ajax' ) ) {
+			vr_frases_add_items_common_ajax( 'autores', array( $importado->autor ), $wpdb );
+		}
+
+		if ( function_exists( 'vr_frases_delete_common' ) ) {
+			vr_frases_delete_common( 'import', $importado->idimport );
+		}
+
+		++$saved;
+	}
+
+	wp_send_json_success(
+		array(
+			'saved'  => $saved,
+			'errors' => $errors,
+		)
+	);
+}
+add_action( 'wp_ajax_vr_frases_save_all_import', 'vr_frases_save_all_imported_ajax' );
 
 /**
  * Export all quotes to a CSV or TXT file and send to browser for download.
