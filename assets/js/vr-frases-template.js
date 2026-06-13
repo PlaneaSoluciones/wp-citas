@@ -69,7 +69,6 @@ document.addEventListener(
 		// Persistence of preferences in cookies.
 		var prefsForm = document.getElementById( "vr-frases-preferences" );
 		if (prefsForm) {
-			var styleSel    = prefsForm.querySelector( 'select[name="style"]' );
 			var fontSizeSel = prefsForm.querySelector( 'select[name="font_size"]' );
 			var numInputs   = prefsForm.querySelector( 'input[name="num_inputs"]' );
 			/**
@@ -91,14 +90,6 @@ document.addEventListener(
 				document.cookie = name + "=" + encodeURIComponent( value ) + expires + "; path=/";
 			}
 
-			if (styleSel) {
-				styleSel.addEventListener(
-					"change",
-					function () {
-						setCookie( "vr_frases_style", styleSel.value, 7 );
-					}
-				);
-			}
 			if (fontSizeSel) {
 				fontSizeSel.addEventListener(
 					"change",

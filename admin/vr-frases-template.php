@@ -68,7 +68,6 @@ function vr_frases_show_main() {
 	$default_num_inputs = isset( $options['num_inputs'] ) && $options['num_inputs'] > 0 ? absint( $options['num_inputs'] ) : 20; // Default to 20 if not set or invalid.
 
 	// Read GET parameters safely using filter_input and sanitize.
-	$get_style     = filter_input( INPUT_GET, 'style', FILTER_UNSAFE_RAW );
 	$get_font_size = filter_input( INPUT_GET, 'font_size', FILTER_UNSAFE_RAW );
 	$get_num       = filter_input( INPUT_GET, 'num_inputs', FILTER_UNSAFE_RAW );
 	$get_pagina    = filter_input( INPUT_GET, 'pagina', FILTER_UNSAFE_RAW );
@@ -76,13 +75,6 @@ function vr_frases_show_main() {
 	$get_autor     = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
 	$get_categoria = filter_input( INPUT_GET, 'categoria', FILTER_UNSAFE_RAW );
 	$get_orden     = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
-
-	$style = 'standard';
-	if ( $nonce_valid && null !== $get_style && '' !== $get_style ) {
-		$style = sanitize_text_field( wp_unslash( $get_style ) );
-	} elseif ( isset( $_COOKIE['vr_frases_style'] ) ) {
-		$style = sanitize_text_field( wp_unslash( $_COOKIE['vr_frases_style'] ) );
-	}
 
 	$font_size = 'default';
 	if ( $nonce_valid && null !== $get_font_size && '' !== $get_font_size ) {
@@ -131,7 +123,7 @@ function vr_frases_show_main() {
 			</button>
 		</div>
 		<div class="vr-frases-preferences-toggle">
-			<?php vr_frases_render_preferences_bar( $style, $font_size, $num_inputs ); ?>
+			<?php vr_frases_render_preferences_bar( $font_size, $num_inputs ); ?>
 		</div>
 	<h3><span class="search-item">
 	<?php
@@ -184,24 +176,11 @@ function vr_frases_show_main() {
  * @param int    $num_inputs Currently selected records per page.
  * @return void Outputs HTML directly to browser.
  */
-function vr_frases_render_preferences_bar( $style, $font_size, $num_inputs ) {
-	$estilos = array(
-		'standard'   => esc_html__( 'Standard', 'vr-frases' ),
-		'dark'       => esc_html__( 'Dark', 'vr-frases' ),
-		'elegant'    => esc_html__( 'Elegant', 'vr-frases' ),
-		'classic'    => esc_html__( 'Classic', 'vr-frases' ),
-		'minimalist' => esc_html__( 'Minimalist', 'vr-frases' ),
-	);
+function vr_frases_render_preferences_bar( $font_size, $num_inputs ) {
 	?>
 	<form method="get" id="vr-frases-preferences" style="margin-bottom:30px;width:100%;">
 		<div class="vr-frases-preferences-bar">
 				<h2><?php esc_html_e( 'Preferences:', 'vr-frases' ); ?></h2>
-				<label for="style"><?php esc_html_e( 'Style:', 'vr-frases' ); ?></label>
-			<select name="style" id="style" onchange="this.form.submit()">
-				<?php foreach ( $estilos as $key => $label ) : ?>
-					<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $style, $key ); ?>><?php echo esc_html( $label ); ?></option>
-				<?php endforeach; ?>
-			</select>
 				<label for="font_size"><?php esc_html_e( 'Font size:', 'vr-frases' ); ?></label>
 			<select name="font_size" id="font_size" onchange="this.form.submit()">
 						<option value="default" <?php selected( $font_size, 'default' ); ?>><?php esc_html_e( 'Default', 'vr-frases' ); ?></option>
@@ -296,7 +275,7 @@ function vr_frases_frontend_pagination( $pagina, $paginas ) {
 
 	// Get current parameters safely.
 	$current_params  = array();
-	$preserve_params = array( 'style', 'font_size', 'num_inputs', 'frase', 'autor', 'categoria', 'orden' );
+	$preserve_params = array( 'font_size', 'num_inputs', 'frase', 'autor', 'categoria', 'orden' );
 
 	foreach ( $preserve_params as $param ) {
 		$param_value = filter_input( INPUT_GET, $param, FILTER_UNSAFE_RAW );
