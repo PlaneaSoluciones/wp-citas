@@ -95,7 +95,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 		array(
 			'gestionar-frases_page_vrfr_addnewquote',
 			'gestionar-frases_page_vrfr_manageautores',
-			'gestionar-frases_page_vrfr_manageclases',
 			'gestionar-frases_page_vrfr_manageimport',
 			'gestionar-frases_page_vrfr_managetemas',
 			'toplevel_page_vrfr_managefrases',
@@ -103,7 +102,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'toplevel_page_vrfr_manageimport',
 			'toplevel_page_vrfr_managesettings',
 			'vr-frases_page_vrfr_manageautores',
-			'vr-frases_page_vrfr_manageclases',
 			'vr-frases_page_vrfr_manageimport',
 			'vr-frases_page_vrfr_managetemas',
 		)
@@ -165,14 +163,12 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'author'                => __( 'Author', 'vr-frases' ),
 			'birthDate'             => __( 'Birth Date', 'vr-frases' ),
 			'cancel'                => __( 'Cancel', 'vr-frases' ),
-			'class'                 => __( 'Class', 'vr-frases' ),
 			'confirmDeleteMultiple' => __( 'Are you sure you want to delete these items?', 'vr-frases' ),
 			'confirmDeleteSingle'   => __( 'Are you sure you want to delete this item?', 'vr-frases' ),
 			'country'               => __( 'Country', 'vr-frases' ),
 			'deathDate'             => __( 'Death Date', 'vr-frases' ),
 			'defaultSuccessMessage' => __( 'Item deleted successfully.', 'vr-frases' ),
 			'details'               => __( 'Details', 'vr-frases' ),
-			'emptyClassField'       => __( 'Class field is required.', 'vr-frases' ),
 			'emptyField'            => __( 'Field cannot be empty.', 'vr-frases' ),
 			'error'                 => __( 'An error occurred.', 'vr-frases' ),
 			'errorLoadingData'      => __( 'Error loading quote data.', 'vr-frases' ),
@@ -183,7 +179,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'quickEdit'             => __( 'Quick Edit', 'vr-frases' ),
 			'save'                  => __( 'Save', 'vr-frases' ),
 			'searchWikipedia'       => __( 'Search on Wikipedia', 'vr-frases' ),
-			'selectClass'           => __( 'Select a class...', 'vr-frases' ),
 			'selectThemes'          => __( 'Select themes...', 'vr-frases' ),
 			'saving'                => __( 'Saving...', 'vr-frases' ),
 			'settingsErrorMessage'  => __( 'Error saving settings.', 'vr-frases' ),
@@ -207,7 +202,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'gdpr_hide'             => __( 'Hide details', 'vr-frases' ),
 			'ajaxurl'               => admin_url( 'admin-ajax.php' ),
 			'nonceAutores'          => wp_create_nonce( 'vr_nonce_autores' ),
-			'nonceClases'           => wp_create_nonce( 'vr_nonce_clases' ),
 			'nonceFrases'           => wp_create_nonce( 'vr_nonce_frases' ),
 			'nonceImport'           => wp_create_nonce( 'vr_nonce_import' ),
 			'nonceTemas'            => wp_create_nonce( 'vr_nonce_temas' ),
@@ -225,7 +219,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 		'vr-frases-select2-init',
 		'vrSelectTranslations',
 		array(
-			'SelClase' => esc_html__( 'Select Class...', 'vr-frases' ),
 			'SelTemas' => esc_html__( 'Select one or more Themes...', 'vr-frases' ),
 		)
 	);
@@ -247,28 +240,18 @@ function vr_frases_enqueue_scripts( $hook ) {
 		)
 	);
 
-	// Only if dynamically used in JS, pass classes and themes data.
-	// Use transients to cache queries and improve performance.
-	$clases = get_transient( 'vr_frases_clases_for_js' );
-	if ( false === $clases ) {
-		// With no variable parameters, we use direct query but with safe table name.
-		$clases = $wpdb->get_results( "SELECT idclase AS id, clase AS nombre FROM {$wpdb->clases} ORDER BY clase ASC" );
-		set_transient( 'vr_frases_clases_for_js', $clases, 3600 ); // Cache for 1 hour (3600 seconds).
-	}
-
+	// Pass themes data for JS selects.
 	$temas = get_transient( 'vr_frases_temas_for_js' );
 	if ( false === $temas ) {
-		// With no variable parameters, we use direct query but with safe table name.
 		$temas = $wpdb->get_results( "SELECT idtema AS id, tema AS nombre FROM {$wpdb->temas} ORDER BY tema ASC" );
-		set_transient( 'vr_frases_temas_for_js', $temas, 3600 ); // Cache for 1 hour (3600 seconds).
+		set_transient( 'vr_frases_temas_for_js', $temas, 3600 );
 	}
-	if ( ! empty( $clases ) && ! empty( $temas ) ) {
+	if ( ! empty( $temas ) ) {
 		wp_localize_script(
 			'vr-frases-scripts',
 			'vrFrasesData',
 			array(
-				'clases' => $clases,
-				'temas'  => $temas,
+				'temas' => $temas,
 			)
 		);
 	}

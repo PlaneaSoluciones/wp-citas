@@ -38,7 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wpdb;
 $wpdb->frases  = $wpdb->prefix . 'vr_fr_frases';   // Quotes table.
 $wpdb->autores = $wpdb->prefix . 'vr_fr_autores';  // Authors table.
-$wpdb->clases  = $wpdb->prefix . 'vr_fr_clases';   // Classes table.
 $wpdb->temas   = $wpdb->prefix . 'vr_fr_temas';    // Themes table.
 $wpdb->taxos   = $wpdb->prefix . 'vr_fr_taxos';    // Taxonomies table.
 $wpdb->import  = $wpdb->prefix . 'vr_fr_import';   // Import table.
@@ -64,19 +63,10 @@ function vr_frases_new_first() {
             idfrase int(11) NOT NULL AUTO_INCREMENT,
             autor text NOT NULL,
             frase text NOT NULL,
-            idclase int(11) NOT NULL DEFAULT '1',
             created_at datetime DEFAULT CURRENT_TIMESTAMP,
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            PRIMARY KEY (idfrase),
-            KEY idx_idclase (idclase)
+            PRIMARY KEY (idfrase)
         ) ENGINE=InnoDB {$wpdb->get_charset_collate()};",
-
-		'clases'  => "CREATE TABLE {$wpdb->clases} (
-            idclase int(11) NOT NULL AUTO_INCREMENT,
-            clase tinytext NOT NULL,
-            descripcion text NULL,
-            PRIMARY KEY (idclase)
-        ) {$wpdb->get_charset_collate()};",
 
 		'temas'   => "CREATE TABLE {$wpdb->temas} (
             idtema int(11) NOT NULL AUTO_INCREMENT,
@@ -191,35 +181,6 @@ function vr_frases_insert_initial_data() {
 
 	// Only add initial data if quotes table is empty.
 	if ( ! $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->frases}" ) ) {
-		// Insert default classes if they don't exist.
-		if ( 0 === $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->clases}" ) ) {
-			$initial_classes = array(
-				array(
-					'clase'       => __( 'General', 'vr-frases' ),
-					'descripcion' => __( 'Default category for all quotes', 'vr-frases' ),
-				),
-				array(
-					'clase'       => __( 'Wisdom', 'vr-frases' ),
-					'descripcion' => __( 'Quotes that contain deep wisdom and philosophical insights', 'vr-frases' ),
-				),
-				array(
-					'clase'       => __( 'Humor', 'vr-frases' ),
-					'descripcion' => __( 'Funny and humorous quotes', 'vr-frases' ),
-				),
-			);
-
-			foreach ( $initial_classes as $class ) {
-				$wpdb->insert(
-					$wpdb->clases,
-					array(
-						'clase'       => $class['clase'],
-						'descripcion' => $class['descripcion'],
-					),
-					array( '%s', '%s' )
-				);
-			}
-		}
-
 		// Insert default theme if none exists.
 		if ( 0 === $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->temas}" ) ) {
 			$wpdb->insert(
@@ -236,11 +197,10 @@ function vr_frases_insert_initial_data() {
 		$wpdb->insert(
 			$wpdb->frases,
 			array(
-				'autor'   => __( 'Anonymous', 'vr-frases' ),
-				'frase'   => __( 'Welcome to VR Frases! This is a sample quote.', 'vr-frases' ),
-				'idclase' => 1,
+				'autor' => __( 'Anonymous', 'vr-frases' ),
+				'frase' => __( 'Welcome to VR Frases! This is a sample quote.', 'vr-frases' ),
 			),
-			array( '%s', '%s', '%d' )
+			array( '%s', '%s' )
 		);
 
 		// Get the new quote ID.
@@ -460,20 +420,13 @@ function vr_frases_update_legacy() {
 
 	// Legacy tables.
 	$old_frases = $wpdb->prefix . 'fr_frases';
-	$old_clases = $wpdb->prefix . 'fr_clases';
 	$old_temas  = $wpdb->prefix . 'fr_temas';
 
 	// Check if legacy tables exist (use prepared statements for the LIKE pattern).
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_frases ) ) ) {
 		// Add necessary columns if they don't exist. Escape identifiers.
 		$old_frases_esc = '`' . esc_sql( $old_frases ) . '`';
-		$wpdb->query( "ALTER TABLE {$old_frases_esc} ADD COLUMN IF NOT EXISTS idclase INT(11) NOT NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( "ALTER TABLE {$old_frases_esc} ADD COLUMN IF NOT EXISTS idtema INT(11) NOT NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	}
-
-	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_clases ) ) ) {
-		$old_clases_esc = '`' . esc_sql( $old_clases ) . '`';
-		$wpdb->query( "ALTER TABLE {$old_clases_esc} ADD COLUMN IF NOT EXISTS descripcion TEXT" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_temas ) ) ) {
@@ -484,7 +437,6 @@ function vr_frases_update_legacy() {
 	// Migrate data if necessary. Use prepared statements for value placeholders.
 	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $old_frases ) ) ) {
 		$old_frases_esc = '`' . esc_sql( $old_frases ) . '`';
-		$wpdb->query( $wpdb->prepare( "UPDATE {$old_frases_esc} SET idclase = %d WHERE idclase IS NULL", 1 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( $wpdb->prepare( "UPDATE {$old_frases_esc} SET idtema = %d WHERE idtema IS NULL", 1 ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }

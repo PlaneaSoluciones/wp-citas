@@ -48,7 +48,6 @@ if ( is_admin() ) {
 	require_once plugin_dir_path( __DIR__ ) . '/admin/vr-frases-options.php'; // Plugin options.
 	require_once plugin_dir_path( __DIR__ ) . '/admin/vr-frases-frases.php'; // Quotes management.
 	require_once plugin_dir_path( __DIR__ ) . '/admin/vr-frases-autores.php'; // Authors management.
-	require_once plugin_dir_path( __DIR__ ) . '/admin/vr-frases-clases.php'; // Classes management.
 	require_once plugin_dir_path( __DIR__ ) . '/admin/vr-frases-temas.php'; // Themes management.
 	require_once plugin_dir_path( __DIR__ ) . '/admin/vr-frases-import.php'; // Data import.
 	require_once plugin_dir_path( __FILE__ ) . 'vr-frases-menu.php'; // Load menu file to hook in.

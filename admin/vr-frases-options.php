@@ -379,7 +379,6 @@ function vr_frases_render_system_info_tab() {
 	// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
 	$frases_count  = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->frases}" );
 	$autores_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->autores}" );
-	$clases_count  = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->clases}" );
 	$temas_count   = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->temas}" );
 
 	// Get authors with their quote counts.
@@ -389,16 +388,6 @@ function vr_frases_render_system_info_tab() {
 		 LEFT JOIN {$wpdb->frases} f ON a.autor = f.autor
 		 GROUP BY a.autor
 		 ORDER BY count DESC, a.autor ASC
-		 LIMIT 10"
-	);
-
-	// Get classes with their quote counts.
-	$clases_stats = $wpdb->get_results(
-		"SELECT c.clase, COUNT(f.idfrase) as count
-		 FROM {$wpdb->clases} c
-		 LEFT JOIN {$wpdb->frases} f ON c.idclase = f.idclase
-		 GROUP BY c.idclase, c.clase
-		 ORDER BY count DESC, c.clase ASC
 		 LIMIT 10"
 	);
 
@@ -453,10 +442,6 @@ function vr_frases_render_system_info_tab() {
 						<td><?php echo esc_html( number_format_i18n( $autores_count ) ); ?></td>
 					</tr>
 					<tr>
-						<td><?php esc_html_e( 'Total Classes', 'vr-frases' ); ?>:</td>
-						<td><?php echo esc_html( number_format_i18n( $clases_count ) ); ?></td>
-					</tr>
-					<tr>
 						<td><?php esc_html_e( 'Total Themes', 'vr-frases' ); ?>:</td>
 						<td><?php echo esc_html( number_format_i18n( $temas_count ) ); ?></td>
 					</tr>
@@ -465,7 +450,6 @@ function vr_frases_render_system_info_tab() {
 				<div class="quick-links">
 					<a href="?page=vrfr_managefrases"><?php esc_html_e( 'Manage Quotes', 'vr-frases' ); ?></a>
 					<a href="?page=vrfr_manageautores"><?php esc_html_e( 'Manage Authors', 'vr-frases' ); ?></a>
-					<a href="?page=vrfr_manageclases"><?php esc_html_e( 'Manage Classes', 'vr-frases' ); ?></a>
 					<a href="?page=vrfr_managetemas"><?php esc_html_e( 'Manage Themes', 'vr-frases' ); ?></a>
 				</div>
 			</div>
@@ -489,26 +473,6 @@ function vr_frases_render_system_info_tab() {
 				<?php if ( count( $autores_stats ) >= 10 ) : ?>
 				<p style="margin-top: 10px; font-style: italic; color: #666;">
 					<?php esc_html_e( 'Showing top 10 authors. Visit Manage Authors to see all.', 'vr-frases' ); ?>
-				</p>
-				<?php endif; ?>
-			</div>
-			<?php endif; ?>
-
-			<!-- Top Classes Card -->
-			<?php if ( ! empty( $clases_stats ) ) : ?>
-			<div class="system-info-card">
-				<h3><span class="dashicons dashicons-tag" style="margin-right: 8px;"></span><?php esc_html_e( 'Top Classes by Quote Count', 'vr-frases' ); ?></h3>
-				<div class="authors-list">
-					<?php foreach ( $clases_stats as $clase ) : ?>
-					<div class="author-item">
-						<span><?php echo esc_html( $clase->clase ); ?></span>
-						<span><strong><?php echo esc_html( number_format_i18n( $clase->count ) ); ?></strong> <?php esc_html_e( 'quotes', 'vr-frases' ); ?></span>
-					</div>
-					<?php endforeach; ?>
-				</div>
-				<?php if ( count( $clases_stats ) >= 10 ) : ?>
-				<p style="margin-top: 10px; font-style: italic; color: #666;">
-					<?php esc_html_e( 'Showing top 10 classes. Visit Manage Classes to see all.', 'vr-frases' ); ?>
 				</p>
 				<?php endif; ?>
 			</div>

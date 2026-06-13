@@ -411,9 +411,6 @@ function vr_frases_block_listado_frases( $frases, $options ) {
 								</a>
 							</span>
 							<div class="frase-categories">
-								<div class="frase-class">
-									<?php echo esc_html( $frase->clase ); ?>
-								</div>
 								<div class="frase-theme">
 									<?php echo esc_html( $frase->temas ); ?>
 								</div>

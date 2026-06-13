@@ -247,7 +247,6 @@ function vr_frases_get_ordered_message( $orden ) {
 	$ordered = array(
 		'porfrase'  => esc_html__( 'sorted by Quotes', 'vr-frases' ),
 		'porautor'  => esc_html__( 'sorted by Author', 'vr-frases' ),
-		'porclase'  => esc_html__( 'sorted by Class', 'vr-frases' ),
 		'portema'   => esc_html__( 'sorted by Theme', 'vr-frases' ),
 		'aleatorio' => esc_html__( 'in Random Order', 'vr-frases' ),
 	);
@@ -270,7 +269,6 @@ function vr_frases_get_order_by( $orden ) {
 	$order_by_options = array(
 		'porfrase'  => 'f.frase ASC',     // Direct field in SELECT and GROUP BY.
 		'porautor'  => 'f.autor ASC',     // Direct field in SELECT and GROUP BY.
-		'porclase'  => 'c.clase ASC',     // Direct field in SELECT and GROUP BY.
 		'portema'   => 'temas ASC',       // GROUP_CONCAT alias to avoid conflict with t.tema.
 		'aleatorio' => 'RAND()',          // Random order.
 	);
@@ -311,7 +309,6 @@ function vr_frases_get_list_data( $pagina = 1, $num_inputs = 20, $orden = 'porfr
 		FROM {$wpdb->frases} f
 		LEFT JOIN {$wpdb->taxos} tx ON f.idfrase = tx.idfrase
 		LEFT JOIN {$wpdb->temas} t ON tx.idtema = t.idtema
-		LEFT JOIN {$wpdb->clases} c ON f.idclase = c.idclase
 	";
 	if ( ! empty( $where_clause ) ) {
 		$total_sql .= " WHERE {$where_clause}";
@@ -329,18 +326,15 @@ function vr_frases_get_list_data( $pagina = 1, $num_inputs = 20, $orden = 'porfr
 		SELECT f.idfrase,
 		       f.frase,
 		       f.autor,
-		       c.clase AS clase,
-		       f.idclase,
 		       GROUP_CONCAT(DISTINCT t.tema ORDER BY t.tema SEPARATOR ', ') AS temas
 		FROM {$wpdb->frases} f
-		LEFT JOIN {$wpdb->clases} c ON f.idclase = c.idclase
 		LEFT JOIN {$wpdb->taxos} tx ON f.idfrase = tx.idfrase
 		LEFT JOIN {$wpdb->temas} t ON tx.idtema = t.idtema
 	";
 	if ( ! empty( $where_clause ) ) {
 		$sql .= " WHERE {$where_clause}";
 	}
-	$sql .= ' GROUP BY f.idfrase, f.frase, f.autor, c.clase';
+	$sql .= ' GROUP BY f.idfrase, f.frase, f.autor';
 	if ( ! empty( $order_by_clause ) ) {
 		$sql .= " ORDER BY {$order_by_clause}";
 	}
@@ -394,16 +388,10 @@ function vr_frases_search_filters() {
 	}
 
 	if ( ! empty( $categoria ) ) {
-			$categoria_id_clase = $wpdb->get_var( $wpdb->prepare( "SELECT idclase FROM {$wpdb->clases} WHERE clase = %s", $categoria ) );
-		if ( $categoria_id_clase ) {
-			$where_parts[] = 'f.idclase = %d';
-			$params[]      = $categoria_id_clase;
-		} else {
-			$categoria_id_tema = $wpdb->get_var( $wpdb->prepare( "SELECT idtema FROM {$wpdb->temas} WHERE tema = %s", $categoria ) );
-			if ( $categoria_id_tema ) {
-				$where_parts[] = 'tx.idtema = %d';
-				$params[]      = $categoria_id_tema;
-			}
+		$categoria_id_tema = $wpdb->get_var( $wpdb->prepare( "SELECT idtema FROM {$wpdb->temas} WHERE tema = %s", $categoria ) );
+		if ( $categoria_id_tema ) {
+			$where_parts[] = 'tx.idtema = %d';
+			$params[]      = $categoria_id_tema;
 		}
 	}
 
@@ -461,44 +449,25 @@ function vr_frases_search_form( $orden = '', $num_inputs = '' ) {
 			<input type="text" name="autor" id="autor" placeholder="<?php esc_attr_e( 'Author Name', 'vr-frases' ); ?>" value="<?php echo esc_attr( $query_params['autor'] ); ?>" class="search-input" />
 			<label for="categoria" class="screen-reader-text"><?php esc_html_e( 'Category:', 'vr-frases' ); ?></label>
 			<select name="categoria" id="categoria" class="search-input" onchange="document.getElementById('frases-searchform').submit();">
-				<option value="" <?php selected( $query_params['categoria'], '' ); ?>><?php esc_html_e( 'All Categories', 'vr-frases' ); ?></option>
-				<optgroup label="<?php esc_html_e( 'Classes', 'vr-frases' ); ?>">
-					<?php
-					$__vr_clases = vr_frases_new_list_clases( $query_params['categoria'] );
-					echo wp_kses(
-						$__vr_clases,
-						array(
-							'option'   => array(
-								'value'    => true,
-								'selected' => true,
-							),
-							'optgroup' => array( 'label' => true ),
-						)
-					);
-					?>
-				</optgroup>
-				<optgroup label="<?php esc_html_e( 'Themes', 'vr-frases' ); ?>">
-					<?php
-					$__vr_temas = vr_frases_new_list_temas( $query_params['categoria'] );
-					echo wp_kses(
-						$__vr_temas,
-						array(
-							'option'   => array(
-								'value'    => true,
-								'selected' => true,
-							),
-							'optgroup' => array( 'label' => true ),
-						)
-					);
-					?>
-				</optgroup>
+				<option value="" <?php selected( $query_params['categoria'], '' ); ?>><?php esc_html_e( 'All Themes', 'vr-frases' ); ?></option>
+				<?php
+				$__vr_temas = vr_frases_new_list_temas( $query_params['categoria'] );
+				echo wp_kses(
+					$__vr_temas,
+					array(
+						'option' => array(
+							'value'    => true,
+							'selected' => true,
+						),
+					)
+				);
+				?>
 			</select>
 			<label for="orden" class="screen-reader-text"><?php esc_html_e( 'Order by:', 'vr-frases' ); ?></label>
 			<select name="orden" id="orden" class="search-input" onchange="document.getElementById('frases-searchform').submit();">
 				<option value="aleatorio" <?php selected( $query_params['orden'], 'aleatorio' ); ?>><?php esc_html_e( 'Random Order', 'vr-frases' ); ?></option>
 				<option value="porfrase" <?php selected( $query_params['orden'], 'porfrase' ); ?>><?php esc_html_e( 'Order by Quote', 'vr-frases' ); ?></option>
 				<option value="porautor" <?php selected( $query_params['orden'], 'porautor' ); ?>><?php esc_html_e( 'Order by Author', 'vr-frases' ); ?></option>
-				<option value="porclase" <?php selected( $query_params['orden'], 'porclase' ); ?>><?php esc_html_e( 'Order by Class', 'vr-frases' ); ?></option>
 				<option value="portema" <?php selected( $query_params['orden'], 'portema' ); ?>><?php esc_html_e( 'Order by Theme', 'vr-frases' ); ?></option>
 			</select>
 			<input type="submit" class="button" value="<?php esc_attr_e( 'Search', 'vr-frases' ); ?>" />
@@ -538,29 +507,6 @@ function vr_frases_new_list_temas( $selected_categoria = '' ) {
 
 	// Generate HTML options.
 	return vr_frases_generate_options( $temas, 'tema', esc_html( $selected_categoria ) ); // Escape $selected_categoria.
-}
-
-/**
- * Generates a list of class options for select inputs.
- *
- * @since 4.1.0
- * @param string $selected_categoria The currently selected category.
- * @return string HTML option elements.
- */
-function vr_frases_new_list_clases( $selected_categoria = '' ) {
-	global $wpdb;
-
-	// Verify that $wpdb->clases is a valid table name.
-	if ( ! isset( $wpdb->clases ) || ! is_string( $wpdb->clases ) || empty( $wpdb->clases ) ) {
-		// Optional: for debugging. Uncomment to log if $wpdb->clases is not defined or is invalid.
-		return ''; // Return empty string if table name is invalid.
-	}
-
-	// Get classes ordered alphabetically.
-	$clases = $wpdb->get_results( "SELECT clase FROM `{$wpdb->clases}` ORDER BY clase ASC" ); // Backticks added for best practice.
-
-	// Generate HTML options.
-	return vr_frases_generate_options( $clases, 'clase', esc_html( $selected_categoria ) ); // Escape $selected_categoria.
 }
 
 /**

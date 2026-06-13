@@ -328,61 +328,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Initialize add form for Classes.
-  vrFrasesInitAltaGeneric({
-    formId: "add-class-form",
-    inputName: "clase",
-    ajaxAction: "vrfr_add_clase",
-    tbodySelector: ".vr-clases tbody",
-    /**
-     * Returns the HTML for a new Class row.
-     *
-     * @since 4.1.0
-     * @param {number|string} id - The class ID.
-     * @param {string} name - The class name.
-     * @param {string} nonce - The security nonce.
-     * @returns {string} The HTML string for the row.
-     */
-    rowHtml: function (id, name, nonce) {
-      return (
-        "<tr id='clase-" +
-        id +
-        "'>" +
-        "<th scope='row' class='check-column vr-column-center'>" +
-        "<input type='checkbox' class='vr-checkbox' data-id='" +
-        id +
-        "' data-tipo='clases'>" +
-        "</th>" +
-        "<td class='vr-column-center'>" +
-        id +
-        "</td>" +
-        "<td>" +
-        name +
-        "</td>" +
-        "<td class='vr-column-center'>0</td>" +
-        "<td class='vr-column-center'>" +
-        "<button type='button' class='quick-edit button' data-context='clases' data-id='" +
-        id +
-        "' data-name='" +
-        name +
-        "'>" +
-        "<span class='dashicons dashicons-edit' style='vertical-align: text-bottom;'></span> Quick Edit" +
-        "</button>" +
-        "</td>" +
-        "<td class='vr-column-center'>" +
-        "<button type='button' class='button vr-delete-button' title='Delete this Class' data-id='" +
-        id +
-        "' data-tipo='clases' data-nonce='" +
-        nonce +
-        "'>" +
-        "<span class='dashicons dashicons-trash' style='vertical-align: text-bottom; color: #a00;'></span> Delete" +
-        "</button>" +
-        "</td>" +
-        "</tr>"
-      );
-    },
-  });
-
   // Initialize add form for Themes.
   vrFrasesInitAltaGeneric({
     formId: "add-theme-form",
@@ -520,7 +465,6 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     var frase = form.frase.value.trim();
     var autor = form.autor.value.trim();
-    var idclase = form.idclase.value;
     var nonce = form.nonce.value;
     var idtemas = [];
     var temasSelect = form.querySelectorAll("#idtemas option:checked");
@@ -541,7 +485,6 @@ document.addEventListener("DOMContentLoaded", function () {
       action: "vrfr_add_frase",
       frase: frase,
       autor: autor,
-      idclase: idclase,
       nonce: nonce,
     });
     idtemas.forEach(function (tema) {
@@ -561,7 +504,6 @@ document.addEventListener("DOMContentLoaded", function () {
           window.vrFrasesInsertMessage(data.data.message, "success");
           form.frase.value = "";
           form.autor.value = "";
-          form.idclase.value = "";
           if (temasSelect.length) {
             temasSelect.forEach(function (opt) {
               opt.selected = false;
@@ -596,15 +538,14 @@ document.addEventListener("DOMContentLoaded", function () {
 jQuery(document).ready(function ($) {
   $(document).on(
     "click",
-    '.quick-edit[data-context="clases"], .quick-edit[data-context="temas"]',
+    '.quick-edit[data-context="temas"]',
     function (event) {
       event.preventDefault();
 
       const id = $(this).data("id");
       const name = $(this).data("name");
       const context = $(this).data("context");
-      const nonce =
-        context === "clases" ? vrFrasesTranslations.nonceClases : vrFrasesTranslations.nonceTemas;
+      const nonce = vrFrasesTranslations.nonceTemas;
       const row = $(this).closest("tr");
       const originalContent = row.html();
       const saveButtonLabel = vrFrasesTranslations.save || "Save";
@@ -641,8 +582,7 @@ jQuery(document).ready(function ($) {
           return;
         }
         const postData = {
-          action:
-            context === "clases" ? "vr_frases_quick_edit_clases" : "vr_frases_quick_edit_temas",
+          action: "vr_frases_quick_edit_temas",
           id: id,
           name: newName,
           nonce: nonce,
@@ -656,17 +596,7 @@ jQuery(document).ready(function ($) {
           .done(function (response) {
             if (response.success && response.data && response.data.row) {
               // Update row with new data.
-              const updatedRow =
-                context === "clases"
-                  ? `<tr id="clase-${response.data.row.idclase}">
-                    <th scope="row" class="check-column vr-column-center"><input type="checkbox" class="vr-checkbox" data-id="${response.data.row.idclase}" data-tipo="clases"></th>
-                    <td class="vr-column-center">${response.data.row.idclase}</td>
-                    <td>${response.data.row.clase}</td>
-                    <td class="vr-column-center">0</td>
-                    <td class="vr-column-center"><button type="button" class="quick-edit button" data-context="clases" data-id="${response.data.row.idclase}" data-name="${response.data.row.clase}"><span class="dashicons dashicons-edit" style="vertical-align: text-bottom;"></span> Quick Edit</button></td>
-                    <td class="vr-column-center"><button type="button" class="button vr-delete-button" title="Delete this Class" data-id="${response.data.row.idclase}" data-tipo="clases" data-nonce="${nonce}"><span class="dashicons dashicons-trash" style="vertical-align: text-bottom; color: #a00;"></span> Delete</button></td>
-                  </tr>`
-                  : `<tr id="tema-${response.data.row.idtema}">
+              const updatedRow = `<tr id="tema-${response.data.row.idtema}">
                     <th scope="row" class="check-column vr-column-center"><input type="checkbox" class="vr-checkbox" data-id="${response.data.row.idtema}" data-tipo="temas"></th>
                     <td class="vr-column-center">${response.data.row.idtema}</td>
                     <td>${response.data.row.tema}</td>
@@ -717,7 +647,7 @@ jQuery(document).ready(function ($) {
    * @returns {void}
    */
   function initializeSelect2WithTags() {
-    jQuery(".select2-clase, .select2-temas").select2({
+    jQuery(".select2-temas").select2({
       tags: true, // Allow creating new items.
       createTag: function (params) {
         return {
@@ -753,7 +683,6 @@ jQuery(document).ready(function ($) {
       return;
     }
 
-    const currentClase = $(this).data("clase") || "";
     const currentTemasRaw = $(this).data("temas");
     const currentTemas = currentTemasRaw
       ? typeof currentTemasRaw === "string"
@@ -777,20 +706,9 @@ jQuery(document).ready(function ($) {
           <input type="hidden" name="nonce" value="${nonce}" />
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
-              <th><label for="idclase">${vrFrasesTranslations.class}:</label></th>
               <th><label for="idtemas">${vrFrasesTranslations.theme}:</label></th>
             </tr>
             <tr>
-              <td>
-                <select name="idclase" id="idclase" class="select2-clase">
-                  ${vrFrasesData.clases
-                    .map((clase) => {
-                      const isSelected = currentClase == clase.id ? 'selected="selected"' : "";
-                      return `<option value="${clase.id}" ${isSelected}>${clase.nombre}</option>`;
-                    })
-                    .join("")}
-                </select>
-              </td>
               <td>
                 <select name="idtemas[]" id="idtemas" class="select2-temas" multiple="multiple">
                   ${vrFrasesData.temas
@@ -822,19 +740,10 @@ jQuery(document).ready(function ($) {
     // Save via AJAX.
     row.find("form.vr-quick-edit-frase-form").on("submit", function (e) {
       e.preventDefault();
-      const idclase = row.find("select[name='idclase']").val();
       const idtemas = row.find("select[name='idtemas[]']").val() || [];
-      if (!idclase) {
-        window.vrFrasesInsertMessage(
-          vrFrasesTranslations.emptyClassField || "Class field is required.",
-          "error",
-        );
-        return;
-      }
       const postData = {
         action: "vr_frases_quick_edit_frases",
         idfrase: id,
-        idclase: idclase,
         idtemas: idtemas,
         nonce: nonce,
       };
@@ -907,14 +816,13 @@ jQuery(document).ready(function ($) {
               ${authorLink}
               ${wikiBtn}
             </td>
-            <td>${escapeHtml(data.clase)}</td>
             <td>${escapeHtml(temasStr)}</td>
             <td class="vr-column-center">
               <div class="button-group">
                 <a href="${vrFrasesTranslations.editUrlBase || "#"}&accion=editar&idfrase=${data.idfrase}&_wpnonce=${nonce}" class="button" title="${vrFrasesTranslations.editThisQuote || "Edit this Quote"}">
                   <span class="dashicons dashicons-edit"></span>
                 </a>
-                <button type="button" class="quick-edit button" data-context="frases" data-id="${data.idfrase}" data-clase="${data.idclase}" data-temas="${temasIds}" style="padding-top: 5px;" title="${vrFrasesTranslations.quickEditClassThemes || "Quick edit class and themes"}">
+                <button type="button" class="quick-edit button" data-context="frases" data-id="${data.idfrase}" data-temas="${temasIds}" style="padding-top: 5px;" title="${vrFrasesTranslations.quickEditThemes || "Quick edit themes"}">
                   <span class="dashicons dashicons-admin-tools"></span>
                 </button>
               </div>
@@ -1322,17 +1230,6 @@ jQuery(document).ready(function ($) {
     $("#edit-quote-text").val(data.frase.frase);
     $("#edit-quote-author").val(data.frase.autor);
 
-    // Populate classes dropdown.
-    var classSelect = $("#edit-quote-class");
-    classSelect.empty();
-    classSelect.append('<option value="">' + (vrFrasesAjax.selectClass || "*CLASS*") + "</option>");
-    $.each(data.clases, function (index, clase) {
-      var selected = clase.idclase == data.frase.idclase ? "selected" : "";
-      classSelect.append(
-        '<option value="' + clase.idclase + '" ' + selected + ">" + clase.clase + "</option>",
-      );
-    });
-
     // Populate themes dropdown.
     var themesSelect = $("#edit-quote-themes");
     themesSelect.empty();
@@ -1345,11 +1242,6 @@ jQuery(document).ready(function ($) {
 
     // Initialize Select2 if available.
     if ($.fn.select2) {
-      $(".select2-clase").select2({
-        placeholder: vrFrasesAjax.selectClass || "Select a class...",
-        allowClear: true,
-        tags: true,
-      });
       $(".select2-temas").select2({
         placeholder: vrFrasesAjax.selectThemes || "Select themes...",
         allowClear: true,
@@ -1384,7 +1276,6 @@ jQuery(document).ready(function ($) {
       idfrase: $("#edit-quote-id").val(),
       frase: $("#edit-quote-text").val(),
       autor: $("#edit-quote-author").val(),
-      idclase: $("#edit-quote-class").val(),
       idtemas: $("#edit-quote-themes").val() || [],
       nonce: $("#edit-quote-nonce").val(),
     })
@@ -1457,17 +1348,7 @@ jQuery(document).ready(function ($) {
     const row = button.closest("tr");
 
     // Get form data from the row.
-    const idclase = row.find(`select[name="idclase[${idimport}]"]`).val();
     const idtemas = row.find(`select[name="idtemas[${idimport}][]"]`).val() || [];
-
-    // Validate required fields.
-    if (!idclase) {
-      vrFrasesInsertMessage(
-        vrFrasesAjax.selectClass || "Please select a class before saving.",
-        "error",
-      );
-      return;
-    }
 
     // Show overlay with saving message.
     if (window.vrFrasesOverlay) {
@@ -1486,7 +1367,6 @@ jQuery(document).ready(function ($) {
     $.post(vrFrasesAjax.ajaxurl, {
       action: "vr_frases_save_import",
       idimport: idimport,
-      idclase: idclase,
       idtemas: idtemas,
       nonce: vrFrasesAjax.nonceImport,
     })

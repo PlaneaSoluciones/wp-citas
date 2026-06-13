@@ -84,15 +84,6 @@ function vr_frases_add_menu() {
 
 	add_submenu_page(
 		'vrfr_managefrases',
-		esc_html__( 'Manage Classes', 'vr-frases' ),
-		esc_html__( 'Manage Classes', 'vr-frases' ),
-		'manage_options',
-		'vrfr_manageclases',
-		'vr_frases_manage_clases'
-	);
-
-	add_submenu_page(
-		'vrfr_managefrases',
 		esc_html__( 'Manage Themes', 'vr-frases' ),
 		esc_html__( 'Manage Themes', 'vr-frases' ),
 		'manage_options',

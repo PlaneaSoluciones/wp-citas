@@ -35,9 +35,6 @@ document.addEventListener(
 			if (jQuery( ".select2-temas" ).data( "select2" )) {
 				jQuery( ".select2-temas" ).select2( "destroy" );
 			}
-			if (jQuery( ".select2-clase" ).data( "select2" )) {
-				jQuery( ".select2-clase" ).select2( "destroy" );
-			}
 			// Initialize Select2 for themes fields.
 			if (jQuery( ".select2-temas" ).length) {
 				jQuery( ".select2-temas" ).select2(
@@ -59,27 +56,7 @@ document.addEventListener(
 					}
 				);
 			}
-			// Initialize Select2 for class fields.
-			if (jQuery( ".select2-clase" ).length) {
-				jQuery( ".select2-clase" ).select2(
-					{
-						placeholder: vrSelectTranslations.SelClase,
-						allowClear: true,
-						tags: true,
-						// Ensure new classes use the term as id so server-side code can detect non-numeric values.
-						createTag: function (params) {
-							return {
-								id: params.term,
-								text: params.term,
-								newOption: true,
-							};
-						},
-						multiple: false,
-						width: "50%",
-						language: "es",
-					}
-				);
-			}
+
 		}
 
 		/**

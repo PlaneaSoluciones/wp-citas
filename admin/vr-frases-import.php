@@ -455,10 +455,9 @@ function vr_frases_display_imported_data() {
 				<tr>
 					<th width="35%"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
 					<th width="15%"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-					<th width="20%"><?php esc_html_e( 'Class', 'vr-frases' ); ?></th>
-					<th width="20%"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></th>
-					<th width="05%"><?php esc_html_e( 'Save', 'vr-frases' ); ?></th>
-					<th width="05%"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
+					<th width="30%"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></th>
+					<th width="10%"><?php esc_html_e( 'Save', 'vr-frases' ); ?></th>
+					<th width="10%"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 				</tr>
 			</thead>
 
@@ -474,10 +473,9 @@ function vr_frases_display_imported_data() {
 				<tr>
 					<th width="35%"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
 					<th width="15%"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-					<th width="20%"><?php esc_html_e( 'Class', 'vr-frases' ); ?></th>
-					<th width="20%"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></th>
-					<th width="05%"><?php esc_html_e( 'Save', 'vr-frases' ); ?></th>
-					<th width="05%"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
+					<th width="30%"><?php esc_html_e( 'Themes', 'vr-frases' ); ?></th>
+					<th width="10%"><?php esc_html_e( 'Save', 'vr-frases' ); ?></th>
+					<th width="10%"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 				</tr>
 			</tfoot>
 		</table>
@@ -502,24 +500,12 @@ function vr_frases_display_imported_data() {
 function vr_frases_render_import_row( $item ) {
 	global $wpdb;
 
-	$clases = $wpdb->get_results( "SELECT * FROM {$wpdb->clases} ORDER BY clase ASC" );
-	$temas  = $wpdb->get_results( "SELECT * FROM {$wpdb->temas} ORDER BY tema ASC" );
+	$temas = $wpdb->get_results( "SELECT * FROM {$wpdb->temas} ORDER BY tema ASC" );
 	?>
 
 	<tr>
 		<td><?php echo esc_html( $item->frase ); ?></td>
 		<td><?php echo esc_html( $item->autor ); ?></td>
-
-		<td>
-			<select name="idclase[<?php echo esc_attr( $item->idimport ); ?>]" class="select2-clase">
-				<option value=""><?php esc_html_e( 'Select Class', 'vr-frases' ); ?></option>
-				<?php foreach ( $clases as $clase ) : ?>
-					<option value="<?php echo esc_attr( $clase->idclase ); ?>">
-						<?php echo esc_html( $clase->clase ); ?>
-					</option>
-				<?php endforeach; ?>
-			</select>
-		</td>
 
 		<td>
 			<select name="idtemas[<?php echo esc_attr( $item->idimport ); ?>][]" class="select2-temas" multiple>
@@ -583,36 +569,19 @@ function vr_frases_save_imported_data_ajax() {
 	}
 
 	// Check required parameters.
-	if ( ! isset( $_POST['idimport'] ) || ! isset( $_POST['idclase'] ) ) {
+	if ( ! isset( $_POST['idimport'] ) ) {
 		wp_send_json_error( array( 'message' => esc_html__( 'Missing required data.', 'vr-frases' ) ) );
 	}
 
 	global $wpdb;
 
 	$idimport = absint( $_POST['idimport'] );
-	$idclase  = sanitize_text_field( wp_unslash( $_POST['idclase'] ) );
 	$idtemas  = isset( $_POST['idtemas'] ) ? array_map( 'sanitize_text_field', (array) wp_unslash( $_POST['idtemas'] ) ) : array();
 
 	// Validate that import record exists.
 	$importado = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}vr_fr_import WHERE idimport = %d", $idimport ) );
 	if ( ! $importado ) {
 		wp_send_json_error( array( 'message' => esc_html__( 'Import record not found.', 'vr-frases' ) ) );
-	}
-
-	// Validate class selection.
-	if ( empty( $idclase ) ) {
-		wp_send_json_error( array( 'message' => esc_html__( 'Please select a class.', 'vr-frases' ) ) );
-	}
-
-	// Save new class if it doesn't exist and it's not numeric.
-	if ( ! is_numeric( $idclase ) ) {
-		$existing_class = $wpdb->get_var( $wpdb->prepare( "SELECT idclase FROM {$wpdb->clases} WHERE clase = %s", $idclase ) );
-		if ( $existing_class ) {
-			$idclase = $existing_class;
-		} else {
-			$wpdb->insert( "{$wpdb->clases}", array( 'clase' => $idclase ), array( '%s' ) );
-			$idclase = $wpdb->insert_id;
-		}
 	}
 
 	// Process themes.
@@ -651,11 +620,10 @@ function vr_frases_save_imported_data_ajax() {
 	$result = $wpdb->insert(
 		"{$wpdb->frases}",
 		array(
-			'frase'   => $importado->frase,
-			'autor'   => $importado->autor,
-			'idclase' => $idclase,
+			'frase' => $importado->frase,
+			'autor' => $importado->autor,
 		),
-		array( '%s', '%s', '%d' )
+		array( '%s', '%s' )
 	);
 
 	if ( false === $result ) {

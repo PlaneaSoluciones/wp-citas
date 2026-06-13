@@ -69,11 +69,6 @@ function vr_frases_delete_common( $tipo, $ids ) {
 			'id_column'   => 'idfrase',
 			'name_column' => 'frase',
 		),
-		'clases'  => array(
-			'table'       => $wpdb->clases,
-			'id_column'   => 'idclase',
-			'name_column' => 'clase',
-		),
 		'temas'   => array(
 			'table'       => $wpdb->temas,
 			'id_column'   => 'idtema',
@@ -103,7 +98,6 @@ function vr_frases_delete_common( $tipo, $ids ) {
 
 	// Validate nonce and capability using centralized helper.
 	$nonces     = array(
-		'clases'  => 'vr_nonce_clases',
 		'temas'   => 'vr_nonce_temas',
 		'frases'  => 'vr_nonce_frases',
 		'autores' => 'vr_nonce_autores',
@@ -137,9 +131,6 @@ function vr_frases_delete_common( $tipo, $ids ) {
 		switch ( $tipo ) {
 			case 'frases':
 				$item = $wpdb->get_row( $wpdb->prepare( "SELECT idfrase, frase FROM {$wpdb->frases} WHERE idfrase = %d", $id ) );
-				break;
-			case 'clases':
-				$item = $wpdb->get_row( $wpdb->prepare( "SELECT idclase, clase FROM {$wpdb->clases} WHERE idclase = %d", $id ) );
 				break;
 			case 'temas':
 				$item = $wpdb->get_row( $wpdb->prepare( "SELECT idtema, tema FROM {$wpdb->temas} WHERE idtema = %d", $id ) );
@@ -177,7 +168,7 @@ function vr_frases_delete_common( $tipo, $ids ) {
 
 			// Optimize the table after deleting (table name is validated through internal mapping).
 			$table_name = $map[ $tipo ]['table'];
-			if ( in_array( $table_name, array( $wpdb->autores, $wpdb->clases, $wpdb->temas, $wpdb->frases, $wpdb->import ), true ) ) {
+			if ( in_array( $table_name, array( $wpdb->autores, $wpdb->temas, $wpdb->frases, $wpdb->import ), true ) ) {
 				/* phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared */
 				$wpdb->query( "OPTIMIZE TABLE {$table_name}" );
 			}
@@ -253,26 +244,6 @@ function vr_frases_total_temas() {
 	$results   = $wpdb->get_results( "SELECT COUNT(tema) AS count FROM {$wpdb->temas} GROUP BY tema" );
 	$themes    = count( $results );
 	$formatted = number_format_i18n( (int) $themes );
-
-	return $formatted;
-}
-
-/**
- * Get the count of unique classes with localized formatting.
- *
- * Retrieves distinct classes count from database and returns
- * localized formatted string for display.
- *
- * @since 4.1.0
- * @return string Localized and formatted count of unique classes.
- */
-function vr_frases_total_clases() {
-	global $wpdb;
-
-	// Always query the database.
-	$results   = $wpdb->get_results( "SELECT COUNT(clase) AS count FROM {$wpdb->clases} GROUP BY clase" );
-	$classes   = count( $results );
-	$formatted = number_format_i18n( (int) $classes );
 
 	return $formatted;
 }
