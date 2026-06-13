@@ -43,7 +43,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 4.1.0
  * @return void
  */
-function vr_frases_enqueue_style() {
+function vr_frases_enqueue_style( $hook ) {
+	// Only load styles on plugin-specific admin pages to avoid conflicts with other themes/plugins.
+	if ( strpos( $hook, 'vrfr_' ) === false ) {
+		return;
+	}
+
 	wp_enqueue_style(
 		'vr-frases',
 		plugin_dir_url( __DIR__ ) . 'assets/css/vr-frases.css',
