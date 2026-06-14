@@ -10,7 +10,9 @@
     },
     "scripts": {
         "lint": "phpcs -n",
-        "fix": "phpcbf"
+        "fix": "phpcbf",
+        "post-install-cmd": "git config core.hooksPath .githooks || true",
+        "post-update-cmd": "git config core.hooksPath .githooks || true"
     },
     "config": {
         "allow-plugins": {

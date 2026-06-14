@@ -242,7 +242,8 @@ function vr_frases_define_titles( $params ) {
  * for display in admin interface.
  *
  * @since 4.1.0
- * @param string $orden The order parameter.
+ * @param string $orderby The column to order by.
+ * @param string $order   The order direction (asc or desc).
  * @return string Translated sorting message.
  */
 function vr_frases_get_ordered_message( $orderby, $order = 'asc' ) {
@@ -266,7 +267,8 @@ function vr_frases_get_ordered_message( $orderby, $order = 'asc' ) {
  * with validation and safe defaults.
  *
  * @since 4.1.0
- * @param string $orden The order parameter.
+ * @param string $orderby The column to order by.
+ * @param string $order   The order direction (asc or desc).
  * @return string Safe SQL ORDER BY clause.
  */
 function vr_frases_get_order_by( $orderby = 'frase', $order = 'asc' ) {
@@ -297,7 +299,8 @@ function vr_frases_get_order_by( $orderby = 'frase', $order = 'asc' ) {
  *
  * @param int    $pagina     Current page number.
  * @param int    $num_inputs Items per page.
- * @param string $orden      Sort order specification.
+ * @param string $orderby    Column to sort by.
+ * @param string $order      Sort direction (asc or desc).
  *
  * @return array Complete paginated data with frases, registros, and paginas.
  */

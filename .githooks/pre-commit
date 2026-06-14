@@ -1,0 +1,26 @@
+#!/bin/bash
+# Ejecuta PHPCS sobre los ficheros PHP staged antes de cada commit.
+
+if [ -f vendor/bin/phpcs ]; then
+    PHPCS="vendor/bin/phpcs"
+elif command -v phpcs &>/dev/null; then
+    PHPCS="phpcs"
+else
+    echo "⚠  PHPCS no encontrado (ejecuta 'composer install' para activar el lint local)"
+    exit 0
+fi
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.php$')
+if [ -z "$STAGED" ]; then
+    exit 0
+fi
+
+echo "Ejecutando PHPCS..."
+echo "$STAGED" | xargs "$PHPCS" -n
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ PHPCS falló. Corrige los errores o ejecuta 'composer fix' antes de commitear."
+    exit 1
+fi
+
+echo "✅ PHPCS OK"

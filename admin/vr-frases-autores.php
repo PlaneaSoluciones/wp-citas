@@ -300,7 +300,13 @@ function vr_frases_listar_autores( $pagina = '' ) {
 			$autor_th_class   = 'sortable asc';
 		}
 		$autor_sort_url = add_query_arg(
-			array_merge( $base_sort_args, array( 'orderby' => 'autor', 'order' => $autor_next_order ) ),
+			array_merge(
+				$base_sort_args,
+				array(
+					'orderby' => 'autor',
+					'order'   => $autor_next_order,
+				)
+			),
 			admin_url( 'admin.php' )
 		);
 
@@ -312,7 +318,13 @@ function vr_frases_listar_autores( $pagina = '' ) {
 			$quotes_th_class   = 'sortable desc';
 		}
 		$quotes_sort_url = add_query_arg(
-			array_merge( $base_sort_args, array( 'orderby' => 'quotes', 'order' => $quotes_next_order ) ),
+			array_merge(
+				$base_sort_args,
+				array(
+					'orderby' => 'quotes',
+					'order'   => $quotes_next_order,
+				)
+			),
 			admin_url( 'admin.php' )
 		);
 
