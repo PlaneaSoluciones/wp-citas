@@ -138,6 +138,7 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'author'                => __( 'Author', 'vr-frases' ),
 			'birthDate'             => __( 'Birth Date', 'vr-frases' ),
 			'cancel'                => __( 'Cancel', 'vr-frases' ),
+			'confirm'               => __( 'Confirm', 'vr-frases' ),
 			'confirmDeleteMultiple' => __( 'Are you sure you want to delete these items?', 'vr-frases' ),
 			'confirmDeleteSingle'   => __( 'Are you sure you want to delete this item?', 'vr-frases' ),
 			'country'               => __( 'Country', 'vr-frases' ),

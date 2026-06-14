@@ -104,51 +104,45 @@
       return;
     }
 
-    if (
-      !confirm(
-        vrFrasesTranslations.confirmDeleteSingle || "Are you sure you want to delete this item?",
-      )
-    ) {
-      return;
-    }
+    vrFrasesConfirm(
+      vrFrasesTranslations.confirmDeleteSingle || "Are you sure you want to delete this item?",
+    ).then(function (confirmed) {
+      if (!confirmed) return;
 
-    $btn.prop("disabled", true).addClass("deleting");
+      $btn.prop("disabled", true).addClass("deleting");
 
-    // Show overlay with delete message.
-    if (window.vrFrasesOverlay) {
-      window.vrFrasesOverlay.show(vrFrasesOverlay.deleting || "Deleting...");
-    }
+      if (window.vrFrasesOverlay) {
+        window.vrFrasesOverlay.show(vrFrasesOverlay.deleting || "Deleting...");
+      }
 
-    $.post(vrFrasesAjax.ajaxurl, {
-      action: "vr_frases_delete_item",
-      id,
-      tipo,
-      nonce,
-    })
-      .done(function (response) {
-        if (response.success) {
-          vrFrasesInsertMessage(response.data.message || "Item deleted.", "success");
-
-          const row = $btn.closest("tr");
-          row.fadeOut(300, function () {
-            row.remove();
-          });
-        } else {
-          const msg = response?.data?.message || "Error deleting item.";
-          vrFrasesInsertMessage(msg, "error");
-        }
+      $.post(vrFrasesAjax.ajaxurl, {
+        action: "vr_frases_delete_item",
+        id,
+        tipo,
+        nonce,
       })
-      .fail(function () {
-        vrFrasesInsertMessage("AJAX request failed.", "error");
-      })
-      .always(function () {
-        $btn.prop("disabled", false).removeClass("deleting");
-
-        // Hide overlay.
-        if (window.vrFrasesOverlay) {
-          window.vrFrasesOverlay.hide();
-        }
-      });
+        .done(function (response) {
+          if (response.success) {
+            vrFrasesInsertMessage(response.data.message || "Item deleted.", "success");
+            const row = $btn.closest("tr");
+            row.fadeOut(300, function () {
+              row.remove();
+            });
+          } else {
+            const msg = response?.data?.message || "Error deleting item.";
+            vrFrasesInsertMessage(msg, "error");
+          }
+        })
+        .fail(function () {
+          vrFrasesInsertMessage("AJAX request failed.", "error");
+        })
+        .always(function () {
+          $btn.prop("disabled", false).removeClass("deleting");
+          if (window.vrFrasesOverlay) {
+            window.vrFrasesOverlay.hide();
+          }
+        });
+    });
   });
 })(jQuery);
 
@@ -169,8 +163,6 @@ jQuery(document).ready(function ($) {
     const nonce = $(this).data("nonce");
     const confirmText = $(this).data("confirm");
 
-    if (!confirm(confirmText)) return;
-
     const ids = $('.vr-checkbox[data-tipo="' + tipo + '"]:checked')
       .map(function () {
         return $(this).data("id");
@@ -182,51 +174,53 @@ jQuery(document).ready(function ($) {
       return;
     }
 
-    $(this).prop("disabled", true);
+    vrFrasesConfirm(confirmText).then(function (confirmed) {
+      if (!confirmed) return;
 
-    // Show overlay with delete message.
-    if (window.vrFrasesOverlay) {
-      window.vrFrasesOverlay.show(vrFrasesOverlay.deleting || "Deleting items...");
-    }
+      $("#vr-delitems-button").prop("disabled", true);
 
-    $.post(vrFrasesAjax.ajaxurl, {
-      action: "vr_frases_delete_multiple_items",
-      tipo: tipo,
-      nonce: nonce,
-      ids: ids,
-    })
-      .done(function (response) {
-        $("#vr-delitems-button").prop("disabled", false);
+      if (window.vrFrasesOverlay) {
+        window.vrFrasesOverlay.show(vrFrasesOverlay.deleting || "Deleting items...");
+      }
 
-        if (response.success) {
-          ids.forEach(function (id) {
-            $('.vr-checkbox[data-id="' + id + '"]')
-              .closest("tr")
-              .fadeOut(300, function () {
-                $(this).remove();
-              });
-          });
-          vrFrasesInsertMessage(
-            response?.data?.message || vrFrasesAjax.defaultSuccessMessage || "Items deleted.",
-            "success",
-          );
-        } else {
-          vrFrasesInsertMessage(
-            response?.data?.message || vrFrasesAjax.defaultErrorMessage || "An error occurred.",
-            "error",
-          );
-        }
+      $.post(vrFrasesAjax.ajaxurl, {
+        action: "vr_frases_delete_multiple_items",
+        tipo: tipo,
+        nonce: nonce,
+        ids: ids,
       })
-      .fail(function () {
-        $("#vr-delitems-button").prop("disabled", false);
-        vrFrasesInsertMessage(vrFrasesAjax.ajaxError || "AJAX request failed.", "error");
-      })
-      .always(function () {
-        // Hide overlay.
-        if (window.vrFrasesOverlay) {
-          window.vrFrasesOverlay.hide();
-        }
-      });
+        .done(function (response) {
+          $("#vr-delitems-button").prop("disabled", false);
+
+          if (response.success) {
+            ids.forEach(function (id) {
+              $('.vr-checkbox[data-id="' + id + '"]')
+                .closest("tr")
+                .fadeOut(300, function () {
+                  $(this).remove();
+                });
+            });
+            vrFrasesInsertMessage(
+              response?.data?.message || vrFrasesAjax.defaultSuccessMessage || "Items deleted.",
+              "success",
+            );
+          } else {
+            vrFrasesInsertMessage(
+              response?.data?.message || vrFrasesAjax.defaultErrorMessage || "An error occurred.",
+              "error",
+            );
+          }
+        })
+        .fail(function () {
+          $("#vr-delitems-button").prop("disabled", false);
+          vrFrasesInsertMessage(vrFrasesAjax.ajaxError || "AJAX request failed.", "error");
+        })
+        .always(function () {
+          if (window.vrFrasesOverlay) {
+            window.vrFrasesOverlay.hide();
+          }
+        });
+    });
   });
 });
 

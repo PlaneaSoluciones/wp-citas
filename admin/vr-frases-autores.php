@@ -309,7 +309,7 @@ function vr_frases_listar_autores( $pagina = '' ) {
 							<tr id="autor-<?php echo esc_attr( $autor->idautor ); ?>">
 								<th scope="row" class="check-column">
 									<?php if ( 0 === $contador ) { ?>
-										<input type="checkbox" class="vr-checkbox" data-id="<?php echo esc_attr( $autor->idautor ); ?>" data-tipo="autores">
+										<input type="checkbox" name="ids[]" class="vr-checkbox" data-id="<?php echo esc_attr( $autor->idautor ); ?>" data-tipo="autores" value="<?php echo esc_attr( $autor->idautor ); ?>">
 									<?php } ?>
 								</th>
 								<td class="vr-column-center"><?php echo esc_html( $autor->idautor ); ?></td>
@@ -367,7 +367,7 @@ function vr_frases_listar_autores( $pagina = '' ) {
 									<?php if ( 0 === $contador ) { ?>
 										<button
 											type="button"
-											class="button enabled"
+											class="button vr-delete-button"
 											title="<?php esc_attr_e( 'Delete this Author', 'vr-frases' ); ?>"
 											data-id="<?php echo esc_attr( $autor->idautor ); ?>"
 											data-tipo="autores"

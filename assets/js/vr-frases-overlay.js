@@ -113,6 +113,51 @@
     });
   }
 
+  /**
+   * Shows a styled confirmation modal and returns a Promise resolving to true/false.
+   *
+   * @since 4.5.0
+   * @param {string} message - Text to display in the modal.
+   * @returns {Promise<boolean>}
+   */
+  window.vrFrasesConfirm = function (message) {
+    return new Promise(function (resolve) {
+      if (!document.getElementById("vr-confirm-modal")) {
+        $("body").append(`
+          <div id="vr-confirm-modal">
+            <div class="vr-overlay-dialog">
+              <p class="vr-confirm-message" id="vr-confirm-message"></p>
+              <div class="vr-confirm-buttons">
+                <button id="vr-confirm-ok" class="button button-primary"></button>
+                <button id="vr-confirm-cancel" class="button"></button>
+              </div>
+            </div>
+          </div>
+        `);
+      }
+
+      const t = typeof vrFrasesTranslations !== "undefined" ? vrFrasesTranslations : {};
+      $("#vr-confirm-message").text(message);
+      $("#vr-confirm-ok").text(t.confirm || "Confirm");
+      $("#vr-confirm-cancel").text(t.cancel || "Cancel");
+      $("#vr-confirm-modal").fadeIn(200);
+
+      $("#vr-confirm-ok")
+        .off("click")
+        .on("click", function () {
+          $("#vr-confirm-modal").fadeOut(200);
+          resolve(true);
+        });
+
+      $("#vr-confirm-cancel")
+        .off("click")
+        .on("click", function () {
+          $("#vr-confirm-modal").fadeOut(200);
+          resolve(false);
+        });
+    });
+  };
+
   // Create public API for external use - PRESERVE existing translations
   const originalTranslations =
     typeof window.vrFrasesOverlay !== "undefined" ? window.vrFrasesOverlay : {};
