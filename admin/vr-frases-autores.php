@@ -100,7 +100,15 @@ function vr_frases_listar_autores( $pagina = '' ) {
 	$filter     = null !== $filter_raw ? sanitize_text_field( wp_unslash( $filter_raw ) ) : 'all';
 	$search_raw = filter_input( INPUT_GET, 'search', FILTER_UNSAFE_RAW );
 	$search     = null !== $search_raw ? sanitize_text_field( wp_unslash( $search_raw ) ) : '';
-	$where      = array( '1=1' );
+
+	$orderby_raw   = filter_input( INPUT_GET, 'orderby', FILTER_UNSAFE_RAW );
+	$orderby_clean = null !== $orderby_raw ? sanitize_key( wp_unslash( $orderby_raw ) ) : '';
+	$orderby       = in_array( $orderby_clean, array( 'autor', 'quotes' ), true ) ? $orderby_clean : 'autor';
+	$order_raw     = filter_input( INPUT_GET, 'order', FILTER_UNSAFE_RAW );
+	$order_clean   = null !== $order_raw ? strtoupper( sanitize_key( wp_unslash( $order_raw ) ) ) : '';
+	$order         = in_array( $order_clean, array( 'ASC', 'DESC' ), true ) ? $order_clean : 'ASC';
+
+	$where = array( '1=1' );
 
 	if ( 'all' === $filter ) {
 		$where[] = '1=1';
@@ -256,22 +264,57 @@ function vr_frases_listar_autores( $pagina = '' ) {
 				. " OR datos IS NULL OR datos = '')";
 		}
 
-		$sql = "
-	SELECT *
-	FROM {$wpdb->autores}
-	{$where}
-";
+		if ( 'quotes' === $orderby ) {
+			$sql = "SELECT a.*, (SELECT COUNT(*) FROM {$wpdb->frases} WHERE autor = a.autor) as quote_count FROM {$wpdb->autores} a {$where}";
+		} else {
+			$sql = "SELECT * FROM {$wpdb->autores} {$where}";
+		}
 
 		if ( ! empty( $search ) ) {
 			$sql   .= ' AND autor LIKE %s';
 			$args[] = '%' . $wpdb->esc_like( $search ) . '%';
 		}
 
-		$sql   .= ' ORDER BY autor ASC LIMIT %d, %d';
+		if ( 'quotes' === $orderby ) {
+			$sql .= " ORDER BY quote_count {$order} LIMIT %d, %d"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		} else {
+			$sql .= " ORDER BY autor {$order} LIMIT %d, %d"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		}
 		$args[] = (int) $inicio;
 		$args[] = (int) $num_inputs;
 
 		$autores = $wpdb->get_results( $wpdb->prepare( $sql, ...$args ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
+		$base_sort_args = array(
+			'page'   => 'vrfr_manageautores',
+			'filter' => $filter,
+			'search' => $search,
+			'pagina' => 1,
+		);
+
+		if ( 'autor' === $orderby ) {
+			$autor_next_order = 'ASC' === $order ? 'desc' : 'asc';
+			$autor_th_class   = 'sorted ' . strtolower( $order );
+		} else {
+			$autor_next_order = 'asc';
+			$autor_th_class   = 'sortable asc';
+		}
+		$autor_sort_url = add_query_arg(
+			array_merge( $base_sort_args, array( 'orderby' => 'autor', 'order' => $autor_next_order ) ),
+			admin_url( 'admin.php' )
+		);
+
+		if ( 'quotes' === $orderby ) {
+			$quotes_next_order = 'ASC' === $order ? 'desc' : 'asc';
+			$quotes_th_class   = 'sorted ' . strtolower( $order );
+		} else {
+			$quotes_next_order = 'desc';
+			$quotes_th_class   = 'sortable desc';
+		}
+		$quotes_sort_url = add_query_arg(
+			array_merge( $base_sort_args, array( 'orderby' => 'quotes', 'order' => $quotes_next_order ) ),
+			admin_url( 'admin.php' )
+		);
 
 		if ( ! empty( $autores ) ) {
 			?>
@@ -286,12 +329,28 @@ function vr_frases_listar_autores( $pagina = '' ) {
 								<label></label>
 							</th>
 							<th scope="col" class="vr-column-center" style="width: 02%;"><?php esc_html_e( 'ID', 'vr-frases' ); ?></th>
-							<th scope="col" style="width: 10%;"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
+							<th scope="col" class="<?php echo esc_attr( $autor_th_class ); ?>" style="width: 10%;">
+								<a href="<?php echo esc_url( $autor_sort_url ); ?>">
+									<span><?php esc_html_e( 'Author', 'vr-frases' ); ?></span>
+									<span class="sorting-indicators">
+										<span class="sorting-indicator asc" aria-hidden="true"></span>
+										<span class="sorting-indicator desc" aria-hidden="true"></span>
+									</span>
+								</a>
+							</th>
 							<th scope="col" style="width: 10%;"><?php esc_html_e( 'Country', 'vr-frases' ); ?></th>
 							<th scope="col" style="width: 10%;"><?php esc_html_e( 'Birth Date', 'vr-frases' ); ?></th>
 							<th scope="col" style="width: 10%;"><?php esc_html_e( 'Death Date', 'vr-frases' ); ?></th>
 							<th scope="col" style="width: 32%;"><?php esc_html_e( 'Details', 'vr-frases' ); ?></th>
-							<th scope="col" class="vr-column-center" style="width: 06%;"><?php esc_html_e( 'Quotes', 'vr-frases' ); ?></th>
+							<th scope="col" class="vr-column-center <?php echo esc_attr( $quotes_th_class ); ?>" style="width: 06%;">
+								<a href="<?php echo esc_url( $quotes_sort_url ); ?>">
+									<span><?php esc_html_e( 'Quotes', 'vr-frases' ); ?></span>
+									<span class="sorting-indicators">
+										<span class="sorting-indicator asc" aria-hidden="true"></span>
+										<span class="sorting-indicator desc" aria-hidden="true"></span>
+									</span>
+								</a>
+							</th>
 							<th scope="col" class="vr-column-center" style="width: 11%;"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
 							<th scope="col" class="vr-column-center" style="width: 07%;"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 						</tr>
@@ -299,12 +358,16 @@ function vr_frases_listar_autores( $pagina = '' ) {
 					<tbody>
 						<?php
 						foreach ( $autores as $autor ) {
-							$contador = (int) $wpdb->get_var(
-								$wpdb->prepare(
-									"SELECT COUNT(*) FROM {$wpdb->frases} WHERE autor = %s",
-									$autor->autor
-								)
-							);
+							if ( isset( $autor->quote_count ) ) {
+								$contador = (int) $autor->quote_count;
+							} else {
+								$contador = (int) $wpdb->get_var(
+									$wpdb->prepare(
+										"SELECT COUNT(*) FROM {$wpdb->frases} WHERE autor = %s",
+										$autor->autor
+									)
+								);
+							}
 							?>
 							<tr id="autor-<?php echo esc_attr( $autor->idautor ); ?>">
 								<th scope="row" class="check-column">
@@ -393,12 +456,28 @@ function vr_frases_listar_autores( $pagina = '' ) {
 								<label></label>
 							</th>
 							<th scope="col" class="vr-column-center" style="width: 01%;"><?php esc_html_e( 'ID', 'vr-frases' ); ?></th>
-							<th scope="col" width="15%"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
+							<th scope="col" class="<?php echo esc_attr( $autor_th_class ); ?>" width="15%">
+								<a href="<?php echo esc_url( $autor_sort_url ); ?>">
+									<span><?php esc_html_e( 'Author', 'vr-frases' ); ?></span>
+									<span class="sorting-indicators">
+										<span class="sorting-indicator asc" aria-hidden="true"></span>
+										<span class="sorting-indicator desc" aria-hidden="true"></span>
+									</span>
+								</a>
+							</th>
 							<th scope="col" width="15%"><?php esc_html_e( 'Country', 'vr-frases' ); ?></th>
 							<th scope="col" width="15%"><?php esc_html_e( 'Birth Date', 'vr-frases' ); ?></th>
 							<th scope="col" width="15%"><?php esc_html_e( 'Death Date', 'vr-frases' ); ?></th>
 							<th scope="col" width="27%"><?php esc_html_e( 'Details', 'vr-frases' ); ?></th>
-							<th scope="col" class="vr-column-center" style="width: 01%;"><?php esc_html_e( 'Quotes', 'vr-frases' ); ?></th>
+							<th scope="col" class="vr-column-center <?php echo esc_attr( $quotes_th_class ); ?>" style="width: 01%;">
+								<a href="<?php echo esc_url( $quotes_sort_url ); ?>">
+									<span><?php esc_html_e( 'Quotes', 'vr-frases' ); ?></span>
+									<span class="sorting-indicators">
+										<span class="sorting-indicator asc" aria-hidden="true"></span>
+										<span class="sorting-indicator desc" aria-hidden="true"></span>
+									</span>
+								</a>
+							</th>
 							<th scope="col" class="vr-column-center" style="width: 07%;"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
 							<th scope="col" class="vr-column-center" style="width: 05%;"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 						</tr>
