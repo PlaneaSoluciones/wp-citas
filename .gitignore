@@ -2,3 +2,4 @@ languages/*.mo
 *.DS_Store
 .vscode/
 vendor/
+composer.phar
