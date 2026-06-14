@@ -280,7 +280,11 @@ function vr_frases_get_order_by( $orderby = 'frase', $order = 'asc' ) {
 	);
 	$col = isset( $col_map[ $orderby ] ) ? $col_map[ $orderby ] : 'f.frase';
 	$dir = 'desc' === strtolower( $order ) ? 'DESC' : 'ASC';
-	return $col . ' ' . $dir;
+	$clause = $col . ' ' . $dir;
+	if ( 'autor' === $orderby ) {
+		$clause .= ', f.frase ASC';
+	}
+	return $clause;
 }
 
 /**
