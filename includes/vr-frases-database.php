@@ -93,7 +93,6 @@ function vr_frases_new_first() {
 	foreach ( $tables as $key => $sql ) {
 		dbDelta( $sql );
 	}
-
 }
 
 /**

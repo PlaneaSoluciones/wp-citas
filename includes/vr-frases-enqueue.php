@@ -41,6 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * including the plugin's main CSS, jQuery UI, and Select2.
  *
  * @since 4.1.0
+ * @param string $hook The current admin page hook suffix.
  * @return void
  */
 function vr_frases_enqueue_style( $hook ) {
@@ -172,7 +173,9 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'alreadyInImport'       => __( 'Already in import list', 'vr-frases' ),
 			'saveAll'               => __( 'Save all', 'vr-frases' ),
 			'savingAll'             => __( 'Saving all...', 'vr-frases' ),
+			// translators: %d: number of quotes saved successfully.
 			'saveAllSuccess'        => __( '%d quotes saved successfully.', 'vr-frases' ),
+			// translators: %d: number of quotes that could not be saved.
 			'saveAllErrors'         => __( '%d quotes could not be saved (duplicates or errors).', 'vr-frases' ),
 			'duplicateNotice'       => __( 'These quotes were not imported because they already exist.', 'vr-frases' ),
 			'pageWillReload'        => __( 'Page will reload automatically when you close the duplicates panel.', 'vr-frases' ),
@@ -208,7 +211,6 @@ function vr_frases_enqueue_scripts( $hook ) {
 			'loading'      => esc_html__( 'Loading data...', 'vr-frases' ),
 		)
 	);
-
 }
 
 add_action( 'admin_enqueue_scripts', 'vr_frases_enqueue_scripts' );

@@ -168,7 +168,6 @@ function vr_frases_show_main() {
  * flexbox design with automatic form submission.
  *
  * @since 4.1.0
- * @param string $style      Currently selected visual theme.
  * @param string $font_size  Currently selected font size.
  * @param int    $num_inputs Currently selected records per page.
  * @return void Outputs HTML directly to browser.
