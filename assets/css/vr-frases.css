@@ -738,3 +738,62 @@ h4 .dashicons {
 .quick-links a:hover {
 	background: #005a87;
 }
+
+/* ---------------------------------------------------------------
+ * Sortable column headers — mirrors standard wp-list-table pattern
+ * --------------------------------------------------------------- */
+.vr-frases.wp-list-table th.sortable a,
+.vr-frases.wp-list-table th.sorted a {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.vr-frases.wp-list-table th.sortable .sorting-indicator,
+.vr-frases.wp-list-table th.sorted .sorting-indicator {
+	display: inline-block;
+}
+
+/* Unsorted: sin flecha por defecto (igual que WP nativo) */
+.vr-frases.wp-list-table th.sortable .sorting-indicator::before {
+	content: "";
+}
+
+/* Hover/focus en columna sin ordenar: muestra flecha ASC tenue */
+.vr-frases.wp-list-table th.sortable a:hover .sorting-indicator::before,
+.vr-frases.wp-list-table th.sortable a:focus .sorting-indicator::before {
+	font-family: dashicons;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	speak: never;
+	-webkit-font-smoothing: antialiased;
+	content: "\f142";
+	color: #b4b9be;
+}
+
+/* Sorted ascending: flecha arriba */
+.vr-frases.wp-list-table th.sorted.asc a .sorting-indicator::before {
+	font-family: dashicons;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	speak: never;
+	-webkit-font-smoothing: antialiased;
+	content: "\f142";
+	color: #2c3338;
+}
+
+/* Sorted descending: flecha abajo */
+.vr-frases.wp-list-table th.sorted.desc a .sorting-indicator::before {
+	font-family: dashicons;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	speak: never;
+	-webkit-font-smoothing: antialiased;
+	content: "\f140";
+	color: #2c3338;
+}

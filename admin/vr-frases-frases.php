@@ -81,12 +81,26 @@ function vr_frases_listar_frases( $pagina = '' ) {
 	$where_clause = $filters['sql'];
 	$where_params = $filters['params'];
 
-	// Get the order of results - moved outside cache block to always be available.
+	// Get the order of results.
 	// Nonce verification not required here as we only read parameters to display information, not to modify data.
-	$orden_raw = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
-	$orden     = ! empty( $orden_raw ) ? sanitize_text_field( wp_unslash( $orden_raw ) ) : 'porfrase';
+	$orderby_raw = filter_input( INPUT_GET, 'orderby', FILTER_UNSAFE_RAW );
+	$order_raw   = filter_input( INPUT_GET, 'order', FILTER_UNSAFE_RAW );
+	$orden_raw   = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
 
-	$data      = vr_frases_get_list_data( $pagina, $num_inputs, $orden );
+	$valid_orderby = array( 'id', 'frase', 'autor' );
+	$orderby       = ! empty( $orderby_raw ) ? sanitize_key( wp_unslash( $orderby_raw ) ) : 'frase';
+	if ( ! in_array( $orderby, $valid_orderby, true ) ) {
+		$orderby = 'frase';
+	}
+	$order_val = ! empty( $order_raw ) ? sanitize_key( wp_unslash( $order_raw ) ) : 'asc';
+	$order     = in_array( $order_val, array( 'asc', 'desc' ), true ) ? $order_val : 'asc';
+	$aleatorio = ! empty( $orden_raw ) && 'aleatorio' === sanitize_key( wp_unslash( $orden_raw ) );
+	if ( $aleatorio ) {
+		$orderby = 'aleatorio';
+		$order   = 'asc';
+	}
+
+	$data      = vr_frases_get_list_data( $pagina, $num_inputs, $orderby, $order );
 	$frases    = $data['frases'];
 	$registros = $data['registros'];
 	$paginas   = $data['paginas'];
@@ -109,7 +123,7 @@ function vr_frases_listar_frases( $pagina = '' ) {
 				<?php
 				// Marked safe: vr_frases_search_form() returns safe HTML for this context.
 				/* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
-				echo vr_frases_search_form( $orden );
+				echo vr_frases_search_form();
 				?>
 			</div>
 			<div class="vr-flexbar-info" style="justify-content: flex-end;">
@@ -130,7 +144,9 @@ function vr_frases_listar_frases( $pagina = '' ) {
 				<div class="vr-flexbar-paging">
 					<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" class="paging-input">
 						<input type="hidden" name="page" value="vrfr_managefrases" />
-						<input type="hidden" name="orden" value="<?php echo esc_attr( $orden ); ?>" />
+						<input type="hidden" name="orderby" value="<?php echo esc_attr( $aleatorio ? '' : $orderby ); ?>" />
+						<input type="hidden" name="order" value="<?php echo esc_attr( $order ); ?>" />
+						<input type="hidden" name="orden" value="<?php echo esc_attr( $aleatorio ? 'aleatorio' : '' ); ?>" />
 						<input type="hidden" name="frase" value="<?php echo esc_attr( null !== filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW ) ? sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW ) ) ) : '' ); ?>" />
 						<input type="hidden" name="autor" value="<?php echo esc_attr( null !== filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW ) ? sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW ) ) ) : '' ); ?>" />
 						<div class="tablenav-pages">
@@ -167,11 +183,18 @@ function vr_frases_listar_frases( $pagina = '' ) {
 							<th scope="col" id="cb" class="manage-column check-column vr-column-center" style="width: 03%;">
 								<input id="cb-select-all-1" title="<?php echo esc_attr__( 'Seleccionar/Deseleccionar todo', 'vr-frases' ); ?>" type="checkbox" onclick="SetAllCheckBoxes('listform', 'ids[]', this.checked);" />
 							</th>
-							<th scope="col" class="vr-column-center" style="width: 03%;"><?php esc_html_e( 'ID', 'vr-frases' ); ?></th>
-							<th scope="col" class="column-primary" style="width: 58%;"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
-							<th scope="col" style="width: 15%;"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-							<th scope="col" class="vr-column-center" style="width: 06%;"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
-							<th scope="col" class="vr-column-center" style="width: 04%;"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
+							<?php
+							$sort_col = $aleatorio ? '' : $orderby;
+							// Marked safe: vr_frases_sortable_column_header() returns properly escaped HTML.
+							/* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
+							echo vr_frases_sortable_column_header( __( 'ID', 'vr-frases' ), 'id', $sort_col, $order, 'width: 03%;', 'vr-column-center' );
+							/* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
+							echo vr_frases_sortable_column_header( __( 'Quote', 'vr-frases' ), 'frase', $sort_col, $order, 'width: 58%;', 'column-primary' );
+							/* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
+							echo vr_frases_sortable_column_header( __( 'Author', 'vr-frases' ), 'autor', $sort_col, $order, 'width: 15%;' );
+							?>
+							<th scope="col" class="manage-column vr-column-center" style="width: 06%;"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
+							<th scope="col" class="manage-column vr-column-center" style="width: 04%;"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -247,11 +270,16 @@ function vr_frases_listar_frases( $pagina = '' ) {
 							<th scope="col" id="cb" class="manage-column check-column vr-column-center">
 								<input id="cb-select-all-2" title="<?php echo esc_attr__( 'Seleccionar/Deseleccionar todo', 'vr-frases' ); ?>" type="checkbox" onclick="SetAllCheckBoxes('listform', 'ids[]', this.checked);" />
 							</th>
-							<th scope="col" class="vr-column-center"><?php esc_html_e( 'ID', 'vr-frases' ); ?></th>
-							<th scope="col" class="column-primary"><?php esc_html_e( 'Quote', 'vr-frases' ); ?></th>
-							<th scope="col"><?php esc_html_e( 'Author', 'vr-frases' ); ?></th>
-							<th scope="col" class="vr-column-center"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
-							<th scope="col" class="vr-column-center"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
+							<?php
+							/* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
+							echo vr_frases_sortable_column_header( __( 'ID', 'vr-frases' ), 'id', $sort_col, $order, 'width: 03%;', 'vr-column-center' );
+							/* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
+							echo vr_frases_sortable_column_header( __( 'Quote', 'vr-frases' ), 'frase', $sort_col, $order, 'width: 58%;', 'column-primary' );
+							/* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */
+							echo vr_frases_sortable_column_header( __( 'Author', 'vr-frases' ), 'autor', $sort_col, $order, 'width: 15%;' );
+							?>
+							<th scope="col" class="manage-column vr-column-center"><?php esc_html_e( 'Edit', 'vr-frases' ); ?></th>
+							<th scope="col" class="manage-column vr-column-center"><?php esc_html_e( 'Delete', 'vr-frases' ); ?></th>
 						</tr>
 					</tfoot>
 				</table>

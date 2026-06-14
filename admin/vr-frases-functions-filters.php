@@ -46,23 +46,27 @@
 function vr_frases_form_paginar( $pagina, $paginas, $registros, $pos = '' ) {
 	if ( $paginas > 1 ) {
 		// Read and sanitize common query parameters using filter_input for improved safety.
-		$frase_raw  = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
-		$autor_raw  = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
-		$orden_raw  = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
-		$filter_raw = filter_input( INPUT_GET, 'filter', FILTER_UNSAFE_RAW );
-		$page_raw   = filter_input( INPUT_GET, 'page', FILTER_UNSAFE_RAW );
-		$search_raw = filter_input( INPUT_GET, 'search', FILTER_UNSAFE_RAW );
+		$frase_raw   = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
+		$autor_raw   = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
+		$orden_raw   = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
+		$orderby_raw = filter_input( INPUT_GET, 'orderby', FILTER_UNSAFE_RAW );
+		$order_raw   = filter_input( INPUT_GET, 'order', FILTER_UNSAFE_RAW );
+		$filter_raw  = filter_input( INPUT_GET, 'filter', FILTER_UNSAFE_RAW );
+		$page_raw    = filter_input( INPUT_GET, 'page', FILTER_UNSAFE_RAW );
+		$search_raw  = filter_input( INPUT_GET, 'search', FILTER_UNSAFE_RAW );
 
 		// Build current URL for pagination base.
 		$base_url   = is_admin() ? admin_url( 'admin.php' ) : home_url();
 		$query_args = array(
-			'frase'  => null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '',
-			'autor'  => null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '',
-			'orden'  => null !== $orden_raw ? sanitize_text_field( wp_unslash( $orden_raw ) ) : '',
-			'filter' => null !== $filter_raw ? sanitize_text_field( wp_unslash( $filter_raw ) ) : '',
-			'search' => null !== $search_raw ? sanitize_text_field( wp_unslash( $search_raw ) ) : '',
-			'page'   => null !== $page_raw ? sanitize_text_field( wp_unslash( $page_raw ) ) : 'vrfr_managefrases',
-			'accion' => 'buscar',
+			'frase'   => null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '',
+			'autor'   => null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '',
+			'orden'   => null !== $orden_raw ? sanitize_key( wp_unslash( $orden_raw ) ) : '',
+			'orderby' => null !== $orderby_raw ? sanitize_key( wp_unslash( $orderby_raw ) ) : '',
+			'order'   => null !== $order_raw ? sanitize_key( wp_unslash( $order_raw ) ) : '',
+			'filter'  => null !== $filter_raw ? sanitize_text_field( wp_unslash( $filter_raw ) ) : '',
+			'search'  => null !== $search_raw ? sanitize_text_field( wp_unslash( $search_raw ) ) : '',
+			'page'    => null !== $page_raw ? sanitize_text_field( wp_unslash( $page_raw ) ) : 'vrfr_managefrases',
+			'accion'  => 'buscar',
 		);
 
 		// Remove empty parameters to clean URLs.
@@ -200,9 +204,11 @@ function vr_frases_define_titles( $params ) {
 	$msg       = esc_html__( 'You are viewing ALL quotes.', 'vr-frases' );
 
 	if ( ! empty( $params ) ) { // Check that $params is not empty.
-		$frase = isset( $params['frase'] ) ? sanitize_text_field( $params['frase'] ) : '';
-		$autor = isset( $params['autor'] ) ? sanitize_text_field( $params['autor'] ) : '';
-		$orden = isset( $params['orden'] ) ? sanitize_text_field( $params['orden'] ) : '';
+		$frase   = isset( $params['frase'] ) ? sanitize_text_field( $params['frase'] ) : '';
+		$autor   = isset( $params['autor'] ) ? sanitize_text_field( $params['autor'] ) : '';
+		$orden   = isset( $params['orden'] ) ? sanitize_key( $params['orden'] ) : '';
+		$orderby = isset( $params['orderby'] ) ? sanitize_key( $params['orderby'] ) : '';
+		$order   = isset( $params['order'] ) ? sanitize_key( $params['order'] ) : 'asc';
 
 		if ( ! empty( $frase ) ) {
 			$msg_parts[] = esc_html__( '[Quote: ', 'vr-frases' ) . esc_html( $frase ) . esc_html__( ']', 'vr-frases' );
@@ -210,8 +216,10 @@ function vr_frases_define_titles( $params ) {
 		if ( ! empty( $autor ) ) {
 			$msg_parts[] = esc_html__( '[Author: ', 'vr-frases' ) . esc_html( $autor ) . esc_html__( ']', 'vr-frases' );
 		}
-		if ( ! empty( $orden ) ) {
-			$msg_parts[] = esc_html__( '[Order: ', 'vr-frases' ) . esc_html( vr_frases_get_ordered_message( $orden ) ) . esc_html__( ']', 'vr-frases' );
+		if ( 'aleatorio' === $orden ) {
+			$msg_parts[] = esc_html__( '[Order: ', 'vr-frases' ) . esc_html( vr_frases_get_ordered_message( 'aleatorio' ) ) . esc_html__( ']', 'vr-frases' );
+		} elseif ( ! empty( $orderby ) ) {
+			$msg_parts[] = esc_html__( '[Order: ', 'vr-frases' ) . esc_html( vr_frases_get_ordered_message( $orderby, $order ) ) . esc_html__( ']', 'vr-frases' );
 		}
 		if ( empty( $msg_parts ) ) {
 			$msg_parts[] = esc_html__( '[ALL Quotes]', 'vr-frases' );
@@ -237,14 +245,18 @@ function vr_frases_define_titles( $params ) {
  * @param string $orden The order parameter.
  * @return string Translated sorting message.
  */
-function vr_frases_get_ordered_message( $orden ) {
-	$ordered = array(
-		'porfrase'  => esc_html__( 'sorted by Quotes', 'vr-frases' ),
-		'porautor'  => esc_html__( 'sorted by Author', 'vr-frases' ),
-		'aleatorio' => esc_html__( 'in Random Order', 'vr-frases' ),
+function vr_frases_get_ordered_message( $orderby, $order = 'asc' ) {
+	if ( 'aleatorio' === $orderby ) {
+		return esc_html__( 'in Random Order', 'vr-frases' );
+	}
+	$col_msgs = array(
+		'id'    => esc_html__( 'by ID', 'vr-frases' ),
+		'frase' => esc_html__( 'by Quote', 'vr-frases' ),
+		'autor' => esc_html__( 'by Author', 'vr-frases' ),
 	);
-
-	return isset( $ordered[ $orden ] ) ? $ordered[ $orden ] : '';
+	$col_msg = isset( $col_msgs[ $orderby ] ) ? $col_msgs[ $orderby ] : $col_msgs['frase'];
+	$dir_msg = 'desc' === $order ? esc_html__( 'descending', 'vr-frases' ) : esc_html__( 'ascending', 'vr-frases' );
+	return esc_html__( 'sorted ', 'vr-frases' ) . $col_msg . ' (' . $dir_msg . ')';
 }
 
 /**
@@ -257,19 +269,18 @@ function vr_frases_get_ordered_message( $orden ) {
  * @param string $orden The order parameter.
  * @return string Safe SQL ORDER BY clause.
  */
-function vr_frases_get_order_by( $orden ) {
-	// Valid ordering options mapped to safe aliases or grouped fields.
-	$order_by_options = array(
-		'porfrase'  => 'f.frase ASC',
-		'porautor'  => 'f.autor ASC',
-		'aleatorio' => 'RAND()',
+function vr_frases_get_order_by( $orderby = 'frase', $order = 'asc' ) {
+	if ( 'aleatorio' === $orderby ) {
+		return 'RAND()';
+	}
+	$col_map = array(
+		'id'    => 'f.idfrase',
+		'frase' => 'f.frase',
+		'autor' => 'f.autor',
 	);
-
-	// Normalize the value received.
-	// $orden = strtolower( trim( $orden ) ).
-
-	// Return the safe clause or the default value.
-	return isset( $order_by_options[ $orden ] ) ? $order_by_options[ $orden ] : $order_by_options['porfrase'];
+	$col = isset( $col_map[ $orderby ] ) ? $col_map[ $orderby ] : 'f.frase';
+	$dir = 'desc' === strtolower( $order ) ? 'DESC' : 'ASC';
+	return $col . ' ' . $dir;
 }
 
 /**
@@ -286,13 +297,13 @@ function vr_frases_get_order_by( $orden ) {
  *
  * @return array Complete paginated data with frases, registros, and paginas.
  */
-function vr_frases_get_list_data( $pagina = 1, $num_inputs = 20, $orden = 'porfrase' ) {
+function vr_frases_get_list_data( $pagina = 1, $num_inputs = 20, $orderby = 'frase', $order = 'asc' ) {
 	global $wpdb;
 
 	$filters         = vr_frases_search_filters();
 	$where_clause    = $filters['sql'];
 	$where_params    = $filters['params'];
-	$order_by_clause = vr_frases_get_order_by( $orden );
+	$order_by_clause = vr_frases_get_order_by( $orderby, $order );
 	$inicio          = ( 0 < $pagina ) ? ( ( $pagina - 1 ) * $num_inputs ) : 0;
 
 	// Total count.
@@ -381,20 +392,26 @@ function vr_frases_search_filters() {
  */
 function vr_frases_search_form( $orden = '', $num_inputs = '' ) {
 	// Read incoming GET parameters safely.
-	$frase_raw = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
-	$autor_raw = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
-	$orden_raw = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
+	$frase_raw   = filter_input( INPUT_GET, 'frase', FILTER_UNSAFE_RAW );
+	$autor_raw   = filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW );
+	$orden_raw   = filter_input( INPUT_GET, 'orden', FILTER_UNSAFE_RAW );
+	$orderby_raw = filter_input( INPUT_GET, 'orderby', FILTER_UNSAFE_RAW );
+	$order_raw   = filter_input( INPUT_GET, 'order', FILTER_UNSAFE_RAW );
 
-	$frase = null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '';
-	$autor = null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '';
+	$frase       = null !== $frase_raw ? sanitize_text_field( wp_unslash( $frase_raw ) ) : '';
+	$autor       = null !== $autor_raw ? sanitize_text_field( wp_unslash( $autor_raw ) ) : '';
+	$orderby_val = null !== $orderby_raw ? sanitize_key( wp_unslash( $orderby_raw ) ) : '';
+	$order_val   = null !== $order_raw ? sanitize_key( wp_unslash( $order_raw ) ) : 'asc';
 
-	// Prefer the function parameter $orden when provided, otherwise use GET value.
-	$orden_value = '' !== $orden ? sanitize_text_field( $orden ) : ( null !== $orden_raw ? sanitize_text_field( wp_unslash( $orden_raw ) ) : '' );
+	// Prefer the function parameter $orden when provided (for aleatorio), otherwise use GET value.
+	$orden_value = '' !== $orden ? sanitize_key( $orden ) : ( null !== $orden_raw ? sanitize_key( wp_unslash( $orden_raw ) ) : '' );
 
 	$query_params = array(
-		'frase' => $frase,
-		'autor' => $autor,
-		'orden' => $orden_value,
+		'frase'   => $frase,
+		'autor'   => $autor,
+		'orden'   => $orden_value,
+		'orderby' => $orderby_val,
+		'order'   => $order_val,
 	);
 
 	$is_admin   = is_admin();
@@ -412,11 +429,12 @@ function vr_frases_search_form( $orden = '', $num_inputs = '' ) {
 			<input type="text" name="frase" id="frase" placeholder="<?php esc_attr_e( 'Quote text', 'vr-frases' ); ?>" value="<?php echo esc_attr( $query_params['frase'] ); ?>" class="search-input" />
 			<label for="autor" class="screen-reader-text"><?php esc_html_e( 'Author Name:', 'vr-frases' ); ?></label>
 			<input type="text" name="autor" id="autor" placeholder="<?php esc_attr_e( 'Author Name', 'vr-frases' ); ?>" value="<?php echo esc_attr( $query_params['autor'] ); ?>" class="search-input" />
+			<input type="hidden" name="orderby" value="<?php echo esc_attr( $query_params['orderby'] ); ?>" />
+			<input type="hidden" name="order" value="<?php echo esc_attr( $query_params['order'] ); ?>" />
 			<label for="orden" class="screen-reader-text"><?php esc_html_e( 'Order by:', 'vr-frases' ); ?></label>
 			<select name="orden" id="orden" class="search-input" onchange="document.getElementById('frases-searchform').submit();">
+				<option value="" <?php selected( $query_params['orden'], '' ); ?>><?php esc_html_e( 'Normal Order', 'vr-frases' ); ?></option>
 				<option value="aleatorio" <?php selected( $query_params['orden'], 'aleatorio' ); ?>><?php esc_html_e( 'Random Order', 'vr-frases' ); ?></option>
-				<option value="porfrase" <?php selected( $query_params['orden'], 'porfrase' ); ?>><?php esc_html_e( 'Order by Quote', 'vr-frases' ); ?></option>
-				<option value="porautor" <?php selected( $query_params['orden'], 'porautor' ); ?>><?php esc_html_e( 'Order by Author', 'vr-frases' ); ?></option>
 			</select>
 			<input type="submit" class="button" value="<?php esc_attr_e( 'Search', 'vr-frases' ); ?>" />
 			<?php if ( $is_admin ) : ?>
@@ -504,4 +522,48 @@ function vr_frases_random_frase() {
 	}
 
 	return $frase; // Return the formatted quote.
+}
+
+/**
+ * Generate HTML for a sortable column header following WordPress conventions.
+ *
+ * Produces a <th> with a sort link that toggles ASC/DESC on the active column
+ * and defaults to ASC on inactive columns. Uses standard WordPress CSS classes
+ * (sortable/sorted + asc/desc) and the .sorting-indicator span.
+ *
+ * @since 4.2.0
+ * @param string $label           Column display text.
+ * @param string $column_key      Column key: id, frase, or autor.
+ * @param string $current_orderby Active orderby value.
+ * @param string $current_order   Active order value (asc|desc).
+ * @param string $style           Optional inline style for the <th>.
+ * @param string $extra_classes   Optional additional CSS classes.
+ * @return string Safe HTML for the <th> element.
+ */
+function vr_frases_sortable_column_header( $label, $column_key, $current_orderby, $current_order, $style = '', $extra_classes = '' ) {
+	$is_sorted  = ( $column_key === $current_orderby );
+	$link_order = $is_sorted ? ( 'asc' === $current_order ? 'desc' : 'asc' ) : 'asc';
+	$th_class   = 'manage-column ' . ( $is_sorted ? 'sorted ' . $current_order : 'sortable asc' );
+	if ( $extra_classes ) {
+		$th_class .= ' ' . $extra_classes;
+	}
+
+	$url = add_query_arg(
+		array(
+			'orderby' => $column_key,
+			'order'   => $link_order,
+			'orden'   => false,
+			'pagina'  => false,
+		)
+	);
+
+	$style_attr = $style ? ' style="' . esc_attr( $style ) . '"' : '';
+
+	return sprintf(
+		'<th scope="col" class="%1$s"%2$s><a href="%3$s"><span>%4$s</span><span class="sorting-indicator"></span></a></th>',
+		esc_attr( $th_class ),
+		$style_attr,
+		esc_url( $url ),
+		esc_html( $label )
+	);
 }
