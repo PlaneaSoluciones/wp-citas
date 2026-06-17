@@ -141,6 +141,28 @@ function vr_frases_listar_frases( $pagina = '' ) {
 						?>
 					</span>
 				</div>
+				<?php
+				$autor_filtro = null !== filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW ) ? sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'autor', FILTER_UNSAFE_RAW ) ) ) : '';
+				if ( ! empty( $autor_filtro ) ) :
+					?>
+				<div class="vr-flexbar-export">
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+						<input type="hidden" name="action" value="vr_frases_exportar_por_autores" />
+						<input type="hidden" name="vr_nonce_export_autores" value="<?php echo esc_attr( wp_create_nonce( 'vr_nonce_export_autores' ) ); ?>" />
+						<input type="hidden" name="autor" value="<?php echo esc_attr( $autor_filtro ); ?>" />
+						<button type="submit" class="button">
+							<span class="dashicons dashicons-download" style="vertical-align: text-bottom;"></span>
+							<?php
+							printf(
+								/* translators: %s: author name */
+								esc_html__( 'Export quotes from "%s"', 'vr-frases' ),
+								esc_html( $autor_filtro )
+							);
+							?>
+						</button>
+					</form>
+				</div>
+				<?php endif; ?>
 				<div class="vr-flexbar-paging">
 					<form method="get" action="<?php echo esc_url( admin_url( 'admin.php' ) ); ?>" class="paging-input">
 						<input type="hidden" name="page" value="vrfr_managefrases" />

@@ -220,6 +220,7 @@ function vr_frases_listar_autores( $pagina = '' ) {
 							<input type="text" id="search" name="search" placeholder="<?php esc_attr_e( 'Search authors...', 'vr-frases' ); ?>" value="<?php echo esc_attr( $search ); ?>" oninput="this.form.submit();" />
 						</form>
 					</div>
+
 				</div>
 			</div>
 			<div class="vr-flexbar-info" style="justify-content: flex-end;">

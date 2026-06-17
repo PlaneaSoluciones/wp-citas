@@ -788,6 +788,51 @@ function vr_frases_exportar_csv() {
 add_action( 'admin_post_vr_frases_exportar_csv', 'vr_frases_exportar_csv' );
 
 /**
+ * Export all quotes from a specific author as a CSV download.
+ *
+ * Called from the manage quotes screen when filtered by author (?autor=...).
+ *
+ * @since 4.6.1
+ * @return void Sends file to browser and exits.
+ */
+function vr_frases_exportar_por_autores() {
+	global $wpdb;
+
+	if ( ! isset( $_POST['vr_nonce_export_autores'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['vr_nonce_export_autores'] ) ), 'vr_nonce_export_autores' ) ) {
+		wp_die( esc_html__( 'Error: Action not allowed. Invalid nonce.', 'vr-frases' ) );
+	}
+
+	$autor = isset( $_POST['autor'] ) ? sanitize_text_field( wp_unslash( $_POST['autor'] ) ) : '';
+
+	if ( empty( $autor ) ) {
+		wp_die( esc_html__( 'Error: No author specified.', 'vr-frases' ) );
+	}
+
+	$frases = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT frase, autor FROM {$wpdb->frases} WHERE autor = %s ORDER BY frase",
+			$autor
+		),
+		ARRAY_A
+	);
+
+	$filename = sanitize_file_name( $autor ) . '.csv';
+
+	header( 'Content-Type: text/csv; charset=utf-8' );
+	header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+	echo "\xEF\xBB\xBF";
+
+	$output = fopen( 'php://output', 'w' );
+	fputcsv( $output, array( 'Frase', 'Autor' ), ',', '"' );
+	foreach ( $frases as $frase ) {
+		fputcsv( $output, array( $frase['frase'], $frase['autor'] ), ',', '"' );
+	}
+	fclose( $output );
+	exit;
+}
+add_action( 'admin_post_vr_frases_exportar_por_autores', 'vr_frases_exportar_por_autores' );
+
+/**
  * Render the export form for quotes with format and options selection.
  *
  * This function displays the export form allowing users to choose filename,
