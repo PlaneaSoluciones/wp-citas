@@ -217,7 +217,8 @@ function vr_frases_listar_autores( $pagina = '' ) {
 							<input type="hidden" name="page" value="vrfr_manageautores" />
 							<input type="hidden" name="nonce" value="<?php echo esc_attr( wp_create_nonce( 'vr_nonce_autores' ) ); ?>" />
 							<label for="search"><?php esc_html_e( 'Search Authors:', 'vr-frases' ); ?></label>
-							<input type="text" id="search" name="search" placeholder="<?php esc_attr_e( 'Search authors...', 'vr-frases' ); ?>" value="<?php echo esc_attr( $search ); ?>" oninput="this.form.submit();" />
+							<input type="text" id="search" name="search" placeholder="<?php esc_attr_e( 'Search authors...', 'vr-frases' ); ?>" value="<?php echo esc_attr( $search ); ?>" />
+							<button type="submit" class="button"><span class="dashicons dashicons-search" style="vertical-align: text-bottom;"></span></button>
 						</form>
 					</div>
 
