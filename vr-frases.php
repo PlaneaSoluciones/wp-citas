@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'VR_FRASES_VERSION', '4.6.0' );
+define( 'VR_FRASES_VERSION', '4.6.2' );
 define( 'VR_FRASES_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
