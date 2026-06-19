@@ -1,7 +1,7 @@
 # Changelog
 
 Todos los cambios notables de WP Citas se documentan aquí.  
-Formato: [Keep a Changelog](https://keepachangelog.com/es/1.1.0/) · Versioning: [SemVer](https://semver.org/lang/es/).
+Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioning: [SemVer](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
