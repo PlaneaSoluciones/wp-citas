@@ -35,11 +35,17 @@ jobs:
           sudo apt-get install -y lftp
           lftp -e "set sftp:auto-confirm yes; set net:max-retries 3; open -u $SFTP_USERNAME,$SFTP_PASSWORD sftp://$SFTP_HOST; mirror --reverse --delete --verbose dist/wp-citas/ web/wp-content/plugins/wp-citas/; quit"
 
+      - name: Extraer notas de release desde CHANGELOG.md
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          awk "/^## \[${VERSION}\]/{found=1; next} found && /^## \[/{exit} found && NF{print}" CHANGELOG.md > NOTES.md
+
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${{ github.ref_name }}" \
             --title "${{ github.ref_name }}" \
-            --generate-notes \
+            --notes-file NOTES.md \
             "wp-citas-${{ github.ref_name }}.zip"
