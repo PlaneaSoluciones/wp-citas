@@ -1,0 +1,265 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Return type \(void\) of method VR_Frases_Widget\:\:form\(\) should be compatible with return type \(string\|null\) of method WP_Widget\<array\<string, mixed\>\>\:\:form\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: admin/class-vr-frases-widget.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-autores.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-autores.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-autores.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 5
+			path: admin/vr-frases-autores.php
+
+		-
+			message: '#^Call to function is_numeric\(\) with int\<1, max\> will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: admin/vr-frases-frases.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-frases.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-frases.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between null and string\|false will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: admin/vr-frases-frases.php
+
+		-
+			message: '#^Access to an undefined property wpdb\:\:\$autores\.$#'
+			identifier: property.notFound
+			count: 2
+			path: admin/vr-frases-functions-ajax.php
+
+		-
+			message: '#^Call to function is_array\(\) with array\{id\: int, name\: non\-empty\-string\} will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: admin/vr-frases-functions-ajax.php
+
+		-
+			message: '#^Offset ''autores''\|''frases'' on array\{frases\: string, autores\: string, imports\: string\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: admin/vr-frases-functions-ajax.php
+
+		-
+			message: '#^Offset ''autores''\|''frases''\|''import'' on array\{frases\: string, autores\: string, import\: string\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: admin/vr-frases-functions-ajax.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between ''autores'' and ''autores'' will always evaluate to true\.$#'
+			identifier: identical.alwaysTrue
+			count: 1
+			path: admin/vr-frases-functions-ajax.php
+
+		-
+			message: '#^Comparison operation "\>" between int\<2, max\> and 0 is always true\.$#'
+			identifier: greater.alwaysTrue
+			count: 1
+			path: admin/vr-frases-functions-filters.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strlen expects string, int\<2, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-functions-filters.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 3
+			path: admin/vr-frases-functions-filters.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, int given\.$#'
+			identifier: argument.type
+			count: 2
+			path: admin/vr-frases-functions-filters.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_html expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-functions-filters.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_js expects string, int\<2, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-functions-filters.php
+
+		-
+			message: '#^Offset ''autores''\|''frases''\|''import'' on array\{frases\: ''vr_nonce_frases'', autores\: ''vr_nonce_autores'', import\: ''vr_nonce_import''\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: admin/vr-frases-functions.php
+
+		-
+			message: '#^Variable \$nonce_name in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: admin/vr-frases-functions.php
+
+		-
+			message: '#^Found usage of constant DOING_AJAX\. Use wp_doing_ajax\(\) instead\.$#'
+			identifier: phpstanWP.wpConstant.fetch
+			count: 3
+			path: admin/vr-frases-import.php
+
+		-
+			message: '#^Negated boolean expression is always false\.$#'
+			identifier: booleanNot.alwaysFalse
+			count: 1
+			path: admin/vr-frases-import.php
+
+		-
+			message: '#^Parameter \#2 \$paginas of function vr_frases_form_paginar expects int, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-import.php
+
+		-
+			message: '#^Offset ''Add New Quote''\|''Manage Authors''\|''Manage Classes and…''\|''Manage Import /…''\|''Manage Options''\|''Manage Quotes'' on array\{''Manage Quotes''\: ''dashicons\-edit'', ''Add New Quote''\: ''dashicons\-plus\-alt'', ''Manage Authors''\: ''dashicons\-admin…'', ''Manage Classes and Manage Topics''\: ''dashicons\-tag'', ''Manage Import / Export''\: ''dashicons\-upload'', ''Manage Options''\: ''dashicons\-admin…''\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: admin/vr-frases-options.php
+
+		-
+			message: '#^Offset ''Shortcode\: …''\|''Widget\: Take a look…''\|''Widget\: VR\-frases'' on array\{''Widget\: VR\-frases''\: ''dashicons\-dashboard'', ''Widget\: Take a look for VR\-frases''\: ''dashicons\-dashboard'', ''Shortcode\: \[vrfrases\]''\: ''dashicons\-shortcode'', ''Shortcode\: \[randomfrase\]''\: ''dashicons\-randomize'', ''Shortcode\: \[frasescount\]''\: ''dashicons\-list\-view'', ''Shortcode\: \[autorescount\]''\: ''dashicons\-id\-alt''\} in isset\(\) always exists and is not nullable\.$#'
+			identifier: isset.offset
+			count: 1
+			path: admin/vr-frases-options.php
+
+		-
+			message: '#^Function vr_frases_block_listado_frases invoked with 5 parameters, 2 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: admin/vr-frases-template.php
+
+		-
+			message: '#^Parameter \#1 \$string of function strlen expects string, int\<2, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-template.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int given\.$#'
+			identifier: argument.type
+			count: 2
+			path: admin/vr-frases-template.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<1, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-template.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_js expects string, int\<2, max\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: admin/vr-frases-template.php
+
+		-
+			message: '#^Parameter \#2 \$num_inputs of function vr_frases_search_form expects string, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: admin/vr-frases-template.php
+
+		-
+			message: '#^Constant VR_FRASES_PLUGIN_BASENAME not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/vr-frases-activation.php
+
+		-
+			message: '#^Constant VR_FRASES_PLUGIN_DIR not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/vr-frases-activation.php
+
+		-
+			message: '#^Elseif condition is always false\.$#'
+			identifier: elseif.alwaysFalse
+			count: 1
+			path: includes/vr-frases-activation.php
+
+		-
+			message: '#^If condition is always true\.$#'
+			identifier: if.alwaysTrue
+			count: 1
+			path: includes/vr-frases-activation.php
+
+		-
+			message: '#^If condition is always false\.$#'
+			identifier: if.alwaysFalse
+			count: 3
+			path: includes/vr-frases-database.php
+
+		-
+			message: '#^Parameter \#3 \$args of function register_setting expects array\{type\?\: string, label\?\: string, description\?\: string, sanitize_callback\?\: callable\(\)\: mixed, show_in_rest\?\: array\|bool, default\?\: mixed\}, ''vr_frases_options…'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/vr-frases-loader.php
+
+		-
+			message: '#^Constant VR_FRASES_PLUGIN_BASENAME not found\.$#'
+			identifier: constant.notFound
+			count: 2
+			path: includes/vr-frases-obsoletes.php
+
+		-
+			message: '#^Constant VR_FRASES_PLUGIN_DIR not found\.$#'
+			identifier: constant.notFound
+			count: 1
+			path: includes/vr-frases-obsoletes.php
+
+		-
+			message: '#^Function vr_frases_get_cleanup_status\(\) never returns false so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: includes/vr-frases-obsoletes.php
+
+		-
+			message: '#^Parameter \#1 \$upgrader_object of function vr_frases_eliminar_archivos_obsoletos expects object, null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: includes/vr-frases-obsoletes.php
+
+		-
+			message: '#^Right side of && is always true\.$#'
+			identifier: booleanAnd.rightAlwaysTrue
+			count: 1
+			path: includes/vr-frases-obsoletes.php
