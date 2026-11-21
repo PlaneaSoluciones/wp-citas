@@ -41,14 +41,14 @@ define( 'VR_FRASES_MIN_PHP_VERSION', '8.0' );
 if ( is_admin() && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 
-	$vr_frases_update_checker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+	$vr_frases_update_checker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(
 		'https://github.com/PlaneaSoluciones/wp-citas/',
 		__FILE__,
 		'wp-citas'
 	);
 
 	// enableReleaseAssets() solo existe en la implementación de GitHub, cuyo namespace
-	// interno (v5pN) cambia con cada versión de la librería: no se puede usar instanceof
+	// interno (v6pN) cambia con cada versión de la librería: no se puede usar instanceof
 	// (excepción de PHPStan en phpstan.neon).
 	$vr_frases_update_checker->getVcsApi()->enableReleaseAssets( '/^wp-citas\.zip$/' );
 }
