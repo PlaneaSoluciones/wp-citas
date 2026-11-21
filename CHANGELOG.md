@@ -5,13 +5,15 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 
 ## [Unreleased]
 
-### Correcciones
+### Corregido
 - La constante interna `VR_FRASES_VERSION` ahora está sincronizada con la versión del plugin,
   previniendo posibles inconsistencias en funciones que dependen de ese valor.
+- `readme.txt` mostraba una versión estable (4.2.0) y un PHP mínimo (7.2) que no
+  correspondían al plugin: ahora indica 4.6.2 y PHP 8.0.
 
 ## [4.6.2] - 2026-06-17
 
-### Correcciones
+### Corregido
 - La búsqueda de autores ya no se dispara con cada pulsación de tecla, reduciendo
   las consultas innecesarias al servidor.
 
@@ -29,7 +31,7 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 
 ## [4.5.1] - 2026-06-14
 
-### Correcciones
+### Corregido
 - Al ordenar por autor, las frases de cada autor se muestran ahora en orden alfabético.
 
 ## [4.5.0] - 2026-06-14
@@ -40,12 +42,12 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 
 ## [4.4.2] - 2026-06-14
 
-### Correcciones
+### Corregido
 - Ajustes internos de código sin impacto en el comportamiento del plugin.
 
 ## [4.4.1] - 2026-06-14
 
-### Correcciones
+### Corregido
 - Corregido el botón de eliminar autor. Ahora muestra un diálogo de confirmación
   para evitar eliminaciones accidentales.
 
@@ -73,41 +75,41 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 
 ## [4.1.7] - 2026-06-13
 
-### Correcciones
+### Corregido
 - Los estilos del plugin ya no se cargan en páginas del panel ajenas al plugin,
   previniendo conflictos visuales con otros plugins instalados.
 
 ## [4.1.6] - 2026-06-12
 
-### Correcciones
+### Corregido
 - Importación de CSV/TXT mejorada: se procesan correctamente ficheros con marca BOM,
   línea de cabecera y codificación UTF-8.
 
 ## [4.1.5] - 2026-06-12
 
-### Cambios
+### Cambiado
 - Al desinstalar el plugin ahora se requiere confirmación explícita antes de eliminar
   todos los datos, evitando pérdidas accidentales.
 
 ## [4.1.4] - 2026-06-12
 
-### Correcciones
+### Corregido
 - El ZIP del plugin incluye ahora la estructura de carpeta correcta (`wp-citas/`),
   asegurando que las actualizaciones automáticas de WordPress funcionen sin problemas.
 
 ## [4.1.3] - 2026-06-12
 
-### Cambios
+### Cambiado
 - El menú del plugin en el panel de WordPress aparece ahora como "WP Citas"
   en lugar de "VR-Frases".
 
 ## [4.1.2] - 2026-06-12
 
-### Correcciones
+### Corregido
 - Eliminados includes redundantes y actualizados los metadatos del plugin.
 
 ## [4.1.1] - 2026-06-11
 
-### Correcciones
+### Corregido
 - Corregido un problema de estabilidad en la base de datos que podía impedir la
   instalación correcta en algunos servidores.
