@@ -3,7 +3,7 @@ includes:
 
 parameters:
     level: 5
-    phpVersion: 80000
+    phpVersion: 80200
     paths:
         - .
     excludePaths:
