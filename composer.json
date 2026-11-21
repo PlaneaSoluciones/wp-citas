@@ -3,13 +3,13 @@
     "description": "WordPress plugin for managing and displaying quotes with authors, themes and categories",
     "license": "GPL-2.0-or-later",
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.13.6",
-        "wp-coding-standards/wpcs": "^3.4.1",
-        "phpcsstandards/phpcsutils": "^1.2.3",
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.2.1",
-        "phpstan/phpstan": "^2.3.7",
-        "szepeviktor/phpstan-wordpress": "^2.0.4",
-        "phpstan/extension-installer": "^1.4.3"
+        "squizlabs/php_codesniffer": "^3.13.6,<4.0",
+        "wp-coding-standards/wpcs": "^3.4.1,<4.0",
+        "phpcsstandards/phpcsutils": "^1.2.3,<2.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2.1,<2.0",
+        "phpstan/phpstan": "^2.3.7,<3.0",
+        "szepeviktor/phpstan-wordpress": "^2.0.4,<3.0",
+        "phpstan/extension-installer": "^1.4.3,<2.0"
     },
     "scripts": {
         "lint": "phpcs -n",
@@ -24,6 +24,7 @@
         }
     },
     "require": {
+        "php": ">=8.2,<8.6",
         "yahnis-elsts/plugin-update-checker": "^6.0,<7.0"
     }
 }
