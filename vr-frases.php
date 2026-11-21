@@ -7,7 +7,7 @@
  * Author URI:  https://github.com/PlaneaSoluciones
  * Version:     4.7.0
  * Requires at least: 5.5
- * Tested up to: 6.8.2
+ * Tested up to: 7.1.5
  * Requires PHP: 8.0
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html

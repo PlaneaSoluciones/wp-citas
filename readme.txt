@@ -2,7 +2,7 @@
 Contributors:       vruizg, planeasoluciones
 Tags:               quotes, random, frases, citas, citations, sayings, wisdom, inspirational, authors
 Requires at least:  5.5
-Tested up to:       6.8.2
+Tested up to:       7.1.5
 Requires PHP:       8.0
 Stable tag:         4.7.0
 License:            GPLv2 or later
