@@ -3,3 +3,4 @@ languages/*.mo
 .vscode/
 vendor/
 composer.phar
+.env
