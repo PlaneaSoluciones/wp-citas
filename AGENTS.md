@@ -12,7 +12,7 @@ Plugin de WordPress **WP Citas** para gestionar y mostrar frases/citas con autor
 composer install          # dependencias de desarrollo y hook (core.hooksPath .githooks)
 composer lint             # PHPCS (WordPress Coding Standards, sin warnings)
 composer fix              # phpcbf
-vendor/bin/phpstan analyse --memory-limit=768M   # level 5, phpVersion 80000
+vendor/bin/phpstan analyse --memory-limit=768M   # level 5, phpVersion 80200
 ```
 
 PHP puro sin compilación. Los assets JS/CSS están en `assets/js/` y `assets/css/` (no en `scripts/` ni `css/`).
@@ -80,8 +80,8 @@ La plantilla frontend (`admin/vr-frases-template.php`) soporta el tema visual `s
 
 - `pr-title-lint.yml` — valida Conventional Commits en PRs
 - `secret-scan.yml` — gitleaks en cada push y PR
-- `lint-php.yml` — `php -l` en matriz PHP 8.0–8.5, PHPCS y PHPStan (8.4)
-- `release-php.yml` — con tag `v*`: comprueba que cabecera, `VR_FRASES_VERSION` y `Stable tag` coinciden con el tag → `composer install --no-dev` → compila los `.mo` → `wp-citas.zip` (carpeta raíz `wp-citas/`) → GitHub Release con las notas de `CHANGELOG.md` y el ZIP como asset
+- `lint-php.yml` — `php -l` en matriz PHP 8.2–8.5 (de `Requires PHP` a la última), PHPCS y PHPStan (8.5)
+- `release-php.yml` — con tag `v*`: comprueba que cabecera, `VR_FRASES_VERSION` y `Stable tag` coinciden con el tag → `composer install --no-dev` (PHP 8.5) → compila los `.mo` → `wp-citas.zip` (carpeta raíz `wp-citas/`) → GitHub Release con las notas de `CHANGELOG.md` y el ZIP como asset
 - `.github/dependabot.yml` — Composer y GitHub Actions, semanal
 - Hook `.githooks/pre-commit`: gitleaks + PHPCS sobre lo staged
 
@@ -93,3 +93,4 @@ Versión en la cabecera `* Version:` de `vr-frases.php`, `VR_FRASES_VERSION` y `
 
 - PHPStan: 60 errores heredados en `phpstan-baseline.neon` (tipos en `esc_*`, código inalcanzable, `DOING_AJAX`, constantes no detectadas, `register_setting` con args en formato antiguo). Ir eliminándolos del baseline al tocar cada fichero.
 - Sin página en BookStack.
+- PHPCS 4 (`squizlabs/php_codesniffer` 4.x) no se puede instalar mientras WPCS 3.x exija `squizlabs/php_codesniffer ^3.13`: subir ambos cuando salga una WPCS compatible con PHPCS 4.
