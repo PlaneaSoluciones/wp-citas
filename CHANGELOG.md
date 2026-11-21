@@ -5,6 +5,8 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 
 ## [Unreleased]
 
+## [4.8.0] - 2026-11-21
+
 ### Cambiado
 - Requiere PHP 8.2 o superior (antes 8.0): PHP 8.0 y 8.1 ya no reciben actualizaciones
   de seguridad.
