@@ -20,9 +20,7 @@ PHP puro sin compilación. Los assets JS/CSS están en `assets/js/` y `assets/cs
 ## Despliegue
 
 1. Cambios → SFTP manual desde VS Code (verificación con el cliente).
-2. Aprobado → PR → merge → tag `vX.Y.Z` (ver Releases): `release-php.yml` despliega el ZIP limpio a producción y crea el GitHub Release.
-
-Producción: `isp03.planea.com.es` (SFTP, puerto 22), usuario `andresherrero_com_planea`, ruta `web/wp-content/plugins/wp-citas`. El deploy usa `mirror --delete`: lo que no esté en el ZIP desaparece del servidor.
+2. Aprobado → PR → merge → tag `vX.Y.Z` (ver Releases): `release-php.yml` crea el GitHub Release con el ZIP limpio y producción lo recibe como actualización de WordPress (Plugin Update Checker; ver Actualizaciones).
 
 ## Arquitectura
 
@@ -83,7 +81,7 @@ La plantilla frontend (`admin/vr-frases-template.php`) soporta el tema visual `s
 - `pr-title-lint.yml` — valida Conventional Commits en PRs
 - `secret-scan.yml` — gitleaks en cada push y PR
 - `lint-php.yml` — `php -l` en matriz PHP 8.0–8.5, PHPCS y PHPStan (8.4)
-- `release-php.yml` — con tag `v*`: comprueba que cabecera, `VR_FRASES_VERSION` y `Stable tag` coinciden con el tag → `composer install --no-dev` → compila los `.mo` → `wp-citas.zip` (carpeta raíz `wp-citas/`) → deploy SFTP (transitorio) → GitHub Release con las notas de `CHANGELOG.md` y el ZIP como asset. Secrets: `SFTP_HOST`, `SFTP_USERNAME`, `SFTP_PASSWORD`
+- `release-php.yml` — con tag `v*`: comprueba que cabecera, `VR_FRASES_VERSION` y `Stable tag` coinciden con el tag → `composer install --no-dev` → compila los `.mo` → `wp-citas.zip` (carpeta raíz `wp-citas/`) → GitHub Release con las notas de `CHANGELOG.md` y el ZIP como asset
 - `.github/dependabot.yml` — Composer y GitHub Actions, semanal
 - Hook `.githooks/pre-commit`: gitleaks + PHPCS sobre lo staged
 
@@ -95,7 +93,3 @@ Versión en la cabecera `* Version:` de `vr-frases.php`, `VR_FRASES_VERSION` y `
 
 - PHPStan: 60 errores heredados en `phpstan-baseline.neon` (tipos en `esc_*`, código inalcanzable, `DOING_AJAX`, constantes no detectadas, `register_setting` con args en formato antiguo). Ir eliminándolos del baseline al tocar cada fichero.
 - Sin página en BookStack.
-- **Quitar el deploy SFTP** cuando esté verificado el actualizador (Plugin Update Checker, desde la release que lo incluya):
-  1. Release con el actualizador, desplegada aún por SFTP.
-  2. Siguiente release sin el step SFTP: comprobar en producción que llega por WordPress (o MainWP) y se instala bien.
-  3. Borrar el step SFTP de `release-php.yml`, los secrets `SFTP_*` y la sección de producción SFTP de este fichero.
