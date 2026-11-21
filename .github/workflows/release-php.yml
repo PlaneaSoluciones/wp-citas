@@ -49,15 +49,6 @@ jobs:
           cd dist
           zip -r ../wp-citas.zip wp-citas/
 
-      - name: Deploy a producción
-        env:
-          SFTP_HOST: ${{ secrets.SFTP_HOST }}
-          SFTP_USERNAME: ${{ secrets.SFTP_USERNAME }}
-          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
-        run: |
-          sudo apt-get install -y lftp
-          lftp -e "set sftp:auto-confirm yes; set net:max-retries 3; open -u $SFTP_USERNAME,$SFTP_PASSWORD sftp://$SFTP_HOST; mirror --reverse --delete --verbose dist/wp-citas/ web/wp-content/plugins/wp-citas/; quit"
-
       - name: Extraer notas de release desde CHANGELOG.md
         run: |
           VERSION="${{ github.ref_name }}"
