@@ -24,6 +24,6 @@
         }
     },
     "require": {
-        "yahnis-elsts/plugin-update-checker": "^5.7,<6.0"
+        "yahnis-elsts/plugin-update-checker": "^6.0,<7.0"
     }
 }
