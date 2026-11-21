@@ -6,7 +6,7 @@
  * Author:      Planea Soluciones
  * Author URI:  https://github.com/PlaneaSoluciones
  * Version:     4.7.1
- * Requires at least: 5.5
+ * Requires at least: 6.1
  * Tested up to: 7.1
  * Requires PHP: 8.2
  * License:     GPLv2 or later
@@ -33,12 +33,14 @@ define( 'VR_FRASES_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'VR_FRASES_MIN_WP_VERSION', '5.5' );
-define( 'VR_FRASES_MIN_PHP_VERSION', '8.0' );
+define( 'VR_FRASES_MIN_PHP_VERSION', '8.2' );
 
 // Actualizaciones desde las Releases de GitHub (Plugin Update Checker): el ZIP adjunto a
 // cada Release lo genera release-php.yml. Update URI evita que WordPress lo confunda con
 // un plugin homónimo de wordpress.org.
-if ( is_admin() && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+// Se carga en todas las peticiones, no solo en wp-admin: WP-Cron y la sincronización de MainWP
+// también tienen que ver la actualización.
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 
 	$vr_frases_update_checker = \YahnisElsts\PluginUpdateChecker\v6\PucFactory::buildUpdateChecker(

@@ -9,6 +9,10 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 - Requiere PHP 8.2 o superior (antes 8.0): PHP 8.0 y 8.1 ya no reciben actualizaciones
   de seguridad.
 - Compatibilidad comprobada hasta WordPress 7.1.
+- Requiere WordPress 6.1 o superior (antes 5.5), la primera versión compatible con PHP 8.2.
+
+### Corregido
+- Las actualizaciones desde GitHub también se detectan en segundo plano (WP-Cron) y desde MainWP, no solo al entrar en el escritorio de WordPress
 
 ## [4.7.1] - 2026-11-21
 

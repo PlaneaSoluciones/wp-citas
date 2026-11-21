@@ -1,7 +1,7 @@
 === WP Citas ===
 Contributors:       vruizg, planeasoluciones
 Tags:               quotes, random, frases, citas, citations, sayings, wisdom, inspirational, authors
-Requires at least:  5.5
+Requires at least:  6.1
 Tested up to:       7.1
 Requires PHP:       8.2
 Stable tag:         4.7.1
