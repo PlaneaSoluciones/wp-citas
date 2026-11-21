@@ -5,7 +5,7 @@
  * Description: Crea y gestiona una lista de frases y autores con opciones de visualización en plantilla o widget. Fork de VR-Frases (Vicente Ruiz) mantenido por Planea Soluciones.
  * Author:      Planea Soluciones
  * Author URI:  https://github.com/PlaneaSoluciones
- * Version:     4.7.0
+ * Version:     4.7.1
  * Requires at least: 5.5
  * Tested up to: 7.1.5
  * Requires PHP: 8.0
@@ -17,7 +17,7 @@
  *
  * @package     VR_Frases
  * @author      Planea Soluciones
- * @version     4.7.0
+ * @version     4.7.1
  * @license     GPL-2.0+
  * @since       4.1.0
  */
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants.
-define( 'VR_FRASES_VERSION', '4.7.0' );
+define( 'VR_FRASES_VERSION', '4.7.1' );
 define( 'VR_FRASES_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

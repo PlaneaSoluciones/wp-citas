@@ -4,7 +4,7 @@ Tags:               quotes, random, frases, citas, citations, sayings, wisdom, i
 Requires at least:  5.5
 Tested up to:       7.1.5
 Requires PHP:       8.0
-Stable tag:         4.7.0
+Stable tag:         4.7.1
 License:            GPLv2 or later
 License URI:        https://www.gnu.org/licenses/gpl-2.0.html
 
