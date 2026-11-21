@@ -91,3 +91,9 @@ Versión en la cabecera `* Version:` de `vr-frases.php`, `VR_FRASES_VERSION` y `
 
 - PHPStan: 60 errores heredados en `phpstan-baseline.neon` (tipos en `esc_*`, código inalcanzable, `DOING_AJAX`, constantes no detectadas, `register_setting` con args en formato antiguo). Ir eliminándolos del baseline al tocar cada fichero.
 - Sin página en BookStack.
+- **CD estándar de WordPress (quitar el deploy SFTP):** el plugin se actualizará desde las releases públicas de GitHub como cualquier plugin del repositorio oficial:
+  - Actualizaciones automáticas con el sistema estándar de WordPress (toggle «Activar actualizaciones automáticas»), también gestionables desde MainWP.
+  - Enlace «Comprobar actualizaciones» en el listado de plugins.
+  - Descarga de la versión nueva desde las releases del repo público de GitHub.
+  - ZIP de release con el formato de WordPress: carpeta raíz `wp-citas/`, sin ficheros de desarrollo y con los `.mo` compilados (hoy `languages/*.mo` está en `.gitignore` y no llega al ZIP).
+  - Orden: release con el actualizador desplegada aún por SFTP → comprobar en producción que la siguiente versión llega por el actualizador → quitar el step SFTP de `release-php.yml` y los secrets `SFTP_*`.
