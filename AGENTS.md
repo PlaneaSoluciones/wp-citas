@@ -26,6 +26,10 @@ Producción: `isp03.planea.com.es` (SFTP, puerto 22), usuario `andresherrero_com
 
 ## Arquitectura
 
+### Actualizaciones
+
+`vr-frases.php` carga Plugin Update Checker (`yahnis-elsts/plugin-update-checker`, dependencia de producción: `vendor/` sí va en el ZIP, como en `timp-events-viewer`). Consulta la última Release de GitHub y descarga su asset `wp-citas.zip`; el resto (aviso de versión, toggle de actualizaciones automáticas, enlace «Comprobar actualizaciones») es el de WordPress. `Update URI` evita las comprobaciones contra wordpress.org.
+
 ### Flujo de carga
 
 `vr-frases.php` → `vr-frases-loader.php` → carga condicional de módulos según contexto (admin vs frontend). El loader registra también los settings de WP con callback de validación.
@@ -79,7 +83,7 @@ La plantilla frontend (`admin/vr-frases-template.php`) soporta el tema visual `s
 - `pr-title-lint.yml` — valida Conventional Commits en PRs
 - `secret-scan.yml` — gitleaks en cada push y PR
 - `lint-php.yml` — `php -l` en matriz PHP 8.0–8.5, PHPCS y PHPStan (8.4)
-- `release-php.yml` — con tag `v*`: ZIP limpio → deploy SFTP → GitHub Release con las notas de `CHANGELOG.md`. Secrets: `SFTP_HOST`, `SFTP_USERNAME`, `SFTP_PASSWORD`
+- `release-php.yml` — con tag `v*`: comprueba que cabecera, `VR_FRASES_VERSION` y `Stable tag` coinciden con el tag → `composer install --no-dev` → compila los `.mo` → `wp-citas.zip` (carpeta raíz `wp-citas/`) → deploy SFTP (transitorio) → GitHub Release con las notas de `CHANGELOG.md` y el ZIP como asset. Secrets: `SFTP_HOST`, `SFTP_USERNAME`, `SFTP_PASSWORD`
 - `.github/dependabot.yml` — Composer y GitHub Actions, semanal
 - Hook `.githooks/pre-commit`: gitleaks + PHPCS sobre lo staged
 
@@ -91,9 +95,7 @@ Versión en la cabecera `* Version:` de `vr-frases.php`, `VR_FRASES_VERSION` y `
 
 - PHPStan: 60 errores heredados en `phpstan-baseline.neon` (tipos en `esc_*`, código inalcanzable, `DOING_AJAX`, constantes no detectadas, `register_setting` con args en formato antiguo). Ir eliminándolos del baseline al tocar cada fichero.
 - Sin página en BookStack.
-- **CD estándar de WordPress (quitar el deploy SFTP):** el plugin se actualizará desde las releases públicas de GitHub como cualquier plugin del repositorio oficial:
-  - Actualizaciones automáticas con el sistema estándar de WordPress (toggle «Activar actualizaciones automáticas»), también gestionables desde MainWP.
-  - Enlace «Comprobar actualizaciones» en el listado de plugins.
-  - Descarga de la versión nueva desde las releases del repo público de GitHub.
-  - ZIP de release con el formato de WordPress: carpeta raíz `wp-citas/`, sin ficheros de desarrollo y con los `.mo` compilados (hoy `languages/*.mo` está en `.gitignore` y no llega al ZIP).
-  - Orden: release con el actualizador desplegada aún por SFTP → comprobar en producción que la siguiente versión llega por el actualizador → quitar el step SFTP de `release-php.yml` y los secrets `SFTP_*`.
+- **Quitar el deploy SFTP** cuando esté verificado el actualizador (Plugin Update Checker, desde la release que lo incluya):
+  1. Release con el actualizador, desplegada aún por SFTP.
+  2. Siguiente release sin el step SFTP: comprobar en producción que llega por WordPress (o MainWP) y se instala bien.
+  3. Borrar el step SFTP de `release-php.yml`, los secrets `SFTP_*` y la sección de producción SFTP de este fichero.

@@ -13,6 +13,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: vr-frases
  * Domain Path: /languages
+ * Update URI:  https://github.com/PlaneaSoluciones/wp-citas
  *
  * @package     VR_Frases
  * @author      Planea Soluciones
@@ -32,7 +33,25 @@ define( 'VR_FRASES_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'VR_FRASES_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'VR_FRASES_MIN_WP_VERSION', '5.5' );
-define( 'VR_FRASES_MIN_PHP_VERSION', '7.2' );
+define( 'VR_FRASES_MIN_PHP_VERSION', '8.0' );
+
+// Actualizaciones desde las Releases de GitHub (Plugin Update Checker): el ZIP adjunto a
+// cada Release lo genera release-php.yml. Update URI evita que WordPress lo confunda con
+// un plugin homónimo de wordpress.org.
+if ( is_admin() && file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+
+	$vr_frases_update_checker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+		'https://github.com/PlaneaSoluciones/wp-citas/',
+		__FILE__,
+		'wp-citas'
+	);
+
+	// enableReleaseAssets() solo existe en la implementación de GitHub, cuyo namespace
+	// interno (v5pN) cambia con cada versión de la librería: no se puede usar instanceof
+	// (excepción de PHPStan en phpstan.neon).
+	$vr_frases_update_checker->getVcsApi()->enableReleaseAssets( '/^wp-citas\.zip$/' );
+}
 
 /**
  * Verifies minimum system requirements.
