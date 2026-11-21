@@ -14,18 +14,40 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Comprobar que la versión coincide con el tag
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          HEADER=$(sed -n 's/^ \* Version: *//p' vr-frases.php | head -1)
+          CONSTANT=$(sed -n "s/^define( 'VR_FRASES_VERSION', '\(.*\)' );/\1/p" vr-frases.php)
+          STABLE=$(sed -n 's/^Stable tag: *//p' readme.txt)
+          echo "tag=$VERSION cabecera=$HEADER constante=$CONSTANT stable=$STABLE"
+          [ "$HEADER" = "$VERSION" ] && [ "$CONSTANT" = "$VERSION" ] && [ "$STABLE" = "$VERSION" ] \
+            || { echo "La versión del plugin no coincide con el tag ${GITHUB_REF_NAME}"; exit 1; }
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+
+      - name: Instalar dependencias de producción (Plugin Update Checker)
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Compilar traducciones
+        run: |
+          sudo apt-get install -y gettext
+          for po in languages/*.po; do msgfmt -o "${po%.po}.mo" "$po"; done
+
       - name: Create plugin ZIP
         run: |
           mkdir -p dist/wp-citas
           rsync -a \
             --exclude='.git' --exclude='.github' --exclude='.githooks' --exclude='.claude' \
-            --exclude='dist' --exclude='vendor' \
+            --exclude='dist' \
             --exclude='composer.json' --exclude='composer.lock' \
             --exclude='phpcs.xml' --exclude='phpstan.neon' --exclude='phpstan-baseline.neon' \
             --exclude='.gitattributes' --exclude='.gitignore' --exclude='.editorconfig' --exclude='AGENTS.md' --exclude='CLAUDE.md' \
             . dist/wp-citas/
           cd dist
-          zip -r "../wp-citas-${{ github.ref_name }}.zip" wp-citas/
+          zip -r ../wp-citas.zip wp-citas/
 
       - name: Deploy a producción
         env:
@@ -52,4 +74,4 @@ jobs:
           gh release create "${{ github.ref_name }}" \
             --title "${{ github.ref_name }}" \
             --notes-file NOTES.md \
-            "wp-citas-${{ github.ref_name }}.zip"
+            wp-citas.zip

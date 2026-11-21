@@ -8,3 +8,8 @@ parameters:
         - .
     excludePaths:
         - vendor/
+    ignoreErrors:
+        -
+            identifier: method.notFound
+            message: '#enableReleaseAssets\(\)#'
+            path: vr-frases.php

@@ -22,5 +22,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true
         }
+    },
+    "require": {
+        "yahnis-elsts/plugin-update-checker": "^5.7,<6.0"
     }
 }

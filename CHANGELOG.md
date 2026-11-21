@@ -5,11 +5,17 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 
 ## [Unreleased]
 
+### Añadido
+- El plugin se actualiza desde WordPress como cualquier otro: avisa de las versiones nuevas
+  publicadas en GitHub, permite activar las actualizaciones automáticas e incluye el enlace
+  «Comprobar actualizaciones» en el listado de plugins.
+
 ### Corregido
 - La constante interna `VR_FRASES_VERSION` ahora está sincronizada con la versión del plugin,
   previniendo posibles inconsistencias en funciones que dependen de ese valor.
 - `readme.txt` mostraba una versión estable (4.2.0) y un PHP mínimo (7.2) que no
   correspondían al plugin: ahora indica 4.6.2 y PHP 8.0.
+- La traducción al español se incluye compilada en el paquete del plugin.
 
 ## [4.6.2] - 2026-06-17
 
