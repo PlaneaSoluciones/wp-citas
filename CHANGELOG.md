@@ -5,6 +5,8 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) · Versioni
 
 ## [Unreleased]
 
+## [4.7.1] - 2026-11-21
+
 ### Cambiado
 - Compatibilidad comprobada hasta WordPress 7.1.5.
 - Actualizado el componente de actualizaciones (Plugin Update Checker) a la versión 6.0.
